@@ -2,9 +2,7 @@
 telebot
 python-dotenv
 pandas
-numpy
 ta
-TA-Lib
 scikit-learn
 joblib
 google-generativeai
