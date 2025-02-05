@@ -6,7 +6,7 @@ import logging
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.DEBUG,  # Set to DEBUG for detailed logs
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.StreamHandler()]
 )
