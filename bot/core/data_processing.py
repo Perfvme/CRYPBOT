@@ -1,6 +1,7 @@
 import pandas as pd
-from bot.api.binance_client import BinanceClient
 import talib
+from bot.api.binance_client import BinanceClient
+import logging
 
 class DataProcessor:
     def __init__(self):
@@ -8,7 +9,12 @@ class DataProcessor:
 
     def fetch_data(self, symbol, interval, limit=500):
         """Fetch historical klines data."""
-        return self.client.get_klines(symbol, interval, limit)
+        try:
+            logger.info(f"Fetching data for {symbol} with interval {interval}...")
+            return self.client.get_klines(symbol, interval, limit)
+        except Exception as e:
+            logger.error(f"Error fetching data: {e}")
+            return []
 
     def preprocess_data(self, data):
         """Preprocess raw data into a DataFrame with technical indicators."""
@@ -28,7 +34,8 @@ class DataProcessor:
         df['ema'] = talib.EMA(df['close'], timeperiod=50)
         df['atr'] = talib.ATR(df['high'], df['low'], df['close'], timeperiod=14)
         df['vwap'] = (df['volume'] * (df['high'] + df['low'] + df['close']) / 3).cumsum() / df['volume'].cumsum()
-        return df
+
+        return df.dropna()
 
     def preprocess_for_training(self, data):
         """
@@ -45,4 +52,5 @@ class DataProcessor:
         df['label'] = (df['future_close'] > df['close']).astype(int)  # 1 if price increases, else 0
         y = df['label'].iloc[:-1]  # Exclude the last row (no future price available)
 
+        logger.debug(f"Label distribution: {df['label'].value_counts()}")
         return X, y
