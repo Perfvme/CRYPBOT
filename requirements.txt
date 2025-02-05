@@ -1,0 +1,23 @@
+# Core libraries
+telebot==0.0.4
+python-dotenv==1.0.0
+pandas==2.0.3
+numpy==1.24.4
+ta==0.10.0
+TA-Lib==0.4.25
+scikit-learn==1.3.0
+joblib==1.3.2
+google-generativeai==0.1.0
+psutil==5.9.5
+
+# Binance API client
+python-binance==1.0.16
+
+# Scheduling library
+schedule==1.2.1
+
+# Logging and debugging
+loguru==0.7.0
+
+# Other utilities
+requests==2.31.0

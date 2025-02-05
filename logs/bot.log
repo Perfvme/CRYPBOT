@@ -1,0 +1,1366 @@
+2025-02-04 22:02:53,297 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:02:54,236 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:02:54,526 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:02:54,528 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:02:54,528 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:02:54,528 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:02:55,500 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:03:03,291 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:08:03 UTC)" (scheduled at 2025-02-04 14:03:03.277709+00:00)
+2025-02-04 22:03:07,186 - root - ERROR - Alert check failed for BTC: name 'validate_dataframe' is not defined
+2025-02-04 22:03:07,392 - root - ERROR - Alert check failed for ETH: name 'validate_dataframe' is not defined
+2025-02-04 22:03:07,559 - root - ERROR - Alert check failed for SOL: name 'validate_dataframe' is not defined
+2025-02-04 22:03:07,803 - root - ERROR - Alert check failed for XRP: name 'validate_dataframe' is not defined
+2025-02-04 22:03:07,982 - root - ERROR - Alert check failed for DOGE: name 'validate_dataframe' is not defined
+2025-02-04 22:03:08,154 - root - ERROR - Alert check failed for LTC: name 'validate_dataframe' is not defined
+2025-02-04 22:03:08,155 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:08:03 UTC)" executed successfully
+2025-02-04 22:03:08,156 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:03:16,358 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:03:26,603 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:03:37,560 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:03:37,560 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:03:37,561 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:03:37,577 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 22:19:16,641 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:19:18,028 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:19:18,364 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:19:18,366 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:19:18,367 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:19:18,367 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:19:26,626 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:24:26 UTC)" (scheduled at 2025-02-04 14:19:26.622719+00:00)
+2025-02-04 22:19:30,864 - root - ERROR - Alert check failed for BTC: name 'logging' is not defined
+2025-02-04 22:19:31,125 - root - ERROR - Alert check failed for ETH: name 'logging' is not defined
+2025-02-04 22:19:31,383 - root - ERROR - Alert check failed for SOL: name 'logging' is not defined
+2025-02-04 22:19:31,584 - root - ERROR - Alert check failed for XRP: name 'logging' is not defined
+2025-02-04 22:19:31,748 - root - ERROR - Alert check failed for DOGE: name 'logging' is not defined
+2025-02-04 22:19:31,976 - root - ERROR - Alert check failed for LTC: name 'logging' is not defined
+2025-02-04 22:19:31,976 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:24:26 UTC)" executed successfully
+2025-02-04 22:19:31,978 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:19:42,184 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:19:42,185 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:19:42,186 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:19:42,201 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 22:22:41,071 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:22:42,016 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:22:42,255 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:22:42,256 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:22:42,257 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:22:42,257 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:22:51,056 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:27:51 UTC)" (scheduled at 2025-02-04 14:22:51.053322+00:00)
+2025-02-04 22:22:55,037 - root - ERROR - Alert check failed for BTC: name 'logging' is not defined
+2025-02-04 22:22:55,200 - root - ERROR - Alert check failed for ETH: name 'logging' is not defined
+2025-02-04 22:22:55,487 - root - ERROR - Alert check failed for SOL: name 'logging' is not defined
+2025-02-04 22:22:55,651 - root - ERROR - Alert check failed for XRP: name 'logging' is not defined
+2025-02-04 22:22:55,881 - root - ERROR - Alert check failed for DOGE: name 'logging' is not defined
+2025-02-04 22:22:56,226 - root - ERROR - Alert check failed for LTC: name 'logging' is not defined
+2025-02-04 22:22:56,227 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:27:51 UTC)" executed successfully
+2025-02-04 22:22:56,228 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:22:59,770 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:22:59,771 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:22:59,772 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:22:59,784 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 22:27:12,249 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:27:13,236 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:27:13,487 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:27:13,489 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:27:13,490 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:27:13,490 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:27:22,241 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:32:22 UTC)" (scheduled at 2025-02-04 14:27:22.232375+00:00)
+2025-02-04 22:27:27,025 - root - ERROR - Alert check failed for BTC: name 'logging' is not defined
+2025-02-04 22:27:27,274 - root - ERROR - Alert check failed for ETH: name 'logging' is not defined
+2025-02-04 22:27:27,450 - root - ERROR - Alert check failed for SOL: name 'logging' is not defined
+2025-02-04 22:27:27,620 - root - ERROR - Alert check failed for XRP: name 'logging' is not defined
+2025-02-04 22:27:27,780 - root - ERROR - Alert check failed for DOGE: name 'logging' is not defined
+2025-02-04 22:27:27,987 - root - ERROR - Alert check failed for LTC: name 'logging' is not defined
+2025-02-04 22:27:27,988 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:32:22 UTC)" executed successfully
+2025-02-04 22:27:27,988 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:27:31,780 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:27:31,782 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:27:31,783 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:27:31,806 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 22:30:02,650 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:30:03,704 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:30:03,968 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:30:03,970 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:30:03,970 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:30:03,970 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:30:12,643 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:35:12 UTC)" (scheduled at 2025-02-04 14:30:12.629661+00:00)
+2025-02-04 22:30:16,547 - root - ERROR - Alert check failed for BTC: name 'logging' is not defined
+2025-02-04 22:30:16,744 - root - ERROR - Alert check failed for ETH: name 'logging' is not defined
+2025-02-04 22:30:16,943 - root - ERROR - Alert check failed for SOL: name 'logging' is not defined
+2025-02-04 22:30:17,112 - root - ERROR - Alert check failed for XRP: name 'logging' is not defined
+2025-02-04 22:30:17,280 - root - ERROR - Alert check failed for DOGE: name 'logging' is not defined
+2025-02-04 22:30:17,491 - root - ERROR - Alert check failed for LTC: name 'logging' is not defined
+2025-02-04 22:30:17,491 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:35:12 UTC)" executed successfully
+2025-02-04 22:30:17,493 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:30:26,983 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:30:26,984 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:30:26,985 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:30:26,998 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 22:32:36,474 - root - INFO - BinanceClient initialized
+2025-02-04 22:32:36,484 - root - INFO - BinanceClient initialized
+2025-02-04 22:32:37,543 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 22:32:38,500 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 22:32:38,758 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 22:32:38,760 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 22:32:38,760 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 22:32:38,761 - telegram.ext.Application - INFO - Application started
+2025-02-04 22:32:47,529 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:37:47 UTC)" (scheduled at 2025-02-04 14:32:47.525752+00:00)
+2025-02-04 22:32:51,249 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:51,456 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:51,619 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:51,783 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:52,267 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:52,618 - root - ERROR - Missing RSI data in DataFrame
+2025-02-04 22:32:52,618 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 14:37:47 UTC)" executed successfully
+2025-02-04 22:32:52,619 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:32:56,418 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 22:32:56,420 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 22:32:56,420 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 22:32:56,434 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 23:07:52,984 - root - INFO - BinanceClient initialized
+2025-02-04 23:07:52,993 - root - INFO - BinanceClient initialized
+2025-02-04 23:07:54,154 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 23:07:55,461 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 23:07:55,788 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 23:07:55,790 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 23:07:55,790 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 23:07:55,791 - telegram.ext.Application - INFO - Application started
+2025-02-04 23:08:04,149 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:13:04 UTC)" (scheduled at 2025-02-04 15:08:04.135007+00:00)
+2025-02-04 23:08:07,921 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-04 23:08:07,922 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:07,922 - root - WARNING - Invalid data for BTC
+2025-02-04 23:08:08,128 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-04 23:08:08,128 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:08,129 - root - WARNING - Invalid data for ETH
+2025-02-04 23:08:08,354 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-04 23:08:08,354 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:08,354 - root - WARNING - Invalid data for SOL
+2025-02-04 23:08:08,523 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-04 23:08:08,523 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:08,524 - root - WARNING - Invalid data for XRP
+2025-02-04 23:08:08,686 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-04 23:08:08,687 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:08,687 - root - WARNING - Invalid data for DOGE
+2025-02-04 23:08:08,876 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-04 23:08:08,876 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:08:08,876 - root - WARNING - Invalid data for LTC
+2025-02-04 23:08:08,877 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:13:04 UTC)" executed successfully
+2025-02-04 23:08:08,877 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:08:18,489 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:08:18,490 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 23:08:18,490 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 23:08:18,511 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 23:15:43,961 - root - INFO - BinanceClient initialized
+2025-02-04 23:15:43,969 - root - INFO - BinanceClient initialized
+2025-02-04 23:15:45,042 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 23:15:45,966 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 23:15:46,332 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 23:15:46,333 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 23:15:46,334 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 23:15:46,334 - telegram.ext.Application - INFO - Application started
+2025-02-04 23:15:55,040 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:20:55 UTC)" (scheduled at 2025-02-04 15:15:55.025723+00:00)
+2025-02-04 23:15:58,666 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-04 23:15:58,666 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:58,667 - root - WARNING - Invalid data for BTC
+2025-02-04 23:15:58,837 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-04 23:15:58,838 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:58,838 - root - WARNING - Invalid data for ETH
+2025-02-04 23:15:58,999 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-04 23:15:59,000 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:59,000 - root - WARNING - Invalid data for SOL
+2025-02-04 23:15:59,472 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-04 23:15:59,472 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:59,473 - root - WARNING - Invalid data for XRP
+2025-02-04 23:15:59,633 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-04 23:15:59,634 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:59,635 - root - WARNING - Invalid data for DOGE
+2025-02-04 23:15:59,856 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-04 23:15:59,856 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:15:59,857 - root - WARNING - Invalid data for LTC
+2025-02-04 23:15:59,858 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:20:55 UTC)" executed successfully
+2025-02-04 23:15:59,859 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:16:06,231 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:16:06,232 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 23:16:06,232 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 23:16:06,246 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 23:28:32,535 - root - INFO - BinanceClient initialized
+2025-02-04 23:28:32,543 - root - INFO - BinanceClient initialized
+2025-02-04 23:28:33,623 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 23:28:34,912 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 23:28:35,213 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 23:28:35,214 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 23:28:35,215 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 23:28:35,215 - telegram.ext.Application - INFO - Application started
+2025-02-04 23:28:43,618 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:33:43 UTC)" (scheduled at 2025-02-04 15:28:43.605309+00:00)
+2025-02-04 23:28:47,403 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-04 23:28:47,404 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:47,404 - root - WARNING - Invalid data for BTC
+2025-02-04 23:28:47,609 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-04 23:28:47,610 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:47,610 - root - WARNING - Invalid data for ETH
+2025-02-04 23:28:47,779 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-04 23:28:47,780 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:47,780 - root - WARNING - Invalid data for SOL
+2025-02-04 23:28:47,979 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-04 23:28:47,980 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:47,980 - root - WARNING - Invalid data for XRP
+2025-02-04 23:28:48,148 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-04 23:28:48,148 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:48,149 - root - WARNING - Invalid data for DOGE
+2025-02-04 23:28:48,324 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-04 23:28:48,324 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:28:48,325 - root - WARNING - Invalid data for LTC
+2025-02-04 23:28:48,325 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:33:43 UTC)" executed successfully
+2025-02-04 23:28:48,325 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:28:53,187 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:28:53,188 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 23:28:53,189 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 23:28:53,203 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 23:36:48,202 - root - INFO - BinanceClient initialized
+2025-02-04 23:36:48,213 - root - INFO - BinanceClient initialized
+2025-02-04 23:36:49,274 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 23:36:50,695 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 23:36:51,000 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 23:36:51,002 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 23:36:51,003 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 23:36:51,003 - telegram.ext.Application - INFO - Application started
+2025-02-04 23:36:59,267 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:41:59 UTC)" (scheduled at 2025-02-04 15:36:59.256714+00:00)
+2025-02-04 23:37:03,052 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-04 23:37:03,052 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:03,063 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 05:45:00  104554.00  104569.40  104236.95  104365.97  140.29117
+1 2025-01-25 06:00:00  104365.96  104480.00  104289.71  104440.22   87.88787
+2 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+3 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+4 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+2025-02-04 23:37:03,064 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:03,064 - root - WARNING - Invalid data for BTC
+2025-02-04 23:37:03,411 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-04 23:37:03,412 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:03,419 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 05:45:00  3300.30  3302.51  3294.82  3296.51   763.8745
+1 2025-01-25 06:00:00  3296.50  3303.31  3294.70  3297.68  2202.9586
+2 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824
+3 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518
+4 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549
+2025-02-04 23:37:03,419 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:03,419 - root - WARNING - Invalid data for ETH
+2025-02-04 23:37:03,587 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-04 23:37:03,588 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:03,593 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 05:45:00  250.22  250.62  248.68  248.74  31001.995
+1 2025-01-25 06:00:00  248.75  249.64  248.55  248.73  36992.977
+2 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635
+3 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973
+4 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816
+2025-02-04 23:37:03,594 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:03,594 - root - WARNING - Invalid data for SOL
+2025-02-04 23:37:03,759 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-04 23:37:03,760 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:03,767 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 05:45:00  3.1148  3.1163  3.1054  3.1082   661229.0
+1 2025-01-25 06:00:00  3.1082  3.1083  3.1007  3.1007   767413.0
+2 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0
+3 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0
+4 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0
+2025-02-04 23:37:03,768 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:03,769 - root - WARNING - Invalid data for XRP
+2025-02-04 23:37:03,932 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-04 23:37:03,932 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:03,939 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 05:45:00  0.35064  0.35092  0.34970  0.34995  2332538.0
+1 2025-01-25 06:00:00  0.34995  0.35109  0.34969  0.35028  2083007.0
+2 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0
+3 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0
+4 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0
+2025-02-04 23:37:03,940 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:03,941 - root - WARNING - Invalid data for DOGE
+2025-02-04 23:37:04,098 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-04 23:37:04,098 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-04 23:37:04,105 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 05:45:00  123.10  123.55  122.46  122.80   6681.006
+1 2025-01-25 06:00:00  122.79  122.98  122.25  122.38   5530.552
+2 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+3 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+4 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+2025-02-04 23:37:04,105 - root - ERROR - Missing required columns in DataFrame: ['rsi']
+2025-02-04 23:37:04,105 - root - WARNING - Invalid data for LTC
+2025-02-04 23:37:04,106 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:41:59 UTC)" executed successfully
+2025-02-04 23:37:04,107 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:37:14,756 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:37:14,757 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 23:37:14,757 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 23:37:14,770 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-04 23:52:38,898 - root - INFO - BinanceClient initialized
+2025-02-04 23:52:38,898 - root - INFO - BinanceClient initialized
+2025-02-04 23:52:39,953 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-04 23:52:40,932 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-04 23:52:41,172 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-04 23:52:41,174 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-04 23:52:41,174 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-04 23:52:41,175 - telegram.ext.Application - INFO - Application started
+2025-02-04 23:52:49,944 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:57:49 UTC)" (scheduled at 2025-02-04 15:52:49.935535+00:00)
+2025-02-04 23:52:49,945 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,946 - root - INFO - Fetched data for BTC:
+2025-02-04 23:52:49,946 - root - INFO - Columns: []
+2025-02-04 23:52:49,948 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,948 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,949 - root - ERROR - Alert check failed for BTC: 'close'
+2025-02-04 23:52:49,949 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,950 - root - INFO - Fetched data for ETH:
+2025-02-04 23:52:49,950 - root - INFO - Columns: []
+2025-02-04 23:52:49,950 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,951 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,951 - root - ERROR - Alert check failed for ETH: 'close'
+2025-02-04 23:52:49,951 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,952 - root - INFO - Fetched data for SOL:
+2025-02-04 23:52:49,952 - root - INFO - Columns: []
+2025-02-04 23:52:49,952 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,953 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,953 - root - ERROR - Alert check failed for SOL: 'close'
+2025-02-04 23:52:49,953 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,954 - root - INFO - Fetched data for XRP:
+2025-02-04 23:52:49,954 - root - INFO - Columns: []
+2025-02-04 23:52:49,955 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,955 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,956 - root - ERROR - Alert check failed for XRP: 'close'
+2025-02-04 23:52:49,956 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,956 - root - INFO - Fetched data for DOGE:
+2025-02-04 23:52:49,957 - root - INFO - Columns: []
+2025-02-04 23:52:49,957 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,958 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,958 - root - ERROR - Alert check failed for DOGE: 'close'
+2025-02-04 23:52:49,958 - root - ERROR - Binance API error: 'NoneType' object has no attribute 'fetch_ohlcv'
+2025-02-04 23:52:49,959 - root - INFO - Fetched data for LTC:
+2025-02-04 23:52:49,959 - root - INFO - Columns: []
+2025-02-04 23:52:49,960 - root - INFO - First few rows:
+Empty DataFrame
+Columns: []
+Index: []
+2025-02-04 23:52:49,960 - root - INFO - Initial DataFrame columns: []
+2025-02-04 23:52:49,960 - root - ERROR - Alert check failed for LTC: 'close'
+2025-02-04 23:52:49,960 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 15:57:49 UTC)" executed successfully
+2025-02-04 23:52:52,381 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:53:00,459 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-04 23:53:00,460 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-04 23:53:00,461 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-04 23:53:00,484 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-05 00:00:02,670 - root - INFO - BinanceClient initialized
+2025-02-05 00:00:02,679 - root - INFO - BinanceClient initialized
+2025-02-05 00:00:03,765 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-05 00:00:04,953 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-05 00:00:05,200 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-05 00:00:05,202 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-05 00:00:05,203 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-05 00:00:05,203 - telegram.ext.Application - INFO - Application started
+2025-02-05 00:00:13,744 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 16:05:13 UTC)" (scheduled at 2025-02-04 16:00:13.741981+00:00)
+2025-02-05 00:00:17,289 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:00:17,289 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,297 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:00:17,298 - root - INFO - Fetched data for BTC:
+2025-02-05 00:00:17,298 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,305 - root - INFO - First few rows:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:00:17,306 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,313 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:17,320 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:17,322 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:17,324 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:17,325 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:17,367 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,370 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:17,370 - root - INFO - Processed data for BTC:
+2025-02-05 00:00:17,371 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,389 - root - INFO - First few rows:
+            timestamp       open       high        low      close     volume  ema_8  ema_13  ...  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False  104316.050
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False  104296.390
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False  104379.370
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN          True         False  104453.475
+
+[5 rows x 29 columns]
+2025-02-05 00:00:17,390 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:17,598 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-05 00:00:17,599 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,604 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742
+2025-02-05 00:00:17,605 - root - INFO - Fetched data for ETH:
+2025-02-05 00:00:17,605 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,611 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742
+2025-02-05 00:00:17,611 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,616 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:17,624 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:17,627 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:17,628 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:17,629 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:17,664 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,666 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:17,667 - root - INFO - Processed data for ETH:
+2025-02-05 00:00:17,667 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,686 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume  ema_8  ema_13  ...  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False    3288.875
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False    3289.565
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False    3290.470
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False          True    3288.110
+
+[5 rows x 29 columns]
+2025-02-05 00:00:17,686 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:17,864 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-05 00:00:17,865 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,872 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896
+2025-02-05 00:00:17,872 - root - INFO - Fetched data for SOL:
+2025-02-05 00:00:17,872 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,878 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896
+2025-02-05 00:00:17,878 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:17,882 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:17,890 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:17,892 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:17,893 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:17,894 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:17,931 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,934 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:17,934 - root - INFO - Processed data for SOL:
+2025-02-05 00:00:17,934 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:17,954 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ...  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.220
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.185
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.160
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False          True     246.885
+
+[5 rows x 29 columns]
+2025-02-05 00:00:17,955 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:18,132 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-05 00:00:18,132 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,139 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0
+2025-02-05 00:00:18,140 - root - INFO - Fetched data for XRP:
+2025-02-05 00:00:18,140 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,146 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0
+2025-02-05 00:00:18,146 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,151 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:18,159 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:18,161 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:18,163 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:18,165 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:18,214 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,217 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:18,217 - root - INFO - Processed data for XRP:
+2025-02-05 00:00:18,217 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,235 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ...  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.09885
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10085
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10040
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10355
+
+[5 rows x 29 columns]
+2025-02-05 00:00:18,236 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:18,443 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-05 00:00:18,443 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,449 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0
+2025-02-05 00:00:18,450 - root - INFO - Fetched data for DOGE:
+2025-02-05 00:00:18,450 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,455 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0
+2025-02-05 00:00:18,456 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,461 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:18,471 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:18,474 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:18,476 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:18,478 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:18,515 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,518 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:18,518 - root - INFO - Processed data for DOGE:
+2025-02-05 00:00:18,518 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,540 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume  ema_8  ema_13  ...  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False    0.349010
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False          True    0.348680
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN          True         False    0.348995
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0    NaN     NaN  ...       NaN  NaN      NaN      NaN   NaN         False         False    0.348820
+
+[5 rows x 29 columns]
+2025-02-05 00:00:18,541 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:18,716 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-05 00:00:18,716 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,724 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608
+2025-02-05 00:00:18,725 - root - INFO - Fetched data for LTC:
+2025-02-05 00:00:18,725 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,735 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608
+2025-02-05 00:00:18,735 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:18,746 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:18,755 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:18,759 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:18,760 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:18,762 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:18,804 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,807 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:18,808 - root - INFO - Processed data for LTC:
+2025-02-05 00:00:18,808 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:18,825 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ...  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     122.095
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN          True         False     122.105
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     122.040
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608    NaN     NaN     NaN  ...        NaN       NaN  NaN      NaN      NaN   NaN         False         False     121.625
+
+[5 rows x 29 columns]
+2025-02-05 00:00:18,825 - root - INFO - DataFrame validation passed
+2025-02-05 00:00:18,826 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 16:05:13 UTC)" executed successfully
+2025-02-05 00:00:18,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:29,070 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:32,629 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:37,785 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:38,846 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/sendMessage "HTTP/1.1 200 OK"
+2025-02-05 00:00:43,624 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:46,926 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:50,340 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:51,468 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:00:51,672 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:00:51,672 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:51,677 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:00:51,678 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:51,682 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:51,689 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:51,692 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:51,694 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:51,695 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:51,730 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:51,735 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:51,742 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:00:51,744 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:52,176 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:52,556 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 200 OK"
+2025-02-05 00:00:52,657 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:00:53,027 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:00:53,344 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:00:53,344 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:53,349 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:00:53,350 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:53,355 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:53,362 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:53,364 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:53,365 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:53,367 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:53,406 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:53,407 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:53,410 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:00:53,988 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 400 Bad Request"
+2025-02-05 00:00:53,989 - root - ERROR - Error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 84, in analyze_coin
+    analysis = self.analyzer.full_analysis(df, coin)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\tasks\market_analysis.py", line 32, in full_analysis
+    ds_analysis = self.deepseek.analyze_market({
+        'coin': coin,
+        'indicators': analysis['indicators']
+    })
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\api\deepseek_client.py", line 16, in analyze_market
+    response = requests.post(
+        f"{self.base_url}/analyze",
+        headers=self.headers,
+        json={"market_data": data}
+    )
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+    ~~~~~~~~~^
+        method=request.method.upper(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        hooks=merge_hooks(request.hooks, self.hooks),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 371, in prepare
+    self.prepare_body(data, files, json)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 511, in prepare_body
+    body = complexjson.dumps(json, allow_nan=False)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type Timestamp is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_application.py", line 1325, in process_update
+    await coroutine
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 96, in analyze_coin
+    await query.edit_message_text(text=f"⚠️ Error analyzing {coin}: {str(e)}")
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_callbackquery.py", line 269, in edit_message_text
+    return await self._get_message().edit_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_message.py", line 3782, in edit_text
+    return await self.get_bot().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 1701, in edit_message_text
+    return await super().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 4160, in edit_message_text
+    return await self._send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 610, in _send_message
+    result = await super()._send_message(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<21 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 731, in _send_message
+    result = await self._post(
+             ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 619, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 354, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 648, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 202, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 383, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-02-05 00:00:54,541 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/sendMessage "HTTP/1.1 200 OK"
+2025-02-05 00:00:55,049 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:00:55,228 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:00:55,229 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:55,236 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:00:55,237 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:00:55,242 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:00:55,250 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:00:55,253 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:00:55,254 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:00:55,256 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:00:55,300 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:00:55,303 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:00:55,305 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:00:55,974 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 400 Bad Request"
+2025-02-05 00:00:55,975 - root - ERROR - Error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 84, in analyze_coin
+    analysis = self.analyzer.full_analysis(df, coin)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\tasks\market_analysis.py", line 32, in full_analysis
+    ds_analysis = self.deepseek.analyze_market({
+        'coin': coin,
+        'indicators': analysis['indicators']
+    })
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\api\deepseek_client.py", line 16, in analyze_market
+    response = requests.post(
+        f"{self.base_url}/analyze",
+        headers=self.headers,
+        json={"market_data": data}
+    )
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+    ~~~~~~~~~^
+        method=request.method.upper(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        hooks=merge_hooks(request.hooks, self.hooks),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 371, in prepare
+    self.prepare_body(data, files, json)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 511, in prepare_body
+    body = complexjson.dumps(json, allow_nan=False)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type Timestamp is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_application.py", line 1325, in process_update
+    await coroutine
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 96, in analyze_coin
+    await query.edit_message_text(text=f"⚠️ Error analyzing {coin}: {str(e)}")
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_callbackquery.py", line 269, in edit_message_text
+    return await self._get_message().edit_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_message.py", line 3782, in edit_text
+    return await self.get_bot().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 1701, in edit_message_text
+    return await super().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 4160, in edit_message_text
+    return await self._send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 610, in _send_message
+    result = await super()._send_message(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<21 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 731, in _send_message
+    result = await self._post(
+             ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 619, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 354, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 648, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 202, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 383, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-02-05 00:00:56,765 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/sendMessage "HTTP/1.1 200 OK"
+2025-02-05 00:01:02,900 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:01:07,598 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:01:07,600 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-05 00:01:07,600 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-05 00:01:07,617 - telegram.ext.Application - INFO - Application.stop() complete
+2025-02-05 00:11:46,547 - root - INFO - BinanceClient initialized
+2025-02-05 00:11:46,557 - root - INFO - BinanceClient initialized
+2025-02-05 00:11:47,641 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-02-05 00:11:48,743 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getMe "HTTP/1.1 200 OK"
+2025-02-05 00:11:49,014 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/deleteWebhook "HTTP/1.1 200 OK"
+2025-02-05 00:11:49,017 - apscheduler.scheduler - INFO - Added job "alert_checker" to job store "default"
+2025-02-05 00:11:49,017 - apscheduler.scheduler - INFO - Scheduler started
+2025-02-05 00:11:49,018 - telegram.ext.Application - INFO - Application started
+2025-02-05 00:11:57,626 - apscheduler.executors.default - INFO - Running job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 16:16:57 UTC)" (scheduled at 2025-02-04 16:11:57.620830+00:00)
+2025-02-05 00:12:01,614 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:12:01,615 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,623 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:12:01,624 - root - INFO - Fetched data for BTC:
+2025-02-05 00:12:01,624 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,629 - root - INFO - First few rows:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:12:01,630 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,635 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:01,643 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:01,645 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:01,646 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:01,648 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:01,683 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:01,685 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:01,686 - root - INFO - Processed data for BTC:
+2025-02-05 00:12:01,686 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:01,704 - root - INFO - First few rows:
+            timestamp       open       high        low      close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  ...  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477    NaN     NaN     NaN     NaN     NaN   NaN          NaN  ...            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693    NaN     NaN     NaN     NaN     NaN   NaN          NaN  ...            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False  104316.050
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787    NaN     NaN     NaN     NaN     NaN   NaN          NaN  ...            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False  104296.390
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126    NaN     NaN     NaN     NaN     NaN   NaN          NaN  ...            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False  104379.370
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322    NaN     NaN     NaN     NaN     NaN   NaN          NaN  ...            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN          True         False  104453.475
+
+[5 rows x 29 columns]
+2025-02-05 00:12:01,704 - root - WARNING - Invalid data for BTC
+2025-02-05 00:12:01,913 - root - INFO - Fetched 1000 rows of data for ETH/USDT (15m)
+2025-02-05 00:12:01,914 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,924 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742
+2025-02-05 00:12:01,925 - root - INFO - Fetched data for ETH:
+2025-02-05 00:12:01,925 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,933 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742
+2025-02-05 00:12:01,933 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:01,938 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:01,947 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:01,948 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:01,950 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:01,952 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:01,991 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:01,993 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:01,994 - root - INFO - Processed data for ETH:
+2025-02-05 00:12:01,994 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,011 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  macd_diff  ...  kijun_sen  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  3297.67  3297.67  3283.82  3291.86  5668.7824    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  3291.87  3293.27  3284.48  3290.75  3396.4518    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False    3288.875
+2 2025-01-25 06:45:00  3290.74  3293.60  3285.53  3292.51  1410.6549    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False    3289.565
+3 2025-01-25 07:00:00  3292.51  3293.91  3287.03  3290.30  1988.4812    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False    3290.470
+4 2025-01-25 07:15:00  3290.31  3292.65  3283.57  3291.45  2054.1742    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False          True    3288.110
+
+[5 rows x 29 columns]
+2025-02-05 00:12:02,012 - root - WARNING - Invalid data for ETH
+2025-02-05 00:12:02,216 - root - INFO - Fetched 1000 rows of data for SOL/USDT (15m)
+2025-02-05 00:12:02,217 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,222 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896
+2025-02-05 00:12:02,223 - root - INFO - Fetched data for SOL:
+2025-02-05 00:12:02,223 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,230 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896
+2025-02-05 00:12:02,230 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,235 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:02,243 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:02,245 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:02,247 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:02,248 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:02,284 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,285 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:02,285 - root - INFO - Processed data for SOL:
+2025-02-05 00:12:02,286 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,304 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  macd_diff  ...  kijun_sen  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  248.72  248.72  246.55  247.59  91957.635    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  247.59  247.95  246.49  247.11  50709.973    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.220
+2 2025-01-25 06:45:00  247.11  247.69  246.68  247.26  27747.816    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.185
+3 2025-01-25 07:00:00  247.25  247.65  246.67  246.85  68336.501    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     247.160
+4 2025-01-25 07:15:00  246.84  247.22  246.55  246.91  48253.896    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False          True     246.885
+
+[5 rows x 29 columns]
+2025-02-05 00:12:02,304 - root - WARNING - Invalid data for SOL
+2025-02-05 00:12:02,503 - root - INFO - Fetched 1000 rows of data for XRP/USDT (15m)
+2025-02-05 00:12:02,503 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,512 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0
+2025-02-05 00:12:02,513 - root - INFO - Fetched data for XRP:
+2025-02-05 00:12:02,513 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,518 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0
+2025-02-05 00:12:02,519 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,524 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:02,531 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:02,532 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:02,534 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:02,536 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:02,572 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,575 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:02,575 - root - INFO - Processed data for XRP:
+2025-02-05 00:12:02,575 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,592 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  macd_diff  ...  kijun_sen  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  3.1006  3.1016  3.0950  3.0973  1065526.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  3.0973  3.1040  3.0937  3.1035   643676.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.09885
+2 2025-01-25 06:45:00  3.1035  3.1040  3.0977  3.1024   762933.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10085
+3 2025-01-25 07:00:00  3.1024  3.1049  3.0959  3.1047   929872.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10040
+4 2025-01-25 07:15:00  3.1047  3.1071  3.1000  3.1043   627425.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     3.10355
+
+[5 rows x 29 columns]
+2025-02-05 00:12:02,593 - root - WARNING - Invalid data for XRP
+2025-02-05 00:12:02,777 - root - INFO - Fetched 1000 rows of data for DOGE/USDT (15m)
+2025-02-05 00:12:02,777 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,783 - root - INFO - First few rows of data:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0
+2025-02-05 00:12:02,784 - root - INFO - Fetched data for DOGE:
+2025-02-05 00:12:02,784 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,789 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0
+2025-02-05 00:12:02,789 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:02,794 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:02,801 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:02,802 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:02,804 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:02,805 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:02,842 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,843 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:02,843 - root - INFO - Processed data for DOGE:
+2025-02-05 00:12:02,844 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:02,869 - root - INFO - First few rows:
+            timestamp     open     high      low    close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  macd_diff  ...  kijun_sen  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  0.35027  0.35027  0.34846  0.34924  3976610.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  0.34924  0.34952  0.34850  0.34921  2943939.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False    0.349010
+2 2025-01-25 06:45:00  0.34921  0.34932  0.34804  0.34890  4525307.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False          True    0.348680
+3 2025-01-25 07:00:00  0.34889  0.34962  0.34837  0.34917  2909323.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN          True         False    0.348995
+4 2025-01-25 07:15:00  0.34916  0.34935  0.34829  0.34872  2317342.0    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False    0.348820
+
+[5 rows x 29 columns]
+2025-02-05 00:12:02,870 - root - WARNING - Invalid data for DOGE
+2025-02-05 00:12:03,044 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-05 00:12:03,044 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:03,050 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608
+2025-02-05 00:12:03,051 - root - INFO - Fetched data for LTC:
+2025-02-05 00:12:03,051 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:03,056 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608
+2025-02-05 00:12:03,057 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:12:03,062 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:12:03,068 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:12:03,070 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:12:03,072 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:12:03,073 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:12:03,113 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:03,116 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:12:03,117 - root - INFO - Processed data for LTC:
+2025-02-05 00:12:03,117 - root - INFO - Columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:12:03,138 - root - INFO - First few rows:
+            timestamp    open    high     low   close     volume  ema_8  ema_13  ema_21  ema_34  ema_55  macd  macd_signal  macd_diff  ...  kijun_sen  senkou_span_a  senkou_span_b  atr  bb_upper  bb_middle  bb_lower  rsi  stoch_k  stoch_d  vwap  fractal_bull  fractal_bear  supertrend
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False         NaN
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     122.095
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN          True         False     122.105
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     122.040
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608    NaN     NaN     NaN     NaN     NaN   NaN          NaN        NaN  ...        NaN            NaN            NaN  0.0       NaN        NaN       NaN  NaN      NaN      NaN   NaN         False         False     121.625
+
+[5 rows x 29 columns]
+2025-02-05 00:12:03,138 - root - WARNING - Invalid data for LTC
+2025-02-05 00:12:03,138 - apscheduler.executors.default - INFO - Job "alert_checker (trigger: interval[0:05:00], next run at: 2025-02-04 16:16:57 UTC)" executed successfully
+2025-02-05 00:12:03,139 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:13,396 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:23,614 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:30,800 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:31,815 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/sendMessage "HTTP/1.1 200 OK"
+2025-02-05 00:12:38,797 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:49,015 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:12:59,235 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:04,754 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:07,833 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:08,051 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:09,008 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:13:09,184 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:13:09,184 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:09,190 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:13:09,191 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:09,195 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:13:09,202 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:13:09,204 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:13:09,206 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:13:09,207 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:13:09,246 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:13:09,248 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:13:09,252 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:13:09,827 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 200 OK"
+2025-02-05 00:13:10,548 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:13:10,723 - root - INFO - Fetched 1000 rows of data for BTC/USDT (15m)
+2025-02-05 00:13:10,724 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:10,730 - root - INFO - First few rows of data:
+            timestamp       open       high        low      close     volume
+0 2025-01-25 06:15:00  104440.21  104464.51  104216.81  104367.80  136.33477
+1 2025-01-25 06:30:00  104367.81  104386.09  104246.01  104358.61  134.55693
+2 2025-01-25 06:45:00  104358.60  104358.60  104234.18  104308.00  106.08787
+3 2025-01-25 07:00:00  104308.00  104471.50  104287.24  104453.22   85.47126
+4 2025-01-25 07:15:00  104452.80  104523.25  104383.70  104448.23   62.75322
+2025-02-05 00:13:10,730 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:10,735 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:13:10,743 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:13:10,745 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:13:10,746 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:13:10,747 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:13:10,783 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:13:10,785 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:13:10,786 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:13:11,366 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 400 Bad Request"
+2025-02-05 00:13:11,367 - root - ERROR - Error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 84, in analyze_coin
+    analysis = self.analyzer.full_analysis(df, coin)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\tasks\market_analysis.py", line 32, in full_analysis
+    ds_analysis = self.deepseek.analyze_market({
+        'coin': coin,
+        'indicators': analysis['indicators']
+    })
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\api\deepseek_client.py", line 16, in analyze_market
+    response = requests.post(
+        f"{self.base_url}/analyze",
+        headers=self.headers,
+        json={"market_data": data}
+    )
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\sessions.py", line 486, in prepare_request
+    p.prepare(
+    ~~~~~~~~~^
+        method=request.method.upper(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        hooks=merge_hooks(request.hooks, self.hooks),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 371, in prepare
+    self.prepare_body(data, files, json)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\requests\models.py", line 511, in prepare_body
+    body = complexjson.dumps(json, allow_nan=False)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\MyBook Hype AMD\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type Timestamp is not JSON serializable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_application.py", line 1325, in process_update
+    await coroutine
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 158, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\bot\telegram_bot.py", line 96, in analyze_coin
+    await query.edit_message_text(text=f"⚠️ Error analyzing {coin}: {str(e)}")
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_callbackquery.py", line 269, in edit_message_text
+    return await self._get_message().edit_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_message.py", line 3782, in edit_text
+    return await self.get_bot().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 1701, in edit_message_text
+    return await super().edit_message_text(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<15 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 4160, in edit_message_text
+    return await self._send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 610, in _send_message
+    result = await super()._send_message(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<21 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 731, in _send_message
+    result = await self._post(
+             ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 619, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\ext\_extbot.py", line 354, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\_bot.py", line 648, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 202, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "C:\Users\MyBook Hype AMD\Documents\Crypto\New folder\Trial\crypto-bot-main\crypto-bot-main\venv\Lib\site-packages\telegram\request\_baserequest.py", line 383, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2025-02-05 00:13:11,817 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/sendMessage "HTTP/1.1 200 OK"
+2025-02-05 00:13:15,420 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:16,056 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/answerCallbackQuery "HTTP/1.1 200 OK"
+2025-02-05 00:13:16,229 - root - INFO - Fetched 1000 rows of data for LTC/USDT (15m)
+2025-02-05 00:13:16,229 - root - INFO - DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:16,235 - root - INFO - First few rows of data:
+            timestamp    open    high     low   close     volume
+0 2025-01-25 06:15:00  122.38  122.45  121.66  121.80   7690.179
+1 2025-01-25 06:30:00  121.80  122.39  121.80  122.11   7597.332
+2 2025-01-25 06:45:00  122.11  122.55  121.66  121.96  12713.659
+3 2025-01-25 07:00:00  121.95  122.51  121.57  121.57  10794.903
+4 2025-01-25 07:15:00  121.57  121.82  121.43  121.75   9327.608
+2025-02-05 00:13:16,236 - root - INFO - Initial DataFrame columns: ['timestamp', 'open', 'high', 'low', 'close', 'volume']
+2025-02-05 00:13:16,243 - root - INFO - After adding trend indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b']
+2025-02-05 00:13:16,249 - root - INFO - After adding volatility indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower']
+2025-02-05 00:13:16,251 - root - INFO - RSI calculated. First few values: [nan, nan, nan, nan, nan]
+2025-02-05 00:13:16,252 - root - INFO - After adding momentum indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d']
+2025-02-05 00:13:16,254 - root - INFO - After adding volume indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap']
+2025-02-05 00:13:16,292 - root - INFO - After adding custom indicators: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend']
+2025-02-05 00:13:16,294 - root - INFO - After dropping NaN values: ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'ema_8', 'ema_13', 'ema_21', 'ema_34', 'ema_55', 'macd', 'macd_signal', 'macd_diff', 'tenkan_sen', 'kijun_sen', 'senkou_span_a', 'senkou_span_b', 'atr', 'bb_upper', 'bb_middle', 'bb_lower', 'rsi', 'stoch_k', 'stoch_d', 'vwap', 'fractal_bull', 'fractal_bear', 'supertrend'], Rows: 1000
+2025-02-05 00:13:16,296 - root - ERROR - Analysis error: Object of type Timestamp is not JSON serializable
+2025-02-05 00:13:16,751 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/editMessageText "HTTP/1.1 200 OK"
+2025-02-05 00:13:25,639 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:29,851 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7667487457:AAEoGq4pBONgfVwsY7tXfXhbleLXpaoiocs/getUpdates "HTTP/1.1 200 OK"
+2025-02-05 00:13:29,852 - telegram.ext.Application - INFO - Application is stopping. This might take a moment.
+2025-02-05 00:13:29,853 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2025-02-05 00:13:29,872 - telegram.ext.Application - INFO - Application.stop() complete
