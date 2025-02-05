@@ -1,5 +1,5 @@
-from core.ml_models import MLModel
-from core.data_processing import DataProcessor
+from bot.core.ml_models import MLModel
+from bot.core.data_processing import DataProcessor
 import logging
 import os
 from datetime import datetime
