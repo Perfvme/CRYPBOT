@@ -2,6 +2,7 @@ import pandas as pd
 import talib
 from bot.api.binance_client import BinanceClient
 import logging
+import os
 
 # Load environment variables from .env file
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
