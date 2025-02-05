@@ -9,6 +9,14 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 logger.info(f"Loading .env file from: {dotenv_path}")
 load_dotenv(dotenv_path)
 
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,  # Set to DEBUG for detailed logs
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+logger = logging.getLogger(__name__)
+
 class DataProcessor:
     def __init__(self):
         self.client = BinanceClient()
