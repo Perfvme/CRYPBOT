@@ -3,6 +3,11 @@ import talib
 from bot.api.binance_client import BinanceClient
 import logging
 
+# Load environment variables from .env file
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+logger.info(f"Loading .env file from: {dotenv_path}")
+load_dotenv(dotenv_path)
+
 class DataProcessor:
     def __init__(self):
         self.client = BinanceClient()
