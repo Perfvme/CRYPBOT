@@ -59,7 +59,13 @@ class DataProcessor:
         # Labels: Future price movement (1 for increase, 0 for decrease)
         df['future_close'] = df['close'].shift(-1)  # Next time period's close price
         df['label'] = (df['future_close'] > df['close']).astype(int)  # 1 if price increases, else 0
-        y = df['label'].iloc[:-1]  # Exclude the last row (no future price available)
 
-        logger.debug(f"Label distribution: {df['label'].value_counts()}")
+        # Drop the last row (no future price available)
+        df = df.iloc[:-1]
+
+        # Extract features and labels
+        X = df[['rsi', 'macd', 'bb_upper', 'bb_lower', 'ema', 'atr', 'vwap']]
+        y = df['label']
+
+        logger.debug(f"Features shape: {X.shape}, Labels shape: {y.shape}")
         return X, y
