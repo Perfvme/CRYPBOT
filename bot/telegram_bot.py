@@ -69,7 +69,6 @@ def check_api_health():
         # Check Gemini API
         gemini_client = GeminiClient()
         gemini_client.analyze_sentiment("Test text")  # Dummy call to check connectivity
-        api_health["Gemini"] = "✅ (Ping Successful)"
     except Exception as e:
         api_health["Gemini"] = f"❌ (Error: {str(e)})"
 
@@ -253,9 +252,11 @@ def send_signal(message):
             resistance_levels = []
             atr_values = []
             close_prices = []  # Store close prices for averaging
+            dataframes = [] # Store the dataframes
 
             for tf, data in timeframes.items():
                 df = alert_system.processor.preprocess_data(data)
+                dataframes.append(df) # Append to list
                 signal, _ = alert_system.engine.generate_signal(df)
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
@@ -295,17 +296,15 @@ def send_signal(message):
             # Calculate ML confidence
             ml_confidence = alert_system.calculate_ml_confidence(df)
 
-            # Analyze raw data from this strategy's timeframes using Gemini
-            raw_data_strategy = []
-            indicator_data_strategy = []
-            for tf, data in timeframes.items():
-                raw_data_strategy.extend(data)  # Combine raw data from all timeframes
-                df = alert_system.processor.preprocess_data(data)
-                indicator_data_strategy.append(str(df.tail(1).to_dict()))  # Add latest indicator data
+            # --- GEMINI ANALYSIS (Consistent Data) ---
+            # Use the *last* DataFrame (most recent data) for Gemini
+            combined_df = dataframes[-1].tail(50)  # Use the last dataframe
+            ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
+            indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
 
-            # Use the correct GeminiClient method
+
             ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
-                symbol, strategy_name, raw_data_strategy, indicator_data_strategy
+                symbol, strategy_name, ohlc_data, indicator_data
             )
 
 
@@ -322,16 +321,18 @@ def send_signal(message):
 
         # Helper function to get global recommendation from Gemini
         def get_global_recommendation(all_timeframes):
-            raw_data_all_timeframes = []
-            indicator_data_all_timeframes = []
+            dataframes = []
             for tf, data in all_timeframes.items():
-                raw_data_all_timeframes.extend(data)  # Combine raw data from all timeframes
                 df = alert_system.processor.preprocess_data(data)
-                indicator_data_all_timeframes.append(str(df.tail(1).to_dict()))  # Add latest indicator data
+                dataframes.append(df)
 
-            # Use the correct GeminiClient method
+            # --- GEMINI ANALYSIS (Consistent Data) ---
+            combined_df = pd.concat(dataframes).tail(50) # Combine all timeframes
+            ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
+            indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
+
             recommendation = alert_system.gemini_client.analyze_global_recommendation(
-                symbol, raw_data_all_timeframes, indicator_data_all_timeframes
+                symbol, ohlc_data, indicator_data
             )
 
             return recommendation
