@@ -159,9 +159,19 @@ def check_and_send_alerts():
                 # Determine the majority signal
                 majority_signal = "BUY" if buy_count >= 3 else "SELL" if sell_count >= 3 else "HOLD"
                 
-                # Calculate risk parameters
-                stop_loss = avg_support - avg_atr
-                take_profit = avg_resistance + avg_atr
+                # Calculate risk parameters based on the majority signal
+                if majority_signal == "BUY":
+                    entry_point = avg_support
+                    stop_loss = avg_support - avg_atr
+                    take_profit = avg_resistance + avg_atr
+                elif majority_signal == "SELL":
+                    entry_point = avg_resistance
+                    stop_loss = avg_resistance + avg_atr
+                    take_profit = avg_support - avg_atr
+                else:
+                    entry_point = avg_support
+                    stop_loss = avg_support - avg_atr
+                    take_profit = avg_resistance + avg_atr
                 
                 # Prepare the alert message
                 alert_message = (
@@ -258,6 +268,7 @@ def send_signal(message):
                 f"│ {tf.upper()} │ {signal} │ ML: {ml_confidence}% | DS: {ds_confidence}% │"
             )
             signals.append(signal)
+            
         # Determine the recommended action
         if "BUY" in signals:
             recommended_action = "BUY"
@@ -265,14 +276,33 @@ def send_signal(message):
             recommended_action = "SELL"
         else:
             recommended_action = "HOLD"
-        # Calculate risk parameters
-        avg_support = np.mean(support_levels)
-        avg_resistance = np.mean(resistance_levels)
-        avg_atr = np.mean(atr_values)
-        stop_loss = avg_support - avg_atr
-        take_profit = avg_resistance + avg_atr
-        risk_reward_ratio = (take_profit - avg_support) / (avg_support - stop_loss)
-        position_size = min(0.02 * 100000 / (avg_support - stop_loss), 100000)  # Example portfolio size: $100,000
+
+        # Calculate risk parameters based on the majority signal
+        if recommended_action == "BUY":
+            avg_support = np.mean(support_levels)
+            avg_resistance = np.mean(resistance_levels)
+            avg_atr = np.mean(atr_values)
+            entry_point = avg_support
+            stop_loss = avg_support - avg_atr
+            take_profit = avg_resistance + avg_atr
+            risk_reward_ratio = (take_profit - avg_support) / (avg_support - stop_loss)
+        elif recommended_action == "SELL":
+            avg_support = np.mean(support_levels)
+            avg_resistance = np.mean(resistance_levels)
+            avg_atr = np.mean(atr_values)
+            entry_point = avg_resistance
+            stop_loss = avg_resistance + avg_atr
+            take_profit = avg_support - avg_atr
+            risk_reward_ratio = (take_profit - avg_resistance) / (avg_resistance - stop_loss)
+        else:
+            avg_support = np.mean(support_levels)
+            avg_resistance = np.mean(resistance_levels)
+            avg_atr = np.mean(atr_values)
+            entry_point = avg_support
+            stop_loss = avg_support - avg_atr
+            take_profit = avg_resistance + avg_atr
+            risk_reward_ratio = (take_profit - avg_support) / (avg_support - stop_loss)
+        
         # Combine all responses into a single message
         response = (
             f"🔍 {symbol} Analysis [{pd.Timestamp.now().strftime('%H:%M UTC')}]\n"
@@ -285,7 +315,6 @@ def send_signal(message):
             f"   - Stop Loss: ${stop_loss:.2f}\n"
             f"   - Take Profit: ${take_profit:.2f}\n"
             f"   - R/R Ratio: {risk_reward_ratio:.2f}\n"
-            f"   - Position Size: ${position_size:.2f}"
         )
         bot.reply_to(message, response)
     except Exception as e:
