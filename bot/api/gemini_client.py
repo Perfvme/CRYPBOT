@@ -1,6 +1,7 @@
 import os
 import google.generativeai as genai
 import logging
+import re  # Import the regular expression library
 
 # Configure logging
 logging.basicConfig(
@@ -32,8 +33,13 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (sentiment): {response.text}")
 
             try:
-                sentiment_score = float(response.text.strip())
-                return sentiment_score
+                # Use regular expression to find a number (integer or decimal)
+                match = re.search(r"[-+]?\d*\.?\d+", response.text)
+                if match:
+                    sentiment_score = float(match.group(0))
+                    return sentiment_score
+                else:
+                    raise ValueError("No numeric sentiment score found.")
             except ValueError:
                 logger.warning("Failed to parse sentiment score. Returning 0.")
                 logger.debug(f"Raw response content: {response.text}")
@@ -57,9 +63,14 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (strategy confidence): {response.text}")
 
             try:
-                ai_confidence = float(response.text.split("Confidence: ")[1].split("\n")[0])
-                return ai_confidence
-            except (IndexError, ValueError): # Catch more specific errors
+                # Use regular expression to find "Confidence: [number]"
+                match = re.search(r"Confidence:\s*(\d+)", response.text, re.IGNORECASE)  # Case-insensitive
+                if match:
+                    ai_confidence = float(match.group(1))
+                    return ai_confidence
+                else:
+                    raise ValueError("No 'Confidence:' value found.")
+            except (ValueError, AttributeError):
                 logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50.")
                 return 50.0
 
@@ -83,17 +94,27 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (global recommendation): {response.text}")
 
             try:
-                gemini_entry = float(response.text.split("Entry Point: ")[1].split("\n")[0])
-                gemini_stop_loss = float(response.text.split("Stop Loss: ")[1].split("\n")[0])
-                gemini_take_profit = float(response.text.split("Take Profit: ")[1].split("\n")[0])
-                gemini_confidence = float(response.text.split("Confidence: ")[1].split("\n")[0])
-                return {
-                    "entry_point": gemini_entry,
-                    "stop_loss": gemini_stop_loss,
-                    "take_profit": gemini_take_profit,
-                    "confidence": gemini_confidence,
-                }
-            except (IndexError, ValueError):
+                # Use regular expressions to find each value
+                entry_match = re.search(r"Entry Point:\s*([\d.]+)", response.text, re.IGNORECASE)
+                stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response.text, re.IGNORECASE)
+                take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response.text, re.IGNORECASE)
+                confidence_match = re.search(r"Confidence:\s*(\d+)", response.text, re.IGNORECASE)
+
+                if entry_match and stop_loss_match and take_profit_match and confidence_match:
+                    gemini_entry = float(entry_match.group(1))
+                    gemini_stop_loss = float(stop_loss_match.group(1))
+                    gemini_take_profit = float(take_profit_match.group(1))
+                    gemini_confidence = float(confidence_match.group(1))
+                    return {
+                        "entry_point": gemini_entry,
+                        "stop_loss": gemini_stop_loss,
+                        "take_profit": gemini_take_profit,
+                        "confidence": gemini_confidence,
+                    }
+                else:
+                    raise ValueError("Could not find all required values in Gemini response.")
+
+            except (ValueError, AttributeError):
                 logger.warning("Failed to parse global recommendation from Gemini. Returning defaults.")
                 return {
                     "entry_point": 0.0,
