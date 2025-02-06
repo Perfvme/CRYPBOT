@@ -90,10 +90,11 @@ Confidence: 35
             logger.debug(f"Gemini API raw response (strategy confidence): {response.text}")
 
             try:
-                # More flexible regex: Handles "Confidence Level", optional "/", and extra text
-                match = re.search(r"Confidence(?: Level)?:\s*([\d.]+)(?:/\d+)?.*", response.text, re.IGNORECASE | re.DOTALL)
+                # More flexible regex: Handles "Confidence Level", optional "/", and extra text *non-greedy*
+                match = re.search(r"Confidence(?: Level)?:\s*([\d.]+)(?:/\d+)?.*?", response.text, re.IGNORECASE | re.DOTALL)
                 if match:
                     ai_confidence = float(match.group(1))
+                    print(f"DEBUG: Matched confidence string: {match.group(0)}")  # Add this line
                     return ai_confidence
                 else:
                     logger.warning(f"No 'Confidence:' value found in: {response.text}")
