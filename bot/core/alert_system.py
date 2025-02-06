@@ -1,3 +1,5 @@
+--- START OF FILE alert_system.py ---
+
 from bot.core.strategy_engine import StrategyEngine
 from bot.core.data_processing import DataProcessor
 from bot.api.gemini_client import GeminiClient
@@ -42,7 +44,7 @@ class AlertSystem:
             last_row = df.iloc[-1]
             support, resistance = self.engine.calculate_support_resistance(df)
             fib_levels = self.engine.calculate_fibonacci_levels(df)
-        
+
             text = (
                 f"Market analysis for BTCUSDT:\n"
                 f"Close price: {last_row['close']:.2f}\n"
@@ -59,8 +61,8 @@ class AlertSystem:
                 f"   - 0% (High): {fib_levels['0%']:.2f}, 100% (Low): {fib_levels['100%']:.2f}\n"
                 f"Volume: {last_row['volume']:.2f}\n"
             )
-        
-            sentiment_score = self.gemini_client.analyze(text)
+
+            sentiment_score = self.gemini_client.analyze_sentiment(text) #Use correct method.
             confidence = (sentiment_score + 1) * 50  # Scale to 0-100%
             return confidence
         except Exception as e:
