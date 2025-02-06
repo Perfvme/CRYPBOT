@@ -1,5 +1,3 @@
---- START OF FILE alert_system.py ---
-
 from bot.core.strategy_engine import StrategyEngine
 from bot.core.data_processing import DataProcessor
 from bot.api.gemini_client import GeminiClient
