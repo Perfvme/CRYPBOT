@@ -1,5 +1,3 @@
---- START OF FILE telegram_bot.py ---
-
 import os
 from dotenv import load_dotenv
 import telebot
