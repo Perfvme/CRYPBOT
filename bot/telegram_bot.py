@@ -1,3 +1,5 @@
+--- START OF FILE telegram_bot.py ---
+
 import os
 from dotenv import load_dotenv
 import telebot
@@ -68,7 +70,7 @@ def check_api_health():
     try:
         # Check Gemini API
         gemini_client = GeminiClient()
-        gemini_client.analyze("Test text")  # Dummy call to check connectivity
+        gemini_client.analyze_sentiment("Test text")  # Dummy call to check connectivity
         api_health["Gemini"] = "✅ (Ping Successful)"
     except Exception as e:
         api_health["Gemini"] = f"❌ (Error: {str(e)})"
@@ -117,48 +119,48 @@ def check_and_send_alerts():
         # List of assets to monitor
         assets = ["BTCUSDT", "SOLUSDT", "ETHUSDT", "LTCUSDT"]
         timeframe_data = {"5m": "5m", "15m": "15m", "1h": "1h", "4h": "4h"}
-        
+
         for asset in assets:
             signals = []
             ds_confidences = []
             support_levels = []
             resistance_levels = []
             atr_values = []
-            
+
             # Fetch and analyze data for each timeframe
             for tf, interval in timeframe_data.items():
                 data = fetch_data(asset, interval)
                 df = alert_system.processor.preprocess_data(data)
-                
+
                 # Generate signal and calculate DS confidence
                 signal, _ = alert_system.engine.generate_signal(df)
                 ds_confidence = alert_system.calculate_ds_confidence(df)
-                
+
                 # Collect support/resistance and ATR values
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 atr = df['atr'].iloc[-1]
-                
+
                 signals.append(signal)
                 ds_confidences.append(ds_confidence)
                 support_levels.append(support)
                 resistance_levels.append(resistance)
                 atr_values.append(atr)
-            
+
             # Calculate averages
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
             avg_ds_confidence = sum(ds_confidences) / len(ds_confidences)
-            
+
             # Check if 3/4 timeframes agree and DS confidence is above 75%
             buy_count = signals.count("BUY")
             sell_count = signals.count("SELL")
             hold_count = signals.count("HOLD")
-            
+
             if (buy_count >= 3 or sell_count >= 3 or hold_count >= 3) and avg_ds_confidence > 75:
                 # Determine the majority signal
                 majority_signal = "BUY" if buy_count >= 3 else "SELL" if sell_count >= 3 else "HOLD"
-                
+
                 # Calculate risk parameters based on the majority signal
                 if majority_signal == "BUY":
                     entry_point = avg_support
@@ -172,7 +174,7 @@ def check_and_send_alerts():
                     entry_point = avg_support
                     stop_loss = avg_support - avg_atr
                     take_profit = avg_resistance + avg_atr
-                
+
                 # Prepare the alert message
                 alert_message = (
                     f"🚨 ALERT: {asset}\n"
@@ -183,7 +185,7 @@ def check_and_send_alerts():
                     f"Stop Loss: ${stop_loss:.2f}\n"
                     f"Take Profit: ${take_profit:.2f}\n"
                 )
-                
+
                 # Send the alert to the specified Telegram chat ID
                 chat_id = os.getenv("TELEGRAM_CHAT_ID")  # Replace with your chat ID in .env
                 if chat_id:
@@ -300,19 +302,11 @@ def send_signal(message):
                 df = alert_system.processor.preprocess_data(data)
                 indicator_data_strategy.append(str(df.tail(1).to_dict()))  # Add latest indicator data
 
-            gemini_prompt = (
-                f"Analyze the following market data for {symbol} ({strategy_name}):\n"
-                f"Raw Data: {raw_data_strategy}\n"
-                f"Indicator Data: {indicator_data_strategy}\n"
-                f"Provide a confidence level (0-100%) for the overall sentiment.\n"
-                f"Format your response as:\nConfidence: [value]"
+            # Use the correct GeminiClient method
+            ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
+                symbol, strategy_name, raw_data_strategy, indicator_data_strategy
             )
-            gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
 
-            # Validate and parse Gemini response
-            ai_confidence = parse_gemini_response(gemini_response, default=50.0)
-            if ai_confidence == 50.0:
-                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Using default value.")
 
             return {
                 "strategy": strategy_name,
@@ -334,72 +328,13 @@ def send_signal(message):
                 df = alert_system.processor.preprocess_data(data)
                 indicator_data_all_timeframes.append(str(df.tail(1).to_dict()))  # Add latest indicator data
 
-            gemini_prompt = (
-                f"Analyze the following market data for {symbol} (Global Recommendation):\n"
-                f"Raw Data: {raw_data_all_timeframes}\n"
-                f"Indicator Data: {indicator_data_all_timeframes}\n"
-                f"Provide an ideal entry point, stop-loss, take-profit, and confidence level (0-100%).\n"
-                f"Format your response as:\n"
-                f"Entry Point: [value]\nStop Loss: [value]\nTake Profit: [value]\nConfidence: [value]"
+            # Use the correct GeminiClient method
+            recommendation = alert_system.gemini_client.analyze_global_recommendation(
+                symbol, raw_data_all_timeframes, indicator_data_all_timeframes
             )
-            gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
 
-            # Parse Gemini response
-            parsed_response = parse_gemini_response(gemini_response, default={
-                "entry_point": 0.0,
-                "stop_loss": 0.0,
-                "take_profit": 0.0,
-                "confidence": 50.0
-            })
-            if isinstance(parsed_response, dict):
-                return parsed_response
-            else:
-                logger.warning("Failed to parse global recommendation from Gemini. Using default values.")
-                return {
-                    "entry_point": 0.0,
-                    "stop_loss": 0.0,
-                    "take_profit": 0.0,
-                    "confidence": 50.0,
-                }
+            return recommendation
 
-        # Helper function to parse Gemini responses
-        def parse_gemini_response(response, default=None):
-            try:
-                # Check if response is JSON
-                if isinstance(response, str) and response.strip().startswith("{"):
-                    data = json.loads(response)
-                    if "sentiment_score" in data:
-                        return (data["sentiment_score"] + 1) * 50  # Scale sentiment score to 0-100%
-                    elif "Confidence" in data:
-                        return float(data["Confidence"])
-                    else:
-                        return default
-
-                # Check if response is structured text
-                elif isinstance(response, str):
-                    if "Confidence:" in response:
-                        return float(response.split("Confidence: ")[1].split("\n")[0])
-                    elif "Entry Point:" in response:
-                        entry_point = float(response.split("Entry Point: ")[1].split("\n")[0])
-                        stop_loss = float(response.split("Stop Loss: ")[1].split("\n")[0])
-                        take_profit = float(response.split("Take Profit: ")[1].split("\n")[0])
-                        confidence = float(response.split("Confidence: ")[1].split("\n")[0])
-                        return {
-                            "entry_point": entry_point,
-                            "stop_loss": stop_loss,
-                            "take_profit": take_profit,
-                            "confidence": confidence,
-                        }
-                    else:
-                        return default
-
-                # Fallback to default if no match
-                else:
-                    return default
-
-            except Exception as e:
-                logger.error(f"Error parsing Gemini response: {e}")
-                return default
 
         # Calculate trade parameters for scalping and swing trading
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
@@ -437,6 +372,7 @@ def send_signal(message):
     except Exception as e:
         logger.error(f"Error processing /signal command: {e}")
         bot.reply_to(message, "An error occurred while generating the signal. Please try again later.")
+
 # Command: /ml_status
 @bot.message_handler(commands=['ml_status'])
 def send_ml_status(message):
