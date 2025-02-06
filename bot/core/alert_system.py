@@ -24,8 +24,18 @@ class AlertSystem:
     def calculate_ml_confidence(self, df):
         """Calculate ML-based confidence using the trained model."""
         try:
-            # Prepare features for prediction
-            features = df[['rsi', 'macd', 'bb_upper', 'bb_lower', 'ema', 'atr', 'vwap']].tail(1)
+            # Get enough data for feature engineering
+            temp_df = df.tail(50).copy()  # Use at least 50 rows (or more, depending on your features)
+            features_df = self.processor.get_prediction_features(temp_df)
+
+            # Check if features_df is empty
+            if features_df.empty:
+                logger.warning("Feature DataFrame is empty after preprocessing. Returning default confidence.")
+                return 50
+
+            # Use the LAST row of the processed features
+            features = features_df.tail(1)
+
 
             # Predict probability of price increase
             probabilities = self.ml_model.model.predict_proba(features)[0]
@@ -33,7 +43,7 @@ class AlertSystem:
 
             return confidence
         except Exception as e:
-            logger.error(f"Error calculating ML confidence: {e}")
+            logger.exception(f"Error calculating ML confidence: {e}") # Use logger.exception
             return 50  # Default confidence if prediction fails
 
     def calculate_ds_confidence(self, df):
