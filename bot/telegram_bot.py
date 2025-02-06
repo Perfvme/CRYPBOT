@@ -240,81 +240,150 @@ def send_signal(message):
             bot.reply_to(message, "Usage: /signal <coin> (e.g., /signal BTCUSDT)")
             return
         symbol = args[1].upper()  # Ensure the symbol is uppercase
-        timeframe_data = {
-            "5m": fetch_data(symbol, "5m"),
-            "15m": fetch_data(symbol, "15m"),
-            "1h": fetch_data(symbol, "1h"),
-            "4h": fetch_data(symbol, "4h"),
-        }
-        # Generate signals for all timeframes
-        responses = []
-        signals = []
-        support_levels = []
-        resistance_levels = []
-        atr_values = []
-        for tf, data in timeframe_data.items():
-            df = alert_system.processor.preprocess_data(data)
-            signal, reason = alert_system.engine.generate_signal(df)
-            ml_confidence = alert_system.calculate_ml_confidence(df)
-            ds_confidence = alert_system.calculate_ds_confidence(df)
-            combined_confidence = (ml_confidence + ds_confidence) / 2
-            # Collect support/resistance and ATR values
-            support, resistance = alert_system.engine.calculate_support_resistance(df)
-            atr = df['atr'].iloc[-1]
-            support_levels.append(support)
-            resistance_levels.append(resistance)
-            atr_values.append(atr)
-            responses.append(
-                f"│ {tf.upper()} │ {signal} │ ML: {ml_confidence}% | DS: {ds_confidence}% │"
-            )
-            signals.append(signal)
-            
-        # Determine the recommended action
-        if "BUY" in signals:
-            recommended_action = "BUY"
-        elif "SELL" in signals:
-            recommended_action = "SELL"
-        else:
-            recommended_action = "HOLD"
 
-        # Calculate risk parameters based on the majority signal
-        if recommended_action == "BUY":
+        # Define the target timeframes for scalping, swing trading, and global analysis
+        scalping_timeframes = {"5m": fetch_data(symbol, "5m"), "15m": fetch_data(symbol, "15m"), "1h": fetch_data(symbol, "1h")}
+        swing_timeframes = {"1h": fetch_data(symbol, "1h"), "4h": fetch_data(symbol, "4h")}
+        all_timeframes = {**scalping_timeframes, **swing_timeframes}
+
+        # Helper function to calculate trade parameters for a given strategy
+        def calculate_trade_parameters(timeframes, strategy_name):
+            signals = []
+            support_levels = []
+            resistance_levels = []
+            atr_values = []
+
+            for tf, data in timeframes.items():
+                df = alert_system.processor.preprocess_data(data)
+                signal, _ = alert_system.engine.generate_signal(df)
+                support, resistance = alert_system.engine.calculate_support_resistance(df)
+                fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
+                atr = df['atr'].iloc[-1]
+
+                signals.append(signal)
+                support_levels.append(support)
+                resistance_levels.append(resistance)
+                atr_values.append(atr)
+
+            # Determine the majority signal
+            buy_count = signals.count("BUY")
+            sell_count = signals.count("SELL")
+            hold_count = signals.count("HOLD")
+            majority_signal = "BUY" if buy_count > sell_count else "SELL" if sell_count > buy_count else "HOLD"
+
+            # Calculate average support, resistance, and ATR
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
-            entry_point = avg_support
-            stop_loss = avg_support - avg_atr
-            take_profit = avg_resistance + avg_atr
-            risk_reward_ratio = (take_profit - avg_support) / (avg_support - stop_loss)
-        elif recommended_action == "SELL":
-            avg_support = np.mean(support_levels)
-            avg_resistance = np.mean(resistance_levels)
-            avg_atr = np.mean(atr_values)
-            entry_point = avg_resistance
-            stop_loss = avg_resistance + avg_atr
-            take_profit = avg_support - avg_atr
-            risk_reward_ratio = (take_profit - avg_resistance) / (avg_resistance - stop_loss)
-        else:
-            avg_support = np.mean(support_levels)
-            avg_resistance = np.mean(resistance_levels)
-            avg_atr = np.mean(atr_values)
-            entry_point = avg_support
-            stop_loss = avg_support - avg_atr
-            take_profit = avg_resistance + avg_atr
-            risk_reward_ratio = (take_profit - avg_support) / (avg_support - stop_loss)
-        
+
+            # Refine entry point using Fibonacci levels
+            if majority_signal == "BUY":
+                entry_point = fib_levels["61.8%"]  # Use Fibonacci 61.8% retracement for buy
+            elif majority_signal == "SELL":
+                entry_point = fib_levels["38.2%"]  # Use Fibonacci 38.2% retracement for sell
+            else:
+                entry_point = (avg_support + avg_resistance) / 2  # Midpoint for hold
+
+            # Calculate stop loss and take profit
+            stop_loss = entry_point - avg_atr if majority_signal == "BUY" else entry_point + avg_atr
+            take_profit = entry_point + 2 * avg_atr if majority_signal == "BUY" else entry_point - 2 * avg_atr
+            risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss)
+
+            # Calculate ML confidence
+            ml_confidence = alert_system.calculate_ml_confidence(df)
+
+            # Analyze raw data from this strategy's timeframes using Gemini
+            raw_data_strategy = []
+            indicator_data_strategy = []
+            for tf, data in timeframes.items():
+                raw_data_strategy.extend(data)  # Combine raw data from all timeframes
+                df = alert_system.processor.preprocess_data(data)
+                indicator_data_strategy.append(str(df.tail(1).to_dict()))  # Add latest indicator data
+
+            gemini_prompt = (
+                f"Analyze the following market data for {symbol} ({strategy_name}):\n"
+                f"Raw Data: {raw_data_strategy}\n"
+                f"Indicator Data: {indicator_data_strategy}\n"
+                f"Provide a confidence level (0-100%) for the overall sentiment.\n"
+                f"Format your response as:\nConfidence: [value]"
+            )
+            gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
+            ai_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+
+            return {
+                "strategy": strategy_name,
+                "signal": majority_signal,
+                "entry_point": entry_point,
+                "stop_loss": stop_loss,
+                "take_profit": take_profit,
+                "risk_reward_ratio": risk_reward_ratio,
+                "ml_confidence": ml_confidence,
+                "ai_confidence": ai_confidence,
+            }
+
+        # Helper function to get global recommendation from Gemini
+        def get_global_recommendation(all_timeframes):
+            raw_data_all_timeframes = []
+            indicator_data_all_timeframes = []
+            for tf, data in all_timeframes.items():
+                raw_data_all_timeframes.extend(data)  # Combine raw data from all timeframes
+                df = alert_system.processor.preprocess_data(data)
+                indicator_data_all_timeframes.append(str(df.tail(1).to_dict()))  # Add latest indicator data
+
+            gemini_prompt = (
+                f"Analyze the following market data for {symbol} (Global Recommendation):\n"
+                f"Raw Data: {raw_data_all_timeframes}\n"
+                f"Indicator Data: {indicator_data_all_timeframes}\n"
+                f"Provide an ideal entry point, stop-loss, take-profit, and confidence level (0-100%).\n"
+                f"Format your response as:\n"
+                f"Entry Point: [value]\nStop Loss: [value]\nTake Profit: [value]\nConfidence: [value]"
+            )
+            gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
+
+            # Parse Gemini response
+            gemini_entry = float(gemini_response.split("Entry Point: ")[1].split("\n")[0])
+            gemini_stop_loss = float(gemini_response.split("Stop Loss: ")[1].split("\n")[0])
+            gemini_take_profit = float(gemini_response.split("Take Profit: ")[1].split("\n")[0])
+            gemini_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+
+            return {
+                "entry_point": gemini_entry,
+                "stop_loss": gemini_stop_loss,
+                "take_profit": gemini_take_profit,
+                "confidence": gemini_confidence,
+            }
+
+        # Calculate trade parameters for scalping and swing trading
+        scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
+        swing_params = calculate_trade_parameters(swing_timeframes, "Swing Trading")
+
+        # Get global recommendation from Gemini
+        global_recommendation = get_global_recommendation(all_timeframes)
+
         # Combine all responses into a single message
         response = (
             f"🔍 {symbol} Analysis [{pd.Timestamp.now().strftime('%H:%M UTC')}]\n"
-            f"Timeframe Signals:\n" +
-            "\n".join(responses) +
-            f"\n📊 Combined Confidence: {np.mean([alert_system.calculate_combined_confidence(alert_system.processor.preprocess_data(data)) for data in timeframe_data.values()]):.1f}%\n"
-            f"🎯 Recommended Action: {recommended_action}\n"
-            f"💡 Entry Point: ${avg_support:.2f} (wait for retest)\n"
-            f"⚠️ Risk Parameters:\n"
-            f"   - Stop Loss: ${stop_loss:.2f}\n"
-            f"   - Take Profit: ${take_profit:.2f}\n"
-            f"   - R/R Ratio: {risk_reward_ratio:.2f}\n"
+            f"📊 Scalping Strategy:\n"
+            f"│ Signal: {scalping_params['signal']}\n"
+            f"│ Entry Point: ${scalping_params['entry_point']:.2f}\n"
+            f"│ Stop Loss: ${scalping_params['stop_loss']:.2f}\n"
+            f"│ Take Profit: ${scalping_params['take_profit']:.2f}\n"
+            f"│ Risk-Reward Ratio: {scalping_params['risk_reward_ratio']:.2f}\n"
+            f"│ ML Confidence: {scalping_params['ml_confidence']:.1f}%\n"
+            f"│ AI Confidence: {scalping_params['ai_confidence']:.1f}%\n\n"
+            f"📈 Swing Trading Strategy:\n"
+            f"│ Signal: {swing_params['signal']}\n"
+            f"│ Entry Point: ${swing_params['entry_point']:.2f}\n"
+            f"│ Stop Loss: ${swing_params['stop_loss']:.2f}\n"
+            f"│ Take Profit: ${swing_params['take_profit']:.2f}\n"
+            f"│ Risk-Reward Ratio: {swing_params['risk_reward_ratio']:.2f}\n"
+            f"│ ML Confidence: {swing_params['ml_confidence']:.1f}%\n"
+            f"│ AI Confidence: {swing_params['ai_confidence']:.1f}%\n\n"
+            f"🌍 Global Recommendation:\n"
+            f"│ Entry Point: ${global_recommendation['entry_point']:.2f}\n"
+            f"│ Stop Loss: ${global_recommendation['stop_loss']:.2f}\n"
+            f"│ Take Profit: ${global_recommendation['take_profit']:.2f}\n"
+            f"│ Confidence: {global_recommendation['confidence']:.1f}%\n"
         )
         bot.reply_to(message, response)
     except Exception as e:
