@@ -4,6 +4,7 @@ from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 import numpy as np
 import logging
+import pandas as pd
 
 # Configure logging
 logging.basicConfig(
@@ -38,29 +39,9 @@ class AlertSystem:
     def calculate_ds_confidence(self, df):
         """Calculate Gemini-based confidence."""
         try:
-            # Analyze market sentiment using Gemini API
-            last_row = df.iloc[-1]
-            support, resistance = self.engine.calculate_support_resistance(df)
-            fib_levels = self.engine.calculate_fibonacci_levels(df)
-
-            text = (
-                f"Market analysis for BTCUSDT:\n"
-                f"Close price: {last_row['close']:.2f}\n"
-                f"RSI: {last_row['rsi']:.2f} (Overbought if > 70, Oversold if < 30)\n"
-                f"MACD: {last_row['macd']:.2f}, Signal Line: {last_row['macdsignal']:.2f}\n"
-                f"Support Level: {support:.2f}, Resistance Level: {resistance:.2f}\n"
-                f"Bollinger Bands: Upper={last_row['bb_upper']:.2f}, Middle={last_row['bb_middle']:.2f}, Lower={last_row['bb_lower']:.2f}\n"
-                f"EMA (50): {last_row['ema']:.2f}\n"
-                f"ATR (14): {last_row['atr']:.2f}\n"
-                f"Volume-Weighted Average Price (VWAP): {last_row['vwap']:.2f}\n"
-                f"Fibonacci Levels:\n"
-                f"   - 61.8% Retracement: {fib_levels['61.8%']:.2f}\n"
-                f"   - 38.2% Retracement: {fib_levels['38.2%']:.2f}\n"
-                f"   - 0% (High): {fib_levels['0%']:.2f}, 100% (Low): {fib_levels['100%']:.2f}\n"
-                f"Volume: {last_row['volume']:.2f}\n"
-            )
-
-            sentiment_score = self.gemini_client.analyze_sentiment(text) #Use correct method.
+            # Use the last 50 rows for sentiment analysis
+            df_str = df.tail(50).to_string()
+            sentiment_score = self.gemini_client.analyze_sentiment(df_str)
             confidence = (sentiment_score + 1) * 50  # Scale to 0-100%
             return confidence
         except Exception as e:
