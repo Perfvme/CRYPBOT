@@ -310,11 +310,9 @@ def send_signal(message):
             gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
 
             # Validate and parse Gemini response
-            try:
-                ai_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
-            except Exception:
+            ai_confidence = parse_gemini_response(gemini_response, default=50.0)
+            if ai_confidence == 50.0:
                 logger.warning(f"Failed to parse AI confidence for {strategy_name}. Using default value.")
-                ai_confidence = 50.0  # Default fallback
 
             return {
                 "strategy": strategy_name,
@@ -346,25 +344,62 @@ def send_signal(message):
             )
             gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
 
-            # Validate and parse Gemini response
-            try:
-                gemini_entry = float(gemini_response.split("Entry Point: ")[1].split("\n")[0])
-                gemini_stop_loss = float(gemini_response.split("Stop Loss: ")[1].split("\n")[0])
-                gemini_take_profit = float(gemini_response.split("Take Profit: ")[1].split("\n")[0])
-                gemini_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
-            except Exception:
+            # Parse Gemini response
+            parsed_response = parse_gemini_response(gemini_response, default={
+                "entry_point": 0.0,
+                "stop_loss": 0.0,
+                "take_profit": 0.0,
+                "confidence": 50.0
+            })
+            if isinstance(parsed_response, dict):
+                return parsed_response
+            else:
                 logger.warning("Failed to parse global recommendation from Gemini. Using default values.")
-                gemini_entry = 0.0
-                gemini_stop_loss = 0.0
-                gemini_take_profit = 0.0
-                gemini_confidence = 50.0  # Default fallback
+                return {
+                    "entry_point": 0.0,
+                    "stop_loss": 0.0,
+                    "take_profit": 0.0,
+                    "confidence": 50.0,
+                }
 
-            return {
-                "entry_point": gemini_entry,
-                "stop_loss": gemini_stop_loss,
-                "take_profit": gemini_take_profit,
-                "confidence": gemini_confidence,
-            }
+        # Helper function to parse Gemini responses
+        def parse_gemini_response(response, default=None):
+            try:
+                # Check if response is JSON
+                if isinstance(response, str) and response.strip().startswith("{"):
+                    data = json.loads(response)
+                    if "sentiment_score" in data:
+                        return (data["sentiment_score"] + 1) * 50  # Scale sentiment score to 0-100%
+                    elif "Confidence" in data:
+                        return float(data["Confidence"])
+                    else:
+                        return default
+
+                # Check if response is structured text
+                elif isinstance(response, str):
+                    if "Confidence:" in response:
+                        return float(response.split("Confidence: ")[1].split("\n")[0])
+                    elif "Entry Point:" in response:
+                        entry_point = float(response.split("Entry Point: ")[1].split("\n")[0])
+                        stop_loss = float(response.split("Stop Loss: ")[1].split("\n")[0])
+                        take_profit = float(response.split("Take Profit: ")[1].split("\n")[0])
+                        confidence = float(response.split("Confidence: ")[1].split("\n")[0])
+                        return {
+                            "entry_point": entry_point,
+                            "stop_loss": stop_loss,
+                            "take_profit": take_profit,
+                            "confidence": confidence,
+                        }
+                    else:
+                        return default
+
+                # Fallback to default if no match
+                else:
+                    return default
+
+            except Exception as e:
+                logger.error(f"Error parsing Gemini response: {e}")
+                return default
 
         # Calculate trade parameters for scalping and swing trading
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
@@ -402,7 +437,6 @@ def send_signal(message):
     except Exception as e:
         logger.error(f"Error processing /signal command: {e}")
         bot.reply_to(message, "An error occurred while generating the signal. Please try again later.")
-
 # Command: /ml_status
 @bot.message_handler(commands=['ml_status'])
 def send_ml_status(message):
