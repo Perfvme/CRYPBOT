@@ -23,7 +23,7 @@ class GeminiClient:
         """Analyze text using Gemini Flash 2.0."""
         try:
             # Define the model
-            model = genai.GenerativeModel('gemini-2.0-flash-exp')  # Replace with the correct model name
+            model = genai.GenerativeModel('gemini-2.0-flash-001')  # Replace with the correct model name
             
             # Define the prompt
             prompt = (
