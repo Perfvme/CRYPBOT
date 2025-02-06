@@ -63,12 +63,13 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (strategy confidence): {response.text}")
 
             try:
-                # Use regular expression to find "Confidence: [number]"
-                match = re.search(r"Confidence:\s*(\d+)", response.text, re.IGNORECASE)  # Case-insensitive
+                # More flexible regex: Find "Confidence:" anywhere, then capture the number
+                match = re.search(r"Confidence:.*?(\d+)", response.text, re.IGNORECASE | re.DOTALL)
                 if match:
                     ai_confidence = float(match.group(1))
                     return ai_confidence
                 else:
+                    logger.warning(f"No 'Confidence:' value found in: {response.text}") # More specific logging
                     raise ValueError("No 'Confidence:' value found.")
             except (ValueError, AttributeError):
                 logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50.")
@@ -94,11 +95,11 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (global recommendation): {response.text}")
 
             try:
-                # Use regular expressions to find each value
-                entry_match = re.search(r"Entry Point:\s*([\d.]+)", response.text, re.IGNORECASE)
-                stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response.text, re.IGNORECASE)
-                take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response.text, re.IGNORECASE)
-                confidence_match = re.search(r"Confidence:\s*(\d+)", response.text, re.IGNORECASE)
+                # More flexible regex: Find each label anywhere, then capture the number
+                entry_match = re.search(r"Entry Point:.*?([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
+                stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
+                take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
+                confidence_match = re.search(r"Confidence:.*?(\d+)", response.text, re.IGNORECASE | re.DOTALL)
 
                 if entry_match and stop_loss_match and take_profit_match and confidence_match:
                     gemini_entry = float(entry_match.group(1))
@@ -112,6 +113,7 @@ class GeminiClient:
                         "confidence": gemini_confidence,
                     }
                 else:
+                    logger.warning(f"Could not find all values in: {response.text}") # More specific logging
                     raise ValueError("Could not find all required values in Gemini response.")
 
             except (ValueError, AttributeError):
