@@ -252,6 +252,7 @@ def send_signal(message):
             support_levels = []
             resistance_levels = []
             atr_values = []
+            close_prices = []  # Store close prices for averaging
 
             for tf, data in timeframes.items():
                 df = alert_system.processor.preprocess_data(data)
@@ -259,6 +260,7 @@ def send_signal(message):
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
                 atr = df['atr'].iloc[-1]
+                close_prices.append(df['close'].iloc[-1]) # Get the last close price
 
                 signals.append(signal)
                 support_levels.append(support)
@@ -275,19 +277,20 @@ def send_signal(message):
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
+            avg_close = np.mean(close_prices) # Calculate average close price
 
-            # Refine entry point using Fibonacci levels
+            # Refine entry point using Fibonacci levels AND the average close price
             if majority_signal == "BUY":
-                entry_point = fib_levels["61.8%"]  # Use Fibonacci 61.8% retracement for buy
+                entry_point = fib_levels.get("61.8%", avg_close)  # Use Fibonacci or avg_close if not available
             elif majority_signal == "SELL":
-                entry_point = fib_levels["38.2%"]  # Use Fibonacci 38.2% retracement for sell
+                entry_point = fib_levels.get("38.2%", avg_close)
             else:
-                entry_point = (avg_support + avg_resistance) / 2  # Midpoint for hold
+                entry_point = (avg_support + avg_resistance) / 2
 
-            # Calculate stop loss and take profit
+            # Calculate stop loss and take profit, relative to the entry point
             stop_loss = entry_point - avg_atr if majority_signal == "BUY" else entry_point + avg_atr
             take_profit = entry_point + 2 * avg_atr if majority_signal == "BUY" else entry_point - 2 * avg_atr
-            risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss)
+            risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss) if abs(entry_point - stop_loss) >0 else 0
 
             # Calculate ML confidence
             ml_confidence = alert_system.calculate_ml_confidence(df)
