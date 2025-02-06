@@ -308,7 +308,13 @@ def send_signal(message):
                 f"Format your response as:\nConfidence: [value]"
             )
             gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
-            ai_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+
+            # Validate and parse Gemini response
+            try:
+                ai_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+            except Exception:
+                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Using default value.")
+                ai_confidence = 50.0  # Default fallback
 
             return {
                 "strategy": strategy_name,
@@ -340,11 +346,18 @@ def send_signal(message):
             )
             gemini_response = alert_system.gemini_client.analyze(gemini_prompt)
 
-            # Parse Gemini response
-            gemini_entry = float(gemini_response.split("Entry Point: ")[1].split("\n")[0])
-            gemini_stop_loss = float(gemini_response.split("Stop Loss: ")[1].split("\n")[0])
-            gemini_take_profit = float(gemini_response.split("Take Profit: ")[1].split("\n")[0])
-            gemini_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+            # Validate and parse Gemini response
+            try:
+                gemini_entry = float(gemini_response.split("Entry Point: ")[1].split("\n")[0])
+                gemini_stop_loss = float(gemini_response.split("Stop Loss: ")[1].split("\n")[0])
+                gemini_take_profit = float(gemini_response.split("Take Profit: ")[1].split("\n")[0])
+                gemini_confidence = float(gemini_response.split("Confidence: ")[1].split("\n")[0])
+            except Exception:
+                logger.warning("Failed to parse global recommendation from Gemini. Using default values.")
+                gemini_entry = 0.0
+                gemini_stop_loss = 0.0
+                gemini_take_profit = 0.0
+                gemini_confidence = 50.0  # Default fallback
 
             return {
                 "entry_point": gemini_entry,
