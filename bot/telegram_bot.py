@@ -12,6 +12,7 @@ from bot.core.data_processing import DataProcessor
 from bot.api.binance_client import BinanceClient
 import psutil
 from bot.api.gemini_client import GeminiClient
+from bot.core.ml_models import MLModel # Import MLModel
 
 # Configure logging
 logging.basicConfig(
@@ -33,6 +34,8 @@ if not telegram_token:
     raise ValueError("TELEGRAM_BOT_TOKEN is not set in the environment variables.")
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
+# Initialize MLModel for backtesting results
+ml_model = MLModel(model_path="models/random_forest_model.joblib")
 
 # Function to fetch data (placeholder implementation)
 def fetch_data(symbol, interval):
@@ -68,7 +71,8 @@ def check_api_health():
     try:
         # Check Gemini API
         gemini_client = GeminiClient()
-        gemini_client.analyze_sentiment("Test text")  # Dummy call to check connectivity
+        gemini_client.analyze_sentiment("Test text")  # Dummy call
+        api_health["Gemini"] = "✅ (Test Successful)"
     except Exception as e:
         api_health["Gemini"] = f"❌ (Error: {str(e)})"
 
@@ -103,11 +107,24 @@ def evaluate_model_performance(model):
     try:
         processor = DataProcessor()
         data = processor.fetch_data("BTCUSDT", "1h")
-        X, y = processor.preprocess_for_training(data)
-        accuracy = model.evaluate(X, y) * 100
+        X_train, X_test, y_train, y_test = processor.preprocess_for_training(data)
+        # Ensure feature selection is applied consistently
+        X_test = X_test[model.selected_features]
+        accuracy = model.evaluate(X_test, y_test) * 100
         return f"{accuracy:.1f}%"
     except Exception as e:
         return f"Error: {str(e)}"
+
+# Function to get backtesting results (simplified for display)
+def get_backtesting_results():
+    try:
+        processor = DataProcessor()
+        data = processor.fetch_data("BTCUSDT", "1h", limit=1000) # Fetch enough data
+        results = ml_model.backtest(data, "BTCUSDT")
+        return results
+    except Exception as e:
+        logger.error(f"Error during backtesting: {e}")
+        return {}
 
 # Function to check signals and send alerts
 def check_and_send_alerts():
@@ -190,6 +207,24 @@ def check_and_send_alerts():
                     logger.info(f"Alert sent for {asset}: {alert_message}")
                 else:
                     logger.error("TELEGRAM_CHAT_ID is not set in environment variables.")
+
+            # --- Automatic Signal Check (ML-based) ---
+            # Use 1h timeframe for automatic signal (you can adjust this)
+            data_1h = fetch_data(asset, "1h")
+            df_1h = alert_system.processor.preprocess_data(data_1h)
+            auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h)
+
+            if auto_signal != "HOLD":
+                alert_message = (
+                    f"🤖 AUTOMATIC SIGNAL: {asset}\n"
+                    f"Signal: {auto_signal}\n"
+                    f"ML Confidence: {ml_confidence:.1f}%\n"
+                )
+                chat_id = os.getenv("TELEGRAM_CHAT_ID")
+                if chat_id:
+                    bot.send_message(chat_id, alert_message)
+                    logger.info(f"Automatic signal sent for {asset}: {alert_message}")
+
     except Exception as e:
         logger.error(f"Error during automatic alert check: {e}")
 
@@ -200,7 +235,7 @@ def run_scheduler():
         time.sleep(1)
 
 # Schedule the retraining task (optional, if you have model retraining logic)
-# schedule.every(24).hours.do(retrain_models)
+schedule.every(24).hours.do(retrain_models)
 
 # Schedule the alert task to run every 10 minutes
 schedule.every(10).minutes.do(check_and_send_alerts)
@@ -386,6 +421,8 @@ def send_ml_status(message):
         resource_usage = get_resource_usage()
         last_retraining_time = get_last_retraining_time()
         model_accuracy = evaluate_model_performance(alert_system.ml_model)
+        # Get backtesting results
+        backtest_results = get_backtesting_results()
 
         # Format the response
         response = (
@@ -400,6 +437,19 @@ def send_ml_status(message):
             response += f"   - {resource}: {usage}\n"
         response += f"▫️ Last Model Retraining: {last_retraining_time}\n"
         response += f"▫️ Model Accuracy: {model_accuracy}\n"
+
+        # Add backtesting results to the response
+        if backtest_results:
+            response += (
+                "📊 Backtesting Results (BTCUSDT, 1h):\n"
+                f"  - Final Capital: ${backtest_results['final_capital']:.2f}\n"
+                f"  - Win Rate: {backtest_results['win_rate']:.2%}\n"
+                f"  - Profit Factor: {backtest_results['profit_factor']:.2f}\n"
+                f"  - Max Drawdown: {backtest_results['max_drawdown']:.2%}\n"
+                f"  - Sharpe Ratio: {backtest_results['sharpe_ratio']:.2f}\n"
+            )
+        else:
+            response += "▫️ Backtesting Results:  Not available\n"
 
         bot.reply_to(message, response)
     except Exception as e:
