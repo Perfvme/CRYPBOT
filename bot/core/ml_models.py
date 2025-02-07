@@ -2,13 +2,13 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit, RandomizedSearchCV
-from sklearn.feature_selection import RFE
+from sklearn.feature_selection import RFE, RFECV  # Import RFECV
 import joblib
 import logging
-import numpy as np  # Import numpy
+import numpy as np
 import pandas as pd
-from imblearn.over_sampling import SMOTE # Import for oversampling
-from imblearn.pipeline import Pipeline as ImbPipeline # Use imblearn's Pipeline
+from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import Pipeline as ImbPipeline
 
 # Configure logging
 logging.basicConfig(
@@ -31,15 +31,19 @@ class MLModel:
                     self.model_type = 'gradient_boosting'
                 elif isinstance(self.model, LogisticRegression):
                     self.model_type = 'logistic_regression'
-                else:
-                    logger.warning("Loaded model type not recognized. Defaulting to random_forest.")
-                    self.model_type = 'random_forest'
-                    self.model = RandomForestClassifier(random_state=42)
+                # Check for and load selected_features
+                if hasattr(self.model, 'selected_features'):
+                    self.selected_features = self.model.selected_features
+                else:  # Handle case where loaded model doesn't have it
+                    self.selected_features = None # Will be set during retraining
+                    logger.warning("Loaded model does not have 'selected_features' attribute.")
             except FileNotFoundError:
                 logger.warning(f"Model file not found: {model_path}.  Initializing new model.")
                 self.model = self._initialize_model()
+                self.selected_features = None
         else:
             self.model = self._initialize_model()
+            self.selected_features = None
 
     def _initialize_model(self):
         """Initialize the model based on model_type."""
@@ -48,7 +52,7 @@ class MLModel:
         elif self.model_type == 'gradient_boosting':
             return GradientBoostingClassifier(random_state=42)
         elif self.model_type == 'logistic_regression':
-            return LogisticRegression(random_state=42, solver='liblinear') # Solver for smaller datasets
+            return LogisticRegression(random_state=42, solver='liblinear')
         else:
             raise ValueError(f"Invalid model_type: {self.model_type}")
 
@@ -66,8 +70,11 @@ class MLModel:
         return self.model.predict_proba(X_test)
 
     def save_model(self, path):
-        """Save the trained model."""
+        """Save the trained model, including selected_features."""
         try:
+            # Store selected_features *in* the model object before saving
+            if self.selected_features is not None:
+                self.model.selected_features = self.selected_features
             joblib.dump(self.model, path)
             logger.info(f"Model saved successfully at {path}.")
         except Exception as e:
@@ -82,7 +89,7 @@ class MLModel:
         f1 = f1_score(y_test, predictions)
 
         try:
-            probabilities = self.predict_proba(X_test)[:, 1]  # Probabilities for the positive class
+            probabilities = self.predict_proba(X_test)[:, 1]
             auc = roc_auc_score(y_test, probabilities)
         except:
             auc = None
@@ -96,7 +103,7 @@ class MLModel:
         else:
             logger.info("AUC: Could not be calculated (predict_proba might not be supported).")
 
-        return accuracy  # Return accuracy (or another metric you prefer)
+        return accuracy
 
     def tune_hyperparameters(self, X_train, y_train):
         """Tune hyperparameters using RandomizedSearchCV with TimeSeriesSplit."""
@@ -120,8 +127,8 @@ class MLModel:
             }
         elif self.model_type == 'logistic_regression':
             param_grid = {
-                'model__C': [0.001, 0.01, 0.1, 1, 10, 100],  # Regularization strength
-                'model__penalty': ['l1', 'l2'],          # Regularization type
+                'model__C': [0.001, 0.01, 0.1, 1, 10, 100],
+                'model__penalty': ['l1', 'l2'],
                 'model__class_weight': [None, 'balanced']
             }
         else:
@@ -129,85 +136,57 @@ class MLModel:
 
         tscv = TimeSeriesSplit(n_splits=5)
 
-        # Use imblearn's Pipeline to handle SMOTE within cross-validation
         pipeline = ImbPipeline([
-            ('smote', SMOTE(random_state=42)),  # Add SMOTE
-            ('model', self.model)  # Your chosen model
+            ('smote', SMOTE(random_state=42)),
+            ('model', self.model)
         ])
 
-        # Use RandomizedSearchCV for efficiency
         grid_search = RandomizedSearchCV(estimator=pipeline,
-                                        param_distributions=param_grid,  # Use param_distributions for RandomizedSearchCV
+                                        param_distributions=param_grid,
                                         cv=tscv,
                                         scoring='f1',  # Or 'roc_auc'
                                         n_jobs=-1,
                                         verbose=2,
-                                        n_iter=20)  # Adjust n_iter based on your resources
+                                        n_iter=20)
 
         grid_search.fit(X_train, y_train)
 
         logger.info(f"Best parameters: {grid_search.best_params_}")
         logger.info(f"Best score: {grid_search.best_score_}")
 
-        self.model = grid_search.best_estimator_.named_steps['model'] # Get the best *model* from the pipeline
+        self.model = grid_search.best_estimator_.named_steps['model']
 
 
-    def select_features(self, X_train, y_train, n_features_to_select=20):
-        """Perform Recursive Feature Elimination with cross-validation."""
+    def select_features(self, X_train, y_train, n_features_to_select=30):
+        """Perform Recursive Feature Elimination with cross-validation (RFECV)."""
 
-        # Use the base model (without SMOTE) for feature selection
         estimator = self._initialize_model()
+        # Use RFECV for automatic cross-validated selection of the best number of features
+        selector = RFECV(estimator, step=1, cv=TimeSeriesSplit(n_splits=5), scoring='f1', verbose=1, n_jobs=-1)
+        selector = selector.fit(X_train, y_train)
 
-        # Use RFE *without* cross-validation inside.  We'll use TimeSeriesSplit separately.
-        selector = RFE(estimator, n_features_to_select=n_features_to_select, step=1, verbose=1)
-
-        tscv = TimeSeriesSplit(n_splits=5)
-        best_features = None
-        best_score = -np.inf  # Initialize with negative infinity
-
-        for train_index, val_index in tscv.split(X_train):
-            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
-            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
-
-            selector.fit(X_train_fold, y_train_fold)
-            X_train_selected = selector.transform(X_train_fold)
-            X_val_selected = selector.transform(X_val_fold)
-
-            # Train a model on the selected features and evaluate
-            model = self._initialize_model()  # Create a new model instance
-            model.fit(X_train_selected, y_train_fold)
-            score = model.score(X_val_selected, y_val_fold) # Use .score (accuracy)
-
-            if score > best_score:
-                best_score = score
-                best_features = X_train.columns[selector.support_]
-
-        if best_features is not None:
-            logger.info(f"Best features (RFE): {best_features.tolist()}")
-            self.selected_features = best_features.tolist()  # Store as a list
-            return best_features
-        else:
-            logger.warning("Feature selection failed to select any features.")
-            self.selected_features = X_train.columns.tolist()  # Keep all features
-            return X_train.columns
+        logger.info(f"Optimal number of features: {selector.n_features_}")
+        logger.info(f"Best features (RFECV): {X_train.columns[selector.support_].tolist()}")
+        self.selected_features = X_train.columns[selector.support_].tolist()
+        return self.selected_features
 
 
-    def backtest(self, data, symbol, initial_capital=10000, commission_pct=0.001):
+
+    def backtest(self, df, symbol, initial_capital=10000, commission_pct=0.001):
         """
-        Perform a simplified backtest of the trading strategy.
+        Perform a simplified backtest, using the *preprocessed* DataFrame.
 
         Args:
-            data: DataFrame containing historical data (including 'close', 'high', 'low').
+            df: DataFrame containing *preprocessed* historical data (including features).
             symbol: The trading symbol (e.g., 'BTCUSDT').
-            initial_capital: Starting capital for the simulation.
-            commission_pct:  Commission percentage per trade (e.g., 0.001 for 0.1%).
+            initial_capital: Starting capital.
+            commission_pct: Commission percentage.
 
         Returns:
             Dictionary containing backtesting results.
         """
-        processor = DataProcessor() # Create a DataProcessor instance
-        df = processor.preprocess_data(data)
-        df = processor._engineer_features(df) # Apply feature engineering
+
+        # Filter the DataFrame to include only the selected features
         features_df = df[self.selected_features]
 
         # Initialize variables
@@ -219,12 +198,12 @@ class MLModel:
 
         for i in range(len(features_df)):
             # Get features for the current timestep
-            current_features = features_df.iloc[[i]] # Double brackets for DataFrame
+            current_features = features_df.iloc[[i]]
 
             # Predict probabilities and get confidence
             probabilities = self.predict_proba(current_features)[0]
-            confidence = max(probabilities)  # Confidence of the predicted class
-            prediction = self.predict(current_features)[0]  # 0 or 1
+            confidence = max(probabilities)
+            prediction = self.predict(current_features)[0]
 
             # Generate signal based on prediction and confidence
             if confidence >= 0.8:
@@ -232,12 +211,12 @@ class MLModel:
             else:
                 signal = "HOLD"
 
-            # Get current price data
+            # Get current price data from the *original* DataFrame (not the features_df)
             current_close = df['close'].iloc[i]
             current_high = df['high'].iloc[i]
             current_low = df['low'].iloc[i]
 
-            # Trading logic
+            # Trading logic (rest of the backtesting logic remains the same)
             if signal == "BUY" and position <= 0:  # Buy (or close short)
                 if position == -1:  # Close short position
                     profit = (entry_price - current_close) * abs(position) * capital
