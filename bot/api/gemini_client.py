@@ -3,7 +3,7 @@ import google.generativeai as genai
 import logging
 import re
 import json
-import requests
+import requests  # Add import
 
 # Configure logging
 logging.basicConfig(
@@ -52,7 +52,7 @@ class GeminiClient:
     def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
         """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
-            examples = """..."""  # Your examples (same as before)
+            examples = """..."""  # Your examples
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} ({strategy_name}) and provide a confidence level (0-100) for the overall trading signal.\n"
                 f"{examples}\n"
@@ -63,7 +63,7 @@ class GeminiClient:
             )
 
             response = self.model.generate_content(prompt)
-            response_text = response.text  # Get text *before* any parsing
+            response_text = response.text
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
             try:
@@ -72,9 +72,9 @@ class GeminiClient:
                 ai_confidence = float(response_json.get("Confidence", 50.0))
                 return ai_confidence
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try regex, and be more permissive
+                # If JSON parsing fails, try a more robust regex
                 logger.warning("Failed to parse as JSON. Trying regex...")
-                match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE)  # More robust regex
+                match = re.search(r"confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL) #More robust regex
                 if match:
                     try:
                         ai_confidence = float(match.group(1))
@@ -118,13 +118,13 @@ class GeminiClient:
                     "confidence": float(response_json.get("Confidence", 50.0)),
                 }
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try regex, and be more permissive
+                # If JSON parsing fails, try regex
                 logger.warning("Failed to parse as JSON. Trying regex...")
                 try:
                     entry_match = re.search(r"Entry Point:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                     stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                     take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                    confidence_match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
+                    confidence_match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL) #More robust regex
 
                     entry_point = float(entry_match.group(1)) if entry_match else 0.0
                     stop_loss = float(stop_loss_match.group(1)) if stop_loss_match else 0.0
