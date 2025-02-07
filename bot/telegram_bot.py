@@ -13,7 +13,7 @@ from bot.api.binance_client import BinanceClient
 import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
-from bot.model_retraining import retrain_models  # <--- IMPORT HERE
+from bot.model_retraining import retrain_models
 
 # Configure logging
 logging.basicConfig(
@@ -36,7 +36,7 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 # Initialize MLModel for backtesting results
-ml_model = MLModel(model_path="models/random_forest_model.joblib") # Or whichever model you last trained
+ml_model = MLModel(model_path="models/random_forest_model.joblib") # Or whichever model
 
 # Function to fetch data (placeholder implementation)
 def fetch_data(symbol, interval):
@@ -110,7 +110,8 @@ def evaluate_model_performance(model):
         data = processor.fetch_data("BTCUSDT", "1h")
         X_train, X_test, y_train, y_test = processor.preprocess_for_training(data)
         # Ensure feature selection is applied consistently
-        X_test = X_test[model.selected_features]
+        if model.selected_features is not None:
+            X_test = X_test[model.selected_features]
         accuracy = model.evaluate(X_test, y_test) * 100
         return f"{accuracy:.1f}%"
     except Exception as e:
@@ -148,7 +149,8 @@ def check_and_send_alerts():
             # Fetch and analyze data for each timeframe
             for tf, interval in timeframe_data.items():
                 data = fetch_data(asset, interval)
-                df = alert_system.processor.preprocess_data(data)
+                # Use preprocess_for_strategy here
+                df = alert_system.processor.preprocess_for_strategy(data)
 
                 # Generate signal and calculate DS confidence
                 signal, _ = alert_system.engine.generate_signal(df)
@@ -188,10 +190,10 @@ def check_and_send_alerts():
                     entry_point = avg_resistance
                     stop_loss = avg_resistance + avg_atr
                     take_profit = avg_support - avg_atr
-                else:
-                    entry_point = avg_support
-                    stop_loss = avg_support - avg_atr
-                    take_profit = avg_resistance + avg_atr
+                else:  # Handle HOLD case explicitly
+                    entry_point = (avg_support + avg_resistance) / 2
+                    stop_loss = entry_point - avg_atr  # Example, adjust as needed
+                    take_profit = entry_point + avg_atr # Example, adjust as needed
 
                 # Prepare the alert message
                 alert_message = (
@@ -199,13 +201,13 @@ def check_and_send_alerts():
                     f"Majority Signal: {majority_signal}\n"
                     f"Timeframe Signals: {', '.join(signals)}\n"
                     f"Average DS Confidence: {avg_ds_confidence:.1f}%\n"
-                    f"Entry Point: ${avg_support:.2f}\n"
+                    f"Entry Point: ${entry_point:.2f}\n"
                     f"Stop Loss: ${stop_loss:.2f}\n"
                     f"Take Profit: ${take_profit:.2f}\n"
                 )
 
                 # Send the alert to the specified Telegram chat ID
-                chat_id = os.getenv("TELEGRAM_CHAT_ID")  # Replace with your chat ID in .env
+                chat_id = os.getenv("TELEGRAM_CHAT_ID")
                 if chat_id:
                     bot.send_message(chat_id, alert_message)
                     logger.info(f"Alert sent for {asset}: {alert_message}")
@@ -213,9 +215,8 @@ def check_and_send_alerts():
                     logger.error("TELEGRAM_CHAT_ID is not set in environment variables.")
 
             # --- Automatic Signal Check (ML-based) ---
-            # Use 1h timeframe for automatic signal (you can adjust this)
             data_1h = fetch_data(asset, "1h")
-            df_1h = alert_system.processor.preprocess_data(data_1h)
+            df_1h = alert_system.processor.preprocess_for_strategy(data_1h) # Use preprocess_for_strategy
             auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h)
 
             if auto_signal != "HOLD":
@@ -272,80 +273,70 @@ def send_help(message):
 def send_signal(message):
     logger.info(f"Received message: /signal from user {message.from_user.id}")
     try:
-        # Extract the coin symbol from the command
         args = message.text.split()
         if len(args) < 2:
             bot.reply_to(message, "Usage: /signal <coin> (e.g., /signal BTCUSDT)")
             return
-        symbol = args[1].upper()  # Ensure the symbol is uppercase
+        symbol = args[1].upper()
 
-        # Define the target timeframes for scalping, swing trading, and global analysis
         scalping_timeframes = {"5m": fetch_data(symbol, "5m"), "15m": fetch_data(symbol, "15m"), "1h": fetch_data(symbol, "1h")}
         swing_timeframes = {"1h": fetch_data(symbol, "1h"), "4h": fetch_data(symbol, "4h")}
         all_timeframes = {**scalping_timeframes, **swing_timeframes}
 
-        # Helper function to calculate trade parameters for a given strategy
         def calculate_trade_parameters(timeframes, strategy_name):
             signals = []
             support_levels = []
             resistance_levels = []
             atr_values = []
-            close_prices = []  # Store close prices for averaging
-            dataframes = [] # Store the dataframes
+            close_prices = []
+            dataframes = []
 
             for tf, data in timeframes.items():
-                df = alert_system.processor.preprocess_data(data)
-                dataframes.append(df) # Append to list
+                # Use preprocess_for_strategy here
+                df = alert_system.processor.preprocess_for_strategy(data)
+                dataframes.append(df)
                 signal, _ = alert_system.engine.generate_signal(df)
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
                 atr = df['atr'].iloc[-1]
-                close_prices.append(df['close'].iloc[-1]) # Get the last close price
+                close_prices.append(df['close'].iloc[-1])
 
                 signals.append(signal)
                 support_levels.append(support)
                 resistance_levels.append(resistance)
                 atr_values.append(atr)
 
-            # Determine the majority signal
             buy_count = signals.count("BUY")
             sell_count = signals.count("SELL")
             hold_count = signals.count("HOLD")
             majority_signal = "BUY" if buy_count > sell_count else "SELL" if sell_count > buy_count else "HOLD"
 
-            # Calculate average support, resistance, and ATR
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
-            avg_close = np.mean(close_prices) # Calculate average close price
+            avg_close = np.mean(close_prices)
 
-            # Refine entry point using Fibonacci levels AND the average close price
             if majority_signal == "BUY":
-                entry_point = fib_levels.get("61.8%", avg_close)  # Use Fibonacci or avg_close if not available
+                entry_point = fib_levels.get("61.8%", avg_close)
             elif majority_signal == "SELL":
                 entry_point = fib_levels.get("38.2%", avg_close)
             else:
                 entry_point = (avg_support + avg_resistance) / 2
 
-            # Calculate stop loss and take profit, relative to the entry point
             stop_loss = entry_point - avg_atr if majority_signal == "BUY" else entry_point + avg_atr
             take_profit = entry_point + 2 * avg_atr if majority_signal == "BUY" else entry_point - 2 * avg_atr
             risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss) if abs(entry_point - stop_loss) >0 else 0
 
-            # Calculate ML confidence
-            ml_confidence = alert_system.calculate_ml_confidence(df)
+            # Use the *last* DataFrame (most recent data) for Gemini and ML
+            combined_df = dataframes[-1]
+            ml_confidence = alert_system.calculate_ml_confidence(combined_df) # Pass the full df
 
-            # --- GEMINI ANALYSIS (Consistent Data) ---
-            # Use the *last* DataFrame (most recent data) for Gemini
-            combined_df = dataframes[-1].tail(50)  # Use the last dataframe
-            ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
-            indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
-
+            ohlc_data = combined_df[['open', 'high', 'low', 'close']].tail(50).to_string()
+            indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).tail(50).to_string()
 
             ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
                 symbol, strategy_name, ohlc_data, indicator_data
             )
-
 
             return {
                 "strategy": strategy_name,
@@ -358,33 +349,26 @@ def send_signal(message):
                 "ai_confidence": ai_confidence,
             }
 
-        # Helper function to get global recommendation from Gemini
         def get_global_recommendation(all_timeframes):
             dataframes = []
             for tf, data in all_timeframes.items():
-                df = alert_system.processor.preprocess_data(data)
+                # Use preprocess_for_strategy here
+                df = alert_system.processor.preprocess_for_strategy(data)
                 dataframes.append(df)
 
-            # --- GEMINI ANALYSIS (Consistent Data) ---
-            combined_df = pd.concat(dataframes).tail(50) # Combine all timeframes
+            combined_df = pd.concat(dataframes).tail(50)
             ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
             indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
 
             recommendation = alert_system.gemini_client.analyze_global_recommendation(
                 symbol, ohlc_data, indicator_data
             )
-
             return recommendation
 
-
-        # Calculate trade parameters for scalping and swing trading
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
         swing_params = calculate_trade_parameters(swing_timeframes, "Swing Trading")
-
-        # Get global recommendation from Gemini
         global_recommendation = get_global_recommendation(all_timeframes)
 
-        # Combine all responses into a single message
         response = (
             f"🔍 {symbol} Analysis [{pd.Timestamp.now().strftime('%H:%M UTC')}]\n"
             f"📊 Scalping Strategy:\n"
