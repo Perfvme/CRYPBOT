@@ -37,7 +37,8 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 # Initialize MLModel for backtesting results and getting selected features
-ml_model = MLModel(model_path="models/logistic_regression_model.joblib") # Or whichever model
+# Load the *correct* model (logistic_regression_model.joblib, based on the last retraining run)
+ml_model = MLModel(model_path="models/logistic_regression_model.joblib")
 
 
 # Function to fetch data (placeholder implementation)
@@ -217,7 +218,7 @@ def check_and_send_alerts():
             # --- Automatic Signal Check (ML-based) ---
             data_1h = fetch_data(asset, "1h")
             df_1h = alert_system.processor.preprocess_for_strategy(data_1h) # Use preprocess_for_strategy
-            auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h)
+            auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h, ml_model) # Pass the model
 
             if auto_signal != "HOLD":
                 alert_message = (
@@ -292,7 +293,7 @@ def send_signal(message):
             dataframes = []
 
             for tf, data in timeframes.items():
-                # *** Use preprocess_for_strategy here ***
+                # Use preprocess_for_strategy here
                 df = alert_system.processor.preprocess_for_strategy(data)
                 dataframes.append(df)
                 signal, _ = alert_system.engine.generate_signal(df)
@@ -329,12 +330,9 @@ def send_signal(message):
 
             # --- ML Confidence (using selected features) ---
             combined_df = dataframes[-1]  # Get the last DataFrame
-            # Use get_prediction_features to ensure correct feature set
-            ml_features_df = alert_system.processor.get_prediction_features(combined_df)
-            if not ml_features_df.empty:
-                ml_confidence = alert_system.calculate_ml_confidence(ml_features_df) # Pass the features df
-            else:
-                ml_confidence = 50.0 # Default if no features are available.
+            # Use get_prediction_features to ensure correct feature set, and pass the model
+            ml_confidence = alert_system.calculate_ml_confidence(combined_df, ml_model)
+
 
             # --- GEMINI ANALYSIS (Consistent Data) ---
             ohlc_data = combined_df[['open', 'high', 'low', 'close']].tail(50).to_string()
@@ -345,8 +343,13 @@ def send_signal(message):
                 ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                # Parse as JSON
-                ai_confidence = float(json.loads(ai_confidence_response.text)["Confidence"])
+                # Parse as JSON *if* it's a Response object
+                if isinstance(ai_confidence_response, (requests.models.Response, genai.types.generation_types.GenerateContentResponse)):
+                    ai_confidence = float(json.loads(ai_confidence_response.text)["Confidence"])
+                elif isinstance(ai_confidence_response, (float, int)):
+                     ai_confidence = float(ai_confidence_response) # Already a number
+                else:
+                    raise ValueError("Unexpected response type from Gemini API")
 
             except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
                 logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50. Error: {e}")
@@ -381,15 +384,26 @@ def send_signal(message):
                 recommendation = alert_system.gemini_client.analyze_global_recommendation(
                     symbol, ohlc_data, indicator_data
                 )
-                # Parse as JSON
-                recommendation = json.loads(recommendation.text)
-                # Ensure keys exist and provide defaults
-                return {
-                    "entry_point": float(recommendation.get("Entry Point", 0.0)),
-                    "stop_loss": float(recommendation.get("Stop Loss", 0.0)),
-                    "take_profit": float(recommendation.get("Take Profit", 0.0)),
-                    "confidence": float(recommendation.get("Confidence", 50.0)),
-                }
+                # Parse as JSON *if* it's a Response object
+                if isinstance(recommendation, (requests.models.Response, genai.types.generation_types.GenerateContentResponse)):
+                    recommendation = json.loads(recommendation.text)
+                    # Ensure keys exist and provide defaults
+                    return {
+                        "entry_point": float(recommendation.get("Entry Point", 0.0)),
+                        "stop_loss": float(recommendation.get("Stop Loss", 0.0)),
+                        "take_profit": float(recommendation.get("Take Profit", 0.0)),
+                        "confidence": float(recommendation.get("Confidence", 50.0)),
+                    }
+                elif isinstance(recommendation, dict):
+                    return {
+                        "entry_point": float(recommendation.get("entry_point", 0.0)),
+                        "stop_loss": float(recommendation.get("stop_loss", 0.0)),
+                        "take_profit": float(recommendation.get("take_profit", 0.0)),
+                        "confidence": float(recommendation.get("confidence", 50.0)),
+                    }
+                else:
+                    raise ValueError("Unexpected response type from Gemini API")
+
 
             except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
                 logger.warning(f"Failed to parse global recommendation from Gemini. Returning defaults. Error: {e}")
