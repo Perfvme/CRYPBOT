@@ -19,7 +19,6 @@ import requests
 import google.generativeai as genai
 import argparse  # Import argparse
 
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -41,8 +40,16 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 
+# --- Moved and corrected model initialization ---
+parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
+parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
+                    help='Path to the trained ML model file.')
+args = parser.parse_args()
+ml_model = MLModel(model_path=args.model_path)  # Use args.model_path
+# -------------------------------------------------
 
-# Function to fetch data
+
+# Function to fetch data (placeholder implementation)
 def fetch_data(symbol: str, interval: str) -> pd.DataFrame:
     """Fetch and preprocess data for a given symbol and interval."""
     processor = DataProcessor()
@@ -58,7 +65,7 @@ def get_uptime() -> str:
     uptime_seconds = time.time() - start_time
     days = int(uptime_seconds // (24 * 3600))
     hours = int((uptime_seconds % (24 * 3600)) // 3600)
-    minutes = int((uptime_seconds % 3600) // 60)  # Corrected line
+    minutes = int((uptime_seconds % 3600) // 60)
     return f"{days}d {hours}h {minutes}m"
 
 # Function to check API health
@@ -339,10 +346,10 @@ def send_signal(message):
 
             # --- Corrected Gemini Confidence Parsing ---
             try:
-                ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
+                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-
+                ai_confidence = ai_confidence_response
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
@@ -475,15 +482,6 @@ def echo_all(message):
 # Start polling
 if __name__ == "__main__":
     logger.info("Starting bot...")
-    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
-    parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
-                        help='Path to the trained ML model file.')
-    args = parser.parse_args()
-    # Initialize MLModel with the specified path
-    ml_model = MLModel(model_path=args.model_path)
-     # Pass ml_model to functions that need it
-    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True)
-    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)
     try:
         bot.infinity_polling()
     except Exception as e:
