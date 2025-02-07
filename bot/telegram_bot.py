@@ -367,7 +367,9 @@ def send_signal(message):
             f"🌍 Global Recommendation:\n"
             f"│ Entry Point: ${global_recommendation['entry_point']:.2f}\n"
             f"│ Stop Loss: ${global_recommendation['stop_loss']:.2f}\n"
-            f"│ Take Profit: ${global_recommendation['take_profit']:.2f}\n"
+            f"│ Take Profit 1 : ${global_recommendation['take_profit_1']:.2f}\n"
+            f"│ Take Profit 2 : ${global_recommendation['take_profit_2']:.2f}\n"
+            f"│ Take Profit 3 : ${global_recommendation['take_profit_3']:.2f}\n"
             f"│ Confidence: {global_recommendation['confidence']:.1f}%\n"
         )
         bot.reply_to(message, response)
