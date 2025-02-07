@@ -1,8 +1,8 @@
 import os
-import google.generativeai as genai
+from google.generativeai import GenerativeModel, configure # Import specifics
 import logging
 import re
-import json  # Import json
+import json
 
 # Configure logging
 logging.basicConfig(
@@ -19,8 +19,8 @@ class GeminiClient:
             raise ValueError("GEMINI_API_KEY is not set in the environment variables.")
 
         # Initialize the Gemini client
-        genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-2.0-flash-001')
+        configure(api_key=self.api_key)  # Use configure directly
+        self.model = GenerativeModel('gemini-2.0-flash-001')  # Use GenerativeModel
 
     def analyze_sentiment(self, text):
         """Analyze text for sentiment and return a score between -1 and 1."""
@@ -147,7 +147,7 @@ Confidence: 60
                 f"You are a financial analysis model. Analyze the following market data for {symbol} and provide a global trading recommendation.\n"
                 "Follow these steps:\n"
                 "1. Identify the overall trend (Bullish, Bearish, or Neutral) based on the OHLC data and indicators.\n"
-                "2. Identify key support, resistance levels, fair value gap and order block.\n"
+                "2. Identify key support and resistance levels.\n"
                 "3. Based on the trend and levels, provide an ideal entry point, stop-loss, and take-profit.\n"
                 "4. Provide a confidence level (0-100) for the recommendation.\n\n"
                 f"{examples}\n"
