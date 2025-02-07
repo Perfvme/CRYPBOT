@@ -18,7 +18,6 @@ import json  # Import the json module
 import requests  # Import requests
 import google.generativeai as genai # Import genai
 
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -346,31 +345,13 @@ def send_signal(message):
                 ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                # Parse as JSON *if* it's a Response object
-                if isinstance(ai_confidence_response, (requests.models.Response, genai.types.generation_types.GenerateContentResponse)):
-                    ai_confidence = float(json.loads(ai_confidence_response.text)["Confidence"])
-                elif isinstance(ai_confidence_response, (float, int)):
-                     ai_confidence = float(ai_confidence_response) # Already a number
-                else:
-                    raise ValueError("Unexpected response type from Gemini API")
+                return ai_confidence_response #return directly
 
-            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50. Error: {e}")
-                ai_confidence = 50.0
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
-                ai_confidence = 50.0
+                return 50.0  # Return a default value
 
-            return {
-                "strategy": strategy_name,
-                "signal": majority_signal,
-                "entry_point": entry_point,
-                "stop_loss": stop_loss,
-                "take_profit": take_profit,
-                "risk_reward_ratio": risk_reward_ratio,
-                "ml_confidence": ml_confidence,
-                "ai_confidence": ai_confidence,
-            }
+            
 
         def get_global_recommendation(all_timeframes):
             dataframes = []
@@ -387,35 +368,8 @@ def send_signal(message):
                 recommendation = alert_system.gemini_client.analyze_global_recommendation(
                     symbol, ohlc_data, indicator_data
                 )
-                # Parse as JSON *if* it's a Response object
-                if isinstance(recommendation, (requests.models.Response, genai.types.generation_types.GenerateContentResponse)):
-                    recommendation = json.loads(recommendation.text)
-                    # Ensure keys exist and provide defaults
-                    return {
-                        "entry_point": float(recommendation.get("Entry Point", 0.0)),
-                        "stop_loss": float(recommendation.get("Stop Loss", 0.0)),
-                        "take_profit": float(recommendation.get("Take Profit", 0.0)),
-                        "confidence": float(recommendation.get("Confidence", 50.0)),
-                    }
-                elif isinstance(recommendation, dict):
-                    return {
-                        "entry_point": float(recommendation.get("entry_point", 0.0)),
-                        "stop_loss": float(recommendation.get("stop_loss", 0.0)),
-                        "take_profit": float(recommendation.get("take_profit", 0.0)),
-                        "confidence": float(recommendation.get("confidence", 50.0)),
-                    }
-                else:
-                    raise ValueError("Unexpected response type from Gemini API")
+                return recommendation #return directly
 
-
-            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse global recommendation from Gemini. Returning defaults. Error: {e}")
-                return {
-                    "entry_point": 0.0,
-                    "stop_loss": 0.0,
-                    "take_profit": 0.0,
-                    "confidence": 50.0,
-                }
             except Exception as e:  # Corrected exception handling
                 logger.exception(f"Error calling Gemini API (global recommendation): {e}")
                 return {
