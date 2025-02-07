@@ -2,7 +2,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit, RandomizedSearchCV
-from sklearn.feature_selection import RFE, RFECV  # Import RFECV
+from sklearn.feature_selection import RFE, RFECV
 import joblib
 import logging
 import numpy as np
@@ -24,18 +24,16 @@ class MLModel:
         if model_path:
             try:
                 self.model = joblib.load(model_path)
-                # Infer model type from loaded model
                 if isinstance(self.model, RandomForestClassifier):
                     self.model_type = 'random_forest'
                 elif isinstance(self.model, GradientBoostingClassifier):
                     self.model_type = 'gradient_boosting'
                 elif isinstance(self.model, LogisticRegression):
                     self.model_type = 'logistic_regression'
-                # Check for and load selected_features
                 if hasattr(self.model, 'selected_features'):
                     self.selected_features = self.model.selected_features
-                else:  # Handle case where loaded model doesn't have it
-                    self.selected_features = None # Will be set during retraining
+                else:
+                    self.selected_features = None
                     logger.warning("Loaded model does not have 'selected_features' attribute.")
             except FileNotFoundError:
                 logger.warning(f"Model file not found: {model_path}.  Initializing new model.")
@@ -72,7 +70,6 @@ class MLModel:
     def save_model(self, path):
         """Save the trained model, including selected_features."""
         try:
-            # Store selected_features *in* the model object before saving
             if self.selected_features is not None:
                 self.model.selected_features = self.selected_features
             joblib.dump(self.model, path)
@@ -147,9 +144,10 @@ class MLModel:
         logger.info(f"Best score: {grid_search.best_score_}")
         self.model = grid_search.best_estimator_.named_steps['model']
 
-    def select_features(self, X_train, y_train, n_features_to_select=30):
+    def select_features(self, X_train, y_train):
         """Perform Recursive Feature Elimination with cross-validation (RFECV)."""
         estimator = self._initialize_model()
+        # Use RFECV, let it determine the optimal number of features
         selector = RFECV(estimator, step=1, cv=TimeSeriesSplit(n_splits=5), scoring='f1', verbose=1, n_jobs=-1)
         selector = selector.fit(X_train, y_train)
         logger.info(f"Optimal number of features: {selector.n_features_}")
@@ -161,16 +159,15 @@ class MLModel:
         """Perform a simplified backtest using log returns."""
 
         features_df = df[self.selected_features]
-        close_prices = df['close'].values  # Use NumPy arrays for speed
+        close_prices = df['close'].values
         log_capital = np.log(initial_capital)
         position = 0
         trades = []
         equity_curve = [initial_capital]
 
-        # Pre-calculate log returns
         log_returns = np.log(close_prices[1:] / close_prices[:-1])
 
-        for i in range(len(features_df) -1): # Iterate up to len - 1
+        for i in range(len(features_df) - 1):
             current_features = features_df.iloc[[i]]
             probabilities = self.predict_proba(current_features)[0]
             confidence = max(probabilities)
@@ -181,69 +178,60 @@ class MLModel:
             else:
                 signal = "HOLD"
 
-            # Use pre-calculated log return
             log_return = log_returns[i]
 
             if signal == "BUY" and position <= 0:
                 if position == -1:
                     log_capital += -log_return  # Close short
-                    # Commission: Apply to the *capital* used, not the price
-                    log_capital -= commission_pct
-                    trades.append({"type": "CLOSE_SHORT", "price": close_prices[i+1], "log_return": -log_return, "timestamp": df.index[i+1]})
+                    # Apply commission *only once* when closing the position
+                    trades.append({"type": "CLOSE_SHORT", "price": close_prices[i+1], "log_return": -log_return - commission_pct, "timestamp": df.index[i+1]})
+                else:
+                    trades.append({"type": "BUY", "price": close_prices[i+1], "log_return": 0, "timestamp": df.index[i+1]}) # Log return of 0 for entry
                 position = 1
-                # Commission on entry
+                # Apply commission *only once* when entering the position
                 log_capital -= commission_pct
-                trades.append({"type": "BUY", "price": close_prices[i+1], "log_return": -commission_pct, "timestamp": df.index[i+1]})
 
 
             elif signal == "SELL" and position >= 0:
                 if position == 1:
                     log_capital += log_return  # Close long
-                    log_capital -= commission_pct
-                    trades.append({"type": "CLOSE_LONG", "price": close_prices[i+1], "log_return": log_return, "timestamp": df.index[i+1]})
+                    # Apply commission *only once* when closing the position
+                    trades.append({"type": "CLOSE_LONG", "price": close_prices[i+1], "log_return": log_return - commission_pct, "timestamp": df.index[i+1]})
+                else:
+                     trades.append({"type": "SELL", "price": close_prices[i+1], "log_return": 0, "timestamp": df.index[i+1]}) # Log return of 0 for entry
                 position = -1
+                # Apply commission *only once* when entering the position
                 log_capital -= commission_pct
-                trades.append({"type": "SELL", "price": close_prices[i+1], "log_return": -commission_pct, "timestamp": df.index[i+1]})
+
 
             # Stop-loss and take-profit (log-based)
-            if position != 0:  # Only check if we're in a position
-                if position == 1:
-                    # Calculate stop-loss and take-profit as *log returns* from the entry price
-                    entry_log_price = np.log(trades[-1]['price'])  # Log price of the *last* trade
-                    stop_loss_return = np.log(0.98)  # 2% below entry
-                    take_profit_return = np.log(1.05) # 5% above entry
-                    current_log_return = log_return # Log return since *last* period
+            if position != 0:
+                entry_log_price = np.log(trades[-1]['price'])
+                stop_loss_return = np.log(0.98)  # 2% below entry
+                take_profit_return = np.log(1.05) # 5% above entry
 
-                    if entry_log_price + current_log_return <= entry_log_price + stop_loss_return:
-                        log_capital += stop_loss_return
-                        log_capital -= commission_pct
-                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price + stop_loss_return), "log_return": stop_loss_return, "timestamp": df.index[i+1]})
+                if position == 1:
+                    current_log_return = log_return
+                    if current_log_return <= stop_loss_return:
+                        log_capital += stop_loss_return - commission_pct # Apply commission
+                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price + stop_loss_return), "log_return": stop_loss_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
-                    elif entry_log_price + current_log_return >= entry_log_price + take_profit_return:
-                        log_capital += take_profit_return
-                        log_capital -= commission_pct
-                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price + take_profit_return), "log_return": take_profit_return, "timestamp": df.index[i+1]})
+                    elif current_log_return >= take_profit_return:
+                        log_capital += take_profit_return - commission_pct # Apply commission
+                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price + take_profit_return), "log_return": take_profit_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
 
                 elif position == -1:
-                    entry_log_price = np.log(trades[-1]['price'])
-                    stop_loss_return = np.log(1.02)  # 2% above entry
-                    take_profit_return = np.log(0.95) # 5% below entry
                     current_log_return = log_return
-
-                    if entry_log_price - current_log_return <= entry_log_price + take_profit_return :
-                        log_capital -= current_log_return # Subtract, because short position
-                        log_capital -= commission_pct
-                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price + take_profit_return), "log_return": -current_log_return, "timestamp": df.index[i+1]})
+                    # Corrected short position logic:
+                    if -current_log_return >= stop_loss_return:  # Compare *magnitudes* for short
+                        log_capital -= stop_loss_return + commission_pct # Apply commission
+                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price - stop_loss_return), "log_return": -stop_loss_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
-
-                    elif entry_log_price - current_log_return >= entry_log_price + stop_loss_return:
-                        log_capital -= current_log_return # Subtract log return (becomes addition)
-                        log_capital -= commission_pct
-                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price+stop_loss_return), "log_return": -current_log_return, "timestamp": df.index[i+1]})
+                    elif -current_log_return <= take_profit_return: # Compare *magnitudes* for short
+                        log_capital -= take_profit_return + commission_pct # Apply commission
+                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price - take_profit_return), "log_return": -take_profit_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
-
-
 
             equity_curve.append(np.exp(log_capital))
 
@@ -254,7 +242,7 @@ class MLModel:
             average_profit = profitable_trades['log_return'].mean() if not profitable_trades.empty else 0
             losing_trades = trades_df[trades_df['log_return'] <= 0]
             average_loss = losing_trades['log_return'].mean() if not losing_trades.empty else 0
-            profit_factor = abs(profitable_trades['log_return'].sum() / losing_trades['log_return'].sum()) if losing_trades['log_return'].sum() != 0 else 0
+            profit_factor = abs(profitable_trades['log_return'].sum() / (losing_trades['log_return'].sum() + 1e-8)) if losing_trades['log_return'].sum() != 0 else 0
 
             equity_series = pd.Series(equity_curve)
             peak = equity_series.cummax()
