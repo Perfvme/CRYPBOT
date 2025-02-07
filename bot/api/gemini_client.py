@@ -3,7 +3,7 @@ import google.generativeai as genai
 import logging
 import re
 import json
-import requests  # Import requests
+import requests
 
 # Configure logging
 logging.basicConfig(
@@ -50,7 +50,7 @@ class GeminiClient:
             return 0
 
     def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
-        """Analyze market data, return confidence (0-100). Robust parsing."""
+        """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
             examples = """..."""  # Your examples (same as before)
             prompt = (
@@ -72,9 +72,9 @@ class GeminiClient:
                 ai_confidence = float(response_json.get("Confidence", 50.0))
                 return ai_confidence
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try regex
+                # If JSON parsing fails, try regex, and be more permissive
                 logger.warning("Failed to parse as JSON. Trying regex...")
-                match = re.search(r"Confidence:\s*([\d.]+)", response_text, re.IGNORECASE)
+                match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE)  # More robust regex
                 if match:
                     try:
                         ai_confidence = float(match.group(1))
@@ -91,13 +91,13 @@ class GeminiClient:
             return 50.0
 
     def analyze_global_recommendation(self, symbol, ohlc_data, indicator_data):
-        """Analyze market data, return recommendation dict. Robust parsing."""
+        """Analyze market data for a global recommendation. Returns a dict."""
         try:
-            examples = """..."""  # Your examples (same as before)
+            examples = """..."""  # Your examples
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} and provide a global trading recommendation.\n"
                 "Follow these steps:\n"
-                "1. Identify the overall trend (Bullish, Bearish, or Neutral)...\n" # Rest of your prompt
+                "1. Identify the overall trend (Bullish, Bearish, or Neutral)...\n"  # Rest of your prompt
                 f"Input:\nSymbol: {symbol}\n"
                 f"OHLC Data:\n{ohlc_data}\n"
                 f"Indicator Data:\n{indicator_data}\n"
@@ -105,7 +105,7 @@ class GeminiClient:
             )
 
             response = self.model.generate_content(prompt)
-            response_text = response.text # Get the text *before* parsing
+            response_text = response.text
             logger.debug(f"Gemini API raw response (global recommendation): {response_text}")
 
             try:
@@ -118,13 +118,13 @@ class GeminiClient:
                     "confidence": float(response_json.get("Confidence", 50.0)),
                 }
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try regex
+                # If JSON parsing fails, try regex, and be more permissive
                 logger.warning("Failed to parse as JSON. Trying regex...")
                 try:
-                    entry_match = re.search(r"Entry Point:\s*([\d.]+)", response_text, re.IGNORECASE)
-                    stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response_text, re.IGNORECASE)
-                    take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response_text, re.IGNORECASE)
-                    confidence_match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE)
+                    entry_match = re.search(r"Entry Point:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                    stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                    take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                    confidence_match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
 
                     entry_point = float(entry_match.group(1)) if entry_match else 0.0
                     stop_loss = float(stop_loss_match.group(1)) if stop_loss_match else 0.0
@@ -145,7 +145,6 @@ class GeminiClient:
                         "take_profit": 0.0,
                         "confidence": 50.0,
                     }
-
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
             return {
