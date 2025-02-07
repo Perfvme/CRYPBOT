@@ -14,10 +14,11 @@ import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
-import json
-import requests
-import google.generativeai as genai
+import json  # Import the json module
+import requests  # Import requests
+import google.generativeai as genai # Import genai
 import argparse  # Import argparse
+from typing import Dict, List, Tuple, Optional, Any
 
 # Configure logging
 logging.basicConfig(
@@ -290,7 +291,7 @@ def send_signal(message):
         swing_timeframes = {"1h": fetch_data(symbol, "1h"), "4h": fetch_data(symbol, "4h")}
         all_timeframes = {**scalping_timeframes, **swing_timeframes}
 
-        def calculate_trade_parameters(timeframes, strategy_name):
+        def calculate_trade_parameters(timeframes: Dict[str, pd.DataFrame], strategy_name: str) -> Dict[str, Any]:
             signals = []
             support_levels = []
             resistance_levels = []
@@ -368,7 +369,7 @@ def send_signal(message):
                 "ai_confidence": ai_confidence,
             }
 
-        def get_global_recommendation(all_timeframes):
+        def get_global_recommendation(all_timeframes: Dict[str, pd.DataFrame]) -> Dict[str, float]:
             dataframes = []
             for tf, data in all_timeframes.items():
                 # Use preprocess_for_strategy here
@@ -482,6 +483,15 @@ def echo_all(message):
 # Start polling
 if __name__ == "__main__":
     logger.info("Starting bot...")
+    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
+    parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
+                        help='Path to the trained ML model file.')
+    args = parser.parse_args()
+    # Initialize MLModel with the specified path
+    ml_model = MLModel(model_path=args.model_path)
+     # Pass ml_model to functions that need it
+    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True)
+    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)
     try:
         bot.infinity_polling()
     except Exception as e:
