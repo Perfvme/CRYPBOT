@@ -5,6 +5,7 @@ from bot.core.ml_models import MLModel
 import numpy as np
 import logging
 import pandas as pd
+from typing import Tuple, Optional
 
 # Configure logging
 logging.basicConfig(
@@ -22,7 +23,7 @@ class AlertSystem:
         # Don't load the model here. Load it in telegram_bot.py and pass it.
         # self.ml_model = MLModel(model_path="models/m1h_model.joblib")
 
-    def calculate_ml_confidence(self, df, model):
+    def calculate_ml_confidence(self, df: pd.DataFrame, model: MLModel) -> float:
         """Calculate ML-based confidence using the trained model."""
         try:
             # Check if the model has selected_features
@@ -50,7 +51,7 @@ class AlertSystem:
             logger.exception(f"Error calculating ML confidence: {e}") # Use logger.exception
             return 50.0  # Default confidence if prediction fails
 
-    def calculate_ds_confidence(self, df):
+    def calculate_ds_confidence(self, df: pd.DataFrame) -> float:
         """Calculate Gemini-based confidence."""
         try:
             # Use the last 50 rows for sentiment analysis
@@ -62,13 +63,13 @@ class AlertSystem:
             print(f"Error calculating Gemini confidence: {e}")
             return 50  # Default confidence if analysis fails
 
-    def calculate_combined_confidence(self, df, model):
+    def calculate_combined_confidence(self, df: pd.DataFrame, model: MLModel) -> float:
         """Calculate combined confidence for a single timeframe."""
         ml_confidence = self.calculate_ml_confidence(df, model) # Pass the model
         ds_confidence = self.calculate_ds_confidence(df)
         return (ml_confidence + ds_confidence) / 2
 
-    def generate_automatic_signal(self, df, model):
+    def generate_automatic_signal(self, df: pd.DataFrame, model: MLModel) -> Tuple[str, float]:
         """Generate automatic signal based on ML model confidence."""
         try:
             # Check if the model has selected_features
