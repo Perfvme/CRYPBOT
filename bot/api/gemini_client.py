@@ -5,8 +5,6 @@ import re
 import json
 import requests  # Import requests
 
-load_dotenv(dotenv_path)
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
