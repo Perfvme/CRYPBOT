@@ -15,7 +15,9 @@ from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
 import json  # Import the json module
-import requests
+import requests  # Import requests
+import google.generativeai as genai # Import genai
+
 
 # Configure logging
 logging.basicConfig(
