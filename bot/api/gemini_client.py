@@ -52,7 +52,31 @@ class GeminiClient:
     def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
         """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
-            examples = """..."""  # Your examples
+            examples = """
+Example 1:
+Input:
+Symbol: BTCUSDT, Strategy: Scalping
+OHLC Data:
+             open      high       low     close
+2024-01-28  42000.0  42100.0  41900.0  42050.0
+Indicator Data:
+    volume        rsi       macd  macdsignal
+  1500.0  55.2  12.5  8.2
+Output:
+Confidence: 68
+
+Example 2:
+Input:
+Symbol: ETHUSDT, Strategy: Swing Trading
+OHLC Data:
+             open      high       low     close
+2024-01-28  2200.0  2220.0  2180.0  2190.0
+Indicator Data:
+   volume        rsi      macd  macdsignal
+  2500.0  42.8  -5.3  -2.1
+Output:
+Confidence: 35
+"""
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} ({strategy_name}) and provide a confidence level (0-100) for the overall trading signal.\n"
                 f"{examples}\n"
@@ -63,18 +87,18 @@ class GeminiClient:
             )
 
             response = self.model.generate_content(prompt)
-            response_text = response.text
+            response_text = response.text  # Get text *before* any parsing
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
             try:
                 # Try parsing as JSON first
                 response_json = json.loads(response_text)
-                ai_confidence = float(response_json.get("Confidence", 50.0))
+                ai_confidence = float(response_json.get("Confidence", 50.0)) # Get value, default to 50
                 return ai_confidence
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try a more robust regex
+                # If JSON parsing fails, try regex, and be more permissive
                 logger.warning("Failed to parse as JSON. Trying regex...")
-                match = re.search(r"confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL) #More robust regex
+                match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE)  # More robust regex
                 if match:
                     try:
                         ai_confidence = float(match.group(1))
@@ -93,7 +117,45 @@ class GeminiClient:
     def analyze_global_recommendation(self, symbol, ohlc_data, indicator_data):
         """Analyze market data for a global recommendation. Returns a dict."""
         try:
-            examples = """..."""  # Your examples
+            examples = """
+Example 1:
+Input:
+Symbol: BTCUSDT
+OHLC Data:
+             open      high       low     close
+2024-01-28  42000.0  42100.0  41900.0  42050.0
+Indicator Data:
+    volume        rsi       macd  macdsignal
+  1500.0  55.2  12.5  8.2
+Output:
+Reasoning: The price is above the EMA, and the RSI is in a neutral range. The MACD is positive, suggesting bullish momentum.
+Trend: Slightly Bullish
+Support: 41900
+Resistance: 42100
+Entry Point: 42060
+Stop Loss: 41850
+Take Profit: 42200
+Confidence: 70
+
+Example 2:
+Input:
+Symbol: ETHUSDT
+OHLC Data:
+             open      high       low     close
+2024-01-28  2200.0  2220.0  2180.0  2190.0
+Indicator Data:
+   volume        rsi      macd  macdsignal
+  2500.0  42.8  -5.3  -2.1
+Output:
+Reasoning: The price is below the EMA, and the RSI is approaching oversold. The MACD is negative.
+Trend: Bearish
+Support: 2180
+Resistance: 2220
+Entry Point: 2185
+Stop Loss: 2225
+Take Profit: 2150
+Confidence: 60
+"""
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} and provide a global trading recommendation.\n"
                 "Follow these steps:\n"
@@ -118,7 +180,7 @@ class GeminiClient:
                     "confidence": float(response_json.get("Confidence", 50.0)),
                 }
             except (json.JSONDecodeError, KeyError, ValueError, TypeError):
-                # If JSON parsing fails, try regex
+                # If JSON parsing fails, try regex, and be more permissive
                 logger.warning("Failed to parse as JSON. Trying regex...")
                 try:
                     entry_match = re.search(r"Entry Point:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
