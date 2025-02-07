@@ -12,28 +12,29 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def retrain_models(model_type='random_forest'):
+def retrain_models(model_type='logistic_regression'):  # Start with logistic regression
     """Retrain the ML model and save it."""
     try:
         processor = DataProcessor()
         model = MLModel(model_type=model_type)
 
         # Fetch historical data
-        data = processor.fetch_data("BTCUSDT", "1h", limit=1000)
+        data = processor.fetch_data("BTCUSDT", "1h", limit=2000) # More data
 
-        # Preprocess:  Get BOTH X, y, *and* the full preprocessed DataFrame
+        # Preprocess: Get BOTH X, y, *and* the full preprocessed DataFrame
         X_train, X_test, y_train, y_test = processor.preprocess_for_training(data)
-        df_train = processor.preprocess_data(data)  # Get the full DataFrame
-        df_train = processor._engineer_features(df_train) # Feature engineering
-        df_train = df_train.iloc[:-1]  # Drop last row (same as in preprocess_for_training)
+        df_train = processor.preprocess_data(data)
+        df_train = processor._engineer_features(df_train)
+        df_train = df_train.iloc[:-1]
 
 
-        # Feature Selection
-        selected_features = model.select_features(X_train, y_train)
+        # Feature Selection (optional, but good practice even with few features)
+        selected_features = model.select_features(X_train, y_train) # RFECV will likely select all
         X_train = X_train[selected_features]
         X_test = X_test[selected_features]
 
-        # Hyperparameter Tuning
+
+        # Hyperparameter Tuning (Simplified for Logistic Regression)
         model.tune_hyperparameters(X_train, y_train)
 
         # Train
@@ -44,7 +45,7 @@ def retrain_models(model_type='random_forest'):
         logger.info(f"Model accuracy on test set: {accuracy:.2f}")
 
         # Backtesting (pass the *preprocessed* DataFrame)
-        backtest_results = model.backtest(df_train, "BTCUSDT") # Pass the full df
+        backtest_results = model.backtest(df_train, "BTCUSDT")
         logger.info(f"Backtesting Results: {backtest_results}")
 
         # Save
@@ -58,9 +59,9 @@ def retrain_models(model_type='random_forest'):
             f.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     except Exception as e:
-        logger.exception(f"Error during model retraining: {e}") # Use logger.exception
+        logger.exception(f"Error during model retraining: {e}")
 
 if __name__ == "__main__":
-    retrain_models(model_type='random_forest')
+    retrain_models(model_type='logistic_regression') # Start with logistic regression
     # retrain_models(model_type='gradient_boosting')
-    # retrain_models(model_type='logistic_regression')
+    # retrain_models(model_type='random_forest')
