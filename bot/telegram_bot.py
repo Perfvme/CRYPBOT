@@ -14,6 +14,7 @@ import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
+import json  # Import the json module
 
 # Configure logging
 logging.basicConfig(
@@ -36,7 +37,7 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 # Initialize MLModel for backtesting results
-ml_model = MLModel(model_path="models/random_forest_model.joblib") # Or whichever model
+ml_model = MLModel(model_path="models/logistic_regression_model.joblib") # Or whichever model
 
 # Function to fetch data (placeholder implementation)
 def fetch_data(symbol, interval):
@@ -292,7 +293,7 @@ def send_signal(message):
             dataframes = []
 
             for tf, data in timeframes.items():
-                # Use preprocess_for_strategy here
+                # *** Use preprocess_for_strategy here ***
                 df = alert_system.processor.preprocess_for_strategy(data)
                 dataframes.append(df)
                 signal, _ = alert_system.engine.generate_signal(df)
@@ -327,16 +328,33 @@ def send_signal(message):
             take_profit = entry_point + 2 * avg_atr if majority_signal == "BUY" else entry_point - 2 * avg_atr
             risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss) if abs(entry_point - stop_loss) >0 else 0
 
-            # Use the *last* DataFrame (most recent data) for Gemini and ML
-            combined_df = dataframes[-1]
-            ml_confidence = alert_system.calculate_ml_confidence(combined_df) # Pass the full df
+            # --- ML Confidence (using selected features) ---
+            combined_df = dataframes[-1]  # Get the last DataFrame
+            # Use get_prediction_features to ensure correct feature set
+            ml_features_df = alert_system.processor.get_prediction_features(combined_df)
+            if not ml_features_df.empty:
+                ml_confidence = alert_system.calculate_ml_confidence(combined_df)
+            else:
+                ml_confidence = 50.0 # Default if no features are available.
 
+            # --- GEMINI ANALYSIS (Consistent Data) ---
             ohlc_data = combined_df[['open', 'high', 'low', 'close']].tail(50).to_string()
             indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).tail(50).to_string()
 
-            ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
-                symbol, strategy_name, ohlc_data, indicator_data
-            )
+            # --- Corrected Gemini Confidence Parsing ---
+            try:
+                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
+                    symbol, strategy_name, ohlc_data, indicator_data
+                )
+                # Parse as JSON
+                ai_confidence = float(json.loads(ai_confidence_response.text)["Confidence"])
+
+            except (json.JSONDecodeError, KeyError, ValueError) as e:
+                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50. Error: {e}")
+                ai_confidence = 50.0
+            except Exception as e:
+                logger.error(f"Error calling Gemini API (strategy confidence): {e}")
+                ai_confidence = 50.0
 
             return {
                 "strategy": strategy_name,
@@ -360,10 +378,36 @@ def send_signal(message):
             ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
             indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
 
-            recommendation = alert_system.gemini_client.analyze_global_recommendation(
-                symbol, ohlc_data, indicator_data
-            )
-            return recommendation
+            try:
+                recommendation = alert_system.gemini_client.analyze_global_recommendation(
+                    symbol, ohlc_data, indicator_data
+                )
+                # Parse as JSON
+                recommendation = json.loads(recommendation.text)
+                # Ensure keys exist and provide defaults
+                return {
+                    "entry_point": float(recommendation.get("Entry Point", 0.0)),
+                    "stop_loss": float(recommendation.get("Stop Loss", 0.0)),
+                    "take_profit": float(recommendation.get("Take Profit", 0.0)),
+                    "confidence": float(recommendation.get("Confidence", 50.0)),
+                }
+
+            except (json.JSONDecodeError, KeyError, ValueError) as e:
+                logger.warning(f"Failed to parse global recommendation from Gemini. Returning defaults. Error: {e}")
+                return {
+                    "entry_point": 0.0,
+                    "stop_loss": 0.0,
+                    "take_profit": 0.0,
+                    "confidence": 50.0,
+                }
+            except Exception as e:
+                logger.error(f"Error calling Gemini API (global recommendation): {e}")
+                return {
+                    "entry_point": 0.0,
+                    "stop_loss": 0.0,
+                    "take_profit": 0.0,
+                    "confidence": 50.0,
+                }
 
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
         swing_params = calculate_trade_parameters(swing_timeframes, "Swing Trading")
