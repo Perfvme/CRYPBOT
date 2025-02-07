@@ -3,6 +3,7 @@ from google.generativeai import GenerativeModel, configure # Import specifics
 import logging
 import re
 import json
+import requests # Add import
 
 # Configure logging
 logging.basicConfig(
