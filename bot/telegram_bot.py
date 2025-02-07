@@ -59,7 +59,7 @@ def get_uptime():
     uptime_seconds = time.time() - start_time
     days = int(uptime_seconds // (24 * 3600))
     hours = int((uptime_seconds % (24 * 3600)) // 3600)
-    minutes = int((uptime_seconds % 3600) // 60)
+    minutes = int((uptime_seconds % 3600)) // 60)
     return f"{days}d {hours}h {minutes}m"
 
 # Function to check API health
