@@ -1,9 +1,9 @@
 import os
-from google.generativeai import GenerativeModel, configure # Import specifics
+import google.generativeai as genai  # Corrected import
 import logging
 import re
 import json
-import requests # Add import
+import requests  # Add import
 
 # Configure logging
 logging.basicConfig(
@@ -20,8 +20,8 @@ class GeminiClient:
             raise ValueError("GEMINI_API_KEY is not set in the environment variables.")
 
         # Initialize the Gemini client
-        configure(api_key=self.api_key)  # Use configure directly
-        self.model = GenerativeModel('gemini-2.0-flash-001')  # Use GenerativeModel
+        genai.configure(api_key=self.api_key)  # Use configure directly
+        self.model = genai.GenerativeModel('gemini-2.0-flash-001')  # Use GenerativeModel
 
     def analyze_sentiment(self, text):
         """Analyze text for sentiment and return a score between -1 and 1."""
