@@ -173,14 +173,12 @@ class MLModel:
             confidence = max(probabilities)
             prediction = self.predict(current_features)[0]
 
-            # Determine signal based on prediction and confidence
             if confidence >= 0.8:
                 signal = "BUY" if prediction == 1 else "SELL"
             else:
                 signal = "HOLD"
 
-            # Get current and next close prices for log return calculation
-            current_close = close_prices[i+1]
+            current_close = close_prices[i + 1]
             previous_close = close_prices[i]
             log_return = log_returns[i]
 
@@ -192,6 +190,7 @@ class MLModel:
                 log_capital -= commission_pct  # Commission on Buy
                 position = 1
                 entry_price = current_close
+                entry_log_price = np.log(entry_price) # Store log price at entry
                 trades.append({"type": "BUY", "price": current_close, "log_return": 0, "timestamp": df.index[i+1]}) # Entry trade
 
             elif signal == "SELL" and position != -1:  # Enter Short
@@ -201,34 +200,34 @@ class MLModel:
                 log_capital -= commission_pct  # Commission on Sell
                 position = -1
                 entry_price = current_close
+                entry_log_price = np.log(entry_price) # Store log price at entry
                 trades.append({"type": "SELL", "price": current_close, "log_return": 0, "timestamp": df.index[i+1]}) # Entry trade
 
             # Stop-loss and take-profit (log-based)
             if position != 0:
-                entry_log_price = np.log(entry_price)
+                # Calculate *cumulative* log return since entry
+                cumulative_log_return = np.log(current_close) - entry_log_price
                 stop_loss_return = np.log(0.98)  # 2% below entry
                 take_profit_return = np.log(1.05) # 5% above entry
 
                 if position == 1:  # Long Position
-                    current_log_return = log_return
-                    if current_log_return <= stop_loss_return:
-                        log_capital += stop_loss_return - commission_pct
-                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price + stop_loss_return), "log_return": stop_loss_return - commission_pct, "timestamp": df.index[i+1]})
+                    if cumulative_log_return <= stop_loss_return:
+                        log_capital += cumulative_log_return - commission_pct
+                        trades.append({"type": "STOP_LOSS", "price": current_close, "log_return": cumulative_log_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
-                    elif current_log_return >= take_profit_return:
-                        log_capital += take_profit_return - commission_pct
-                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price + take_profit_return), "log_return": take_profit_return - commission_pct, "timestamp": df.index[i+1]})
+                    elif cumulative_log_return >= take_profit_return:
+                        log_capital += cumulative_log_return - commission_pct
+                        trades.append({"type": "TAKE_PROFIT", "price": current_close, "log_return": cumulative_log_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
 
                 elif position == -1:  # Short Position
-                    current_log_return = log_return
-                    if -current_log_return >= stop_loss_return: # Corrected comparison
-                        log_capital -= stop_loss_return + commission_pct
-                        trades.append({"type": "STOP_LOSS", "price": np.exp(entry_log_price - stop_loss_return), "log_return": -stop_loss_return - commission_pct, "timestamp": df.index[i+1]})
+                    if -cumulative_log_return >= stop_loss_return:
+                        log_capital -= cumulative_log_return + commission_pct
+                        trades.append({"type": "STOP_LOSS", "price": current_close, "log_return": -cumulative_log_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
-                    elif -current_log_return <= take_profit_return: # Corrected comparison
-                        log_capital -= take_profit_return + commission_pct
-                        trades.append({"type": "TAKE_PROFIT", "price": np.exp(entry_log_price - take_profit_return), "log_return": -take_profit_return - commission_pct, "timestamp": df.index[i+1]})
+                    elif -cumulative_log_return <= take_profit_return:
+                        log_capital -= cumulative_log_return + commission_pct
+                        trades.append({"type": "TAKE_PROFIT", "price": current_close, "log_return": -cumulative_log_return - commission_pct, "timestamp": df.index[i+1]})
                         position = 0
 
             equity_curve.append(np.exp(log_capital))
