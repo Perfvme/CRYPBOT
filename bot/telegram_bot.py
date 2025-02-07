@@ -345,13 +345,24 @@ def send_signal(message):
                 ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                return ai_confidence_response #return directly
+                ai_confidence = ai_confidence_response
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
-                return 50.0  # Return a default value
+                ai_confidence = 50.0  # Return a default value
 
-            
+
+
+            return {
+                "strategy": strategy_name,
+                "signal": majority_signal,
+                "entry_point": entry_point,
+                "stop_loss": stop_loss,
+                "take_profit": take_profit,
+                "risk_reward_ratio": risk_reward_ratio,
+                "ml_confidence": ml_confidence,
+                "ai_confidence": ai_confidence,
+            }
 
         def get_global_recommendation(all_timeframes):
             dataframes = []
@@ -368,7 +379,7 @@ def send_signal(message):
                 recommendation = alert_system.gemini_client.analyze_global_recommendation(
                     symbol, ohlc_data, indicator_data
                 )
-                return recommendation #return directly
+                return recommendation
 
             except Exception as e:  # Corrected exception handling
                 logger.exception(f"Error calling Gemini API (global recommendation): {e}")
