@@ -15,6 +15,7 @@ from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
 import json  # Import the json module
+import requests #Import requests
 
 # Configure logging
 logging.basicConfig(
@@ -413,8 +414,8 @@ def send_signal(message):
                     "take_profit": 0.0,
                     "confidence": 50.0,
                 }
-            except Exception as e:
-                logger.error(f"Error calling Gemini API (global recommendation): {e}")
+            except Exception as e:  # Corrected exception handling
+                logger.exception(f"Error calling Gemini API (global recommendation): {e}")
                 return {
                     "entry_point": 0.0,
                     "stop_loss": 0.0,
@@ -465,7 +466,7 @@ def send_ml_status(message):
         api_health = check_api_health()
         resource_usage = get_resource_usage()
         last_retraining_time = get_last_retraining_time()
-        model_accuracy = evaluate_model_performance(alert_system.ml_model)
+        model_accuracy = evaluate_model_performance(ml_model) #pass the model
         # Get backtesting results
         backtest_results = get_backtesting_results()
 
