@@ -13,7 +13,7 @@ from bot.api.binance_client import BinanceClient
 import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
-from bot.core.model_retraining import retrain_models  # <--- IMPORT HERE
+from bot.model_retraining import retrain_models  # <--- IMPORT HERE
 
 # Configure logging
 logging.basicConfig(
