@@ -14,9 +14,11 @@ import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
-import json  # Import the json module
-import requests  # Import requests
-import google.generativeai as genai # Import genai
+import json
+import requests
+import google.generativeai as genai
+import argparse  # Import argparse
+
 
 # Configure logging
 logging.basicConfig(
@@ -38,13 +40,10 @@ if not telegram_token:
     raise ValueError("TELEGRAM_BOT_TOKEN is not set in the environment variables.")
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
-# Initialize MLModel for backtesting results and getting selected features
-# Load the *correct* model (logistic_regression_model.joblib, based on the last retraining run)
-ml_model = MLModel(model_path="models/logistic_regression_model.joblib")
 
 
-# Function to fetch data (placeholder implementation)
-def fetch_data(symbol, interval):
+# Function to fetch data
+def fetch_data(symbol: str, interval: str) -> pd.DataFrame:
     """Fetch and preprocess data for a given symbol and interval."""
     processor = DataProcessor()
     raw_data = processor.fetch_data(symbol, interval)
@@ -54,16 +53,16 @@ def fetch_data(symbol, interval):
 start_time = time.time()
 
 # Function to calculate bot uptime
-def get_uptime():
+def get_uptime() -> str:
     """Calculate bot uptime."""
     uptime_seconds = time.time() - start_time
     days = int(uptime_seconds // (24 * 3600))
     hours = int((uptime_seconds % (24 * 3600)) // 3600)
-    minutes = int((uptime_seconds % 3600)) // 60)
+    minutes = int((uptime_seconds % 3600) // 60)  # Corrected line
     return f"{days}d {hours}h {minutes}m"
 
 # Function to check API health
-def check_api_health():
+def check_api_health() -> dict:
     """Check the health of external APIs."""
     api_health = {}
     try:
@@ -85,7 +84,7 @@ def check_api_health():
     return api_health
 
 # Function to get resource usage
-def get_resource_usage():
+def get_resource_usage() -> dict:
     """Get CPU, RAM, and storage usage."""
     cpu_usage = f"{psutil.cpu_percent()}%"
     ram = psutil.virtual_memory()
@@ -99,7 +98,7 @@ def get_resource_usage():
     }
 
 # Function to get last retraining time
-def get_last_retraining_time():
+def get_last_retraining_time() -> str:
     """Get the last retraining time from the file."""
     try:
         with open("last_retraining_time.txt", "r") as f:
@@ -108,7 +107,7 @@ def get_last_retraining_time():
         return "Never"
 
 # Function to evaluate model performance
-def evaluate_model_performance(model):
+def evaluate_model_performance(model: MLModel) -> str:
     """Evaluate the ML model's accuracy."""
     try:
         processor = DataProcessor()
@@ -123,19 +122,20 @@ def evaluate_model_performance(model):
         return f"Error: {str(e)}"
 
 # Function to get backtesting results (simplified for display)
-def get_backtesting_results():
+def get_backtesting_results(model: MLModel) -> dict:
+    """Gets backtesting results using the provided model."""
     try:
         processor = DataProcessor()
         data = processor.fetch_data("BTCUSDT", "1h", limit=1000)
         df = processor.preprocess_for_strategy(data)  # Use preprocess_for_strategy
-        results = ml_model.backtest(df, "BTCUSDT")
+        results = model.backtest(df, "BTCUSDT")
         return results
     except Exception as e:
         logger.error(f"Error during backtesting: {e}")
         return {}
 
 # Function to check signals and send alerts
-def check_and_send_alerts():
+def check_and_send_alerts(model: MLModel):
     logger.info("Checking signals for automatic alerts...")
     try:
         # List of assets to monitor
@@ -220,7 +220,7 @@ def check_and_send_alerts():
             # --- Automatic Signal Check (ML-based) ---
             data_1h = fetch_data(asset, "1h")
             df_1h = alert_system.processor.preprocess_for_strategy(data_1h) # Use preprocess_for_strategy
-            auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h, ml_model) # Pass the model
+            auto_signal, ml_confidence = alert_system.generate_automatic_signal(df_1h, model) # Pass the model
 
             if auto_signal != "HOLD":
                 alert_message = (
@@ -237,7 +237,7 @@ def check_and_send_alerts():
         logger.error(f"Error during automatic alert check: {e}")
 
 # Function to run scheduled tasks in the background
-def run_scheduler():
+def run_scheduler(model: MLModel):  # Pass model to scheduler functions
     while True:
         schedule.run_pending()
         time.sleep(1)
@@ -246,11 +246,8 @@ def run_scheduler():
 schedule.every(24).hours.do(retrain_models)
 
 # Schedule the alert task to run every 10 minutes
-schedule.every(10).minutes.do(check_and_send_alerts)
+schedule.every(10).minutes.do(check_and_send_alerts, ml_model)  # Pass ml_model
 
-# Start the scheduler in a separate thread
-scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
-scheduler_thread.start()
 
 # Command: /start
 @bot.message_handler(commands=['start'])
@@ -342,10 +339,10 @@ def send_signal(message):
 
             # --- Corrected Gemini Confidence Parsing ---
             try:
-                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
+                ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                ai_confidence = ai_confidence_response
+
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
@@ -435,7 +432,7 @@ def send_ml_status(message):
         last_retraining_time = get_last_retraining_time()
         model_accuracy = evaluate_model_performance(ml_model) #pass the model
         # Get backtesting results
-        backtest_results = get_backtesting_results()
+        backtest_results = get_backtesting_results(ml_model)
 
         # Format the response
         response = (
@@ -478,6 +475,15 @@ def echo_all(message):
 # Start polling
 if __name__ == "__main__":
     logger.info("Starting bot...")
+    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
+    parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
+                        help='Path to the trained ML model file.')
+    args = parser.parse_args()
+    # Initialize MLModel with the specified path
+    ml_model = MLModel(model_path=args.model_path)
+     # Pass ml_model to functions that need it
+    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True)
+    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)
     try:
         bot.infinity_polling()
     except Exception as e:
