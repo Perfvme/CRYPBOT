@@ -12,7 +12,8 @@ from bot.core.data_processing import DataProcessor
 from bot.api.binance_client import BinanceClient
 import psutil
 from bot.api.gemini_client import GeminiClient
-from bot.core.ml_models import MLModel # Import MLModel
+from bot.core.ml_models import MLModel
+from bot.core.model_retraining import retrain_models  # <--- IMPORT HERE
 
 # Configure logging
 logging.basicConfig(
@@ -35,7 +36,7 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 # Initialize MLModel for backtesting results
-ml_model = MLModel(model_path="models/random_forest_model.joblib")
+ml_model = MLModel(model_path="models/random_forest_model.joblib") # Or whichever model you last trained
 
 # Function to fetch data (placeholder implementation)
 def fetch_data(symbol, interval):
@@ -120,7 +121,10 @@ def get_backtesting_results():
     try:
         processor = DataProcessor()
         data = processor.fetch_data("BTCUSDT", "1h", limit=1000) # Fetch enough data
-        results = ml_model.backtest(data, "BTCUSDT")
+        df = processor.preprocess_data(data)
+        df = processor._engineer_features(df)
+        df = df.iloc[:-1]
+        results = ml_model.backtest(df, "BTCUSDT")
         return results
     except Exception as e:
         logger.error(f"Error during backtesting: {e}")
@@ -469,3 +473,4 @@ if __name__ == "__main__":
         bot.infinity_polling()
     except Exception as e:
         logger.error(f"Critical error while running the bot: {e}")
+        # Consider adding a retry mechanism here, or sending an alert to yourself
