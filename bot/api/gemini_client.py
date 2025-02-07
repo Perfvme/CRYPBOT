@@ -2,6 +2,7 @@ import os
 import google.generativeai as genai
 import logging
 import re
+import json  # Import json
 
 # Configure logging
 logging.basicConfig(
@@ -48,9 +49,8 @@ class GeminiClient:
             return 0
 
     def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
-        """Analyze market data for strategy confidence (0-100)."""
+        """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
-            # Few-shot examples (replace with your own, relevant examples)
             examples = """
 Example 1:
 Input:
@@ -82,25 +82,19 @@ Confidence: 35
                 f"Input:\nSymbol: {symbol}, Strategy: {strategy_name}\n"
                 f"OHLC Data:\n{ohlc_data}\n"
                 f"Indicator Data:\n{indicator_data}\n"
-                "Output:\nConfidence:"  # Guide the output format
+                "Output:\nConfidence:"
             )
-
 
             response = self.model.generate_content(prompt)
             logger.debug(f"Gemini API raw response (strategy confidence): {response.text}")
 
+            # --- Parse as JSON, handle errors ---
             try:
-                # More flexible regex: Handles "Confidence Level", optional "/", and extra text *non-greedy*
-                match = re.search(r"Confidence(?: Level)?:\s*([\d.]+)(?:/\d+)?.*?", response.text, re.IGNORECASE | re.DOTALL)
-                if match:
-                    ai_confidence = float(match.group(1))
-                    print(f"DEBUG: Matched confidence string: {match.group(0)}")  # Add this line
-                    return ai_confidence
-                else:
-                    logger.warning(f"No 'Confidence:' value found in: {response.text}")
-                    raise ValueError("No 'Confidence:' value found.")
-            except (ValueError, AttributeError):
-                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50.")
+                response_json = json.loads(response.text)
+                ai_confidence = float(response_json.get("Confidence", 50.0)) # Get value, default to 50
+                return ai_confidence
+            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
+                logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50. Error: {e}")
                 return 50.0
 
         except Exception as e:
@@ -108,9 +102,8 @@ Confidence: 35
             return 50.0
 
     def analyze_global_recommendation(self, symbol, ohlc_data, indicator_data):
-        """Analyze market data for a global recommendation."""
+        """Analyze market data for a global recommendation. Returns a dict."""
         try:
-            # Few-shot examples, chain-of-thought, and specific output format
             examples = """
 Example 1:
 Input:
@@ -154,42 +147,30 @@ Confidence: 60
                 f"You are a financial analysis model. Analyze the following market data for {symbol} and provide a global trading recommendation.\n"
                 "Follow these steps:\n"
                 "1. Identify the overall trend (Bullish, Bearish, or Neutral) based on the OHLC data and indicators.\n"
-                "2. Identify key support and resistance levels.\n"
+                "2. Identify key support, resistance levels, fair value gap and order block.\n"
                 "3. Based on the trend and levels, provide an ideal entry point, stop-loss, and take-profit.\n"
                 "4. Provide a confidence level (0-100) for the recommendation.\n\n"
                 f"{examples}\n"
                 f"Input:\nSymbol: {symbol}\n"
                 f"OHLC Data:\n{ohlc_data}\n"
                 f"Indicator Data:\n{indicator_data}\n"
-                "Output:\nReasoning:" # Guide to start with reasoning
+                "Output:\nReasoning:"
             )
 
             response = self.model.generate_content(prompt)
             logger.debug(f"Gemini API raw response (global recommendation): {response.text}")
 
+            # --- Parse as JSON, handle errors ---
             try:
-                # More robust parsing, expecting a structured response
-                entry_match = re.search(r"Entry Point:\s*([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
-                stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
-                take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response.text, re.IGNORECASE | re.DOTALL)
-                confidence_match = re.search(r"Confidence:\s*(\d+)", response.text, re.IGNORECASE | re.DOTALL)
-
-                if entry_match and stop_loss_match and take_profit_match and confidence_match:
-                    gemini_entry = float(entry_match.group(1))
-                    gemini_stop_loss = float(stop_loss_match.group(1))
-                    gemini_take_profit = float(take_profit_match.group(1))
-                    gemini_confidence = float(confidence_match.group(1))
-                    return {
-                        "entry_point": gemini_entry,
-                        "stop_loss": gemini_stop_loss,
-                        "take_profit": gemini_take_profit,
-                        "confidence": gemini_confidence,
-                    }
-                else:
-                    logger.warning(f"Could not find all values in: {response.text}")
-                    raise ValueError("Could not find all required values in Gemini response.")
-
-            except (ValueError, AttributeError):
+                response_json = json.loads(response.text)
+                # Use .get() with defaults for all keys
+                return {
+                    "entry_point": float(response_json.get("Entry Point", 0.0)),
+                    "stop_loss": float(response_json.get("Stop Loss", 0.0)),
+                    "take_profit": float(response_json.get("Take Profit", 0.0)),
+                    "confidence": float(response_json.get("Confidence", 50.0)),
+                }
+            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
                 logger.warning("Failed to parse global recommendation from Gemini. Returning defaults.")
                 return {
                     "entry_point": 0.0,
