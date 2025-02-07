@@ -63,16 +63,17 @@ class DataProcessor:
         return X_train, X_test, y_train, y_test
 
     def _engineer_features(self, df):
-        """Simplified feature engineering: Only lagged returns."""
-        for lag in [1, 2, 3, 5, 10, 20]:  # Experiment with different lags
-            df[f'return_{lag}'] = df['close'].pct_change(periods=lag)
-        df.dropna(inplace=True)
+        """Corrected feature engineering: Lagged RETURNS."""
+        for lag in [1, 2, 3, 5, 10, 20]:
+            df[f'return_{lag}'] = df['close'].pct_change(periods=lag) # Calculate percentage change
+        df.dropna(inplace=True) # Drop NaN values AFTER calculations
         return df
 
     def get_feature_columns(self):
         """Returns a list of feature column names."""
+        # Dynamically get feature columns, excluding 'label' and 'future_close'
         return [col for col in self._engineer_features(self.preprocess_data(self.fetch_data('BTCUSDT', '1h'))).columns
-                if col not in ['label', 'future_close']] # Ensure 'future_close' is excluded
+                if col not in ['label', 'future_close']]
 
     def get_prediction_features(self, df):
         """Preprocesses data and returns features for prediction."""
