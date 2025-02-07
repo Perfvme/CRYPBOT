@@ -19,31 +19,36 @@ class AlertSystem:
         self.engine = StrategyEngine()
         self.processor = DataProcessor()
         self.gemini_client = GeminiClient()
-        self.ml_model = MLModel(model_path="models/random_forest_model.joblib")  # Load the trained model
+        # Don't load the model here. Load it in telegram_bot.py and pass it.
+        # self.ml_model = MLModel(model_path="models/m1h_model.joblib")
 
-    def calculate_ml_confidence(self, df):
+    def calculate_ml_confidence(self, df, model):
         """Calculate ML-based confidence using the trained model."""
         try:
-            # Get enough data for feature engineering
-            temp_df = df.tail(50).copy()  # Use at least 50 rows
-            features_df = self.processor.get_prediction_features(temp_df)
+            # Check if the model has selected_features
+            if model.selected_features is None:
+                logger.warning("ML model has no selected features.  Returning default confidence.")
+                return 50.0
 
-            # Check if features_df is empty or if selected features are missing
-            if features_df.empty or not all(feature in features_df.columns for feature in self.ml_model.selected_features):
-                logger.warning("Feature DataFrame is empty or missing selected features. Returning default confidence.")
-                return 50
+            # Filter the DataFrame to include *only* the selected features
+            features_df = df[model.selected_features]
 
-            # Select only the features used during training
-            features = features_df[self.ml_model.selected_features].tail(1)
+            # Check if features_df is empty
+            if features_df.empty:
+                logger.warning("Feature DataFrame is empty after filtering. Returning default confidence.")
+                return 50.0
+
+            # Use the LAST row of the processed features
+            features = features_df.tail(1)
 
             # Predict probability of price increase
-            probabilities = self.ml_model.model.predict_proba(features)[0]
+            probabilities = model.predict_proba(features)[0]
             confidence = probabilities[1] * 100  # Probability of "1" (price increase)
 
             return confidence
         except Exception as e:
             logger.exception(f"Error calculating ML confidence: {e}") # Use logger.exception
-            return 50  # Default confidence if prediction fails
+            return 50.0  # Default confidence if prediction fails
 
     def calculate_ds_confidence(self, df):
         """Calculate Gemini-based confidence."""
@@ -57,31 +62,33 @@ class AlertSystem:
             print(f"Error calculating Gemini confidence: {e}")
             return 50  # Default confidence if analysis fails
 
-    def calculate_combined_confidence(self, df):
+    def calculate_combined_confidence(self, df, model):
         """Calculate combined confidence for a single timeframe."""
-        ml_confidence = self.calculate_ml_confidence(df)
+        ml_confidence = self.calculate_ml_confidence(df, model) # Pass the model
         ds_confidence = self.calculate_ds_confidence(df)
         return (ml_confidence + ds_confidence) / 2
 
-    def generate_automatic_signal(self, df):
+    def generate_automatic_signal(self, df, model):
         """Generate automatic signal based on ML model confidence."""
         try:
-            temp_df = df.tail(50).copy()
-            features_df = self.processor.get_prediction_features(temp_df)
+            # Check if the model has selected_features
+            if model.selected_features is None:
+                logger.warning("ML model has no selected features. Returning HOLD signal.")
+                return "HOLD", 50.0
 
-            # Check for empty DataFrame or missing features
-            if features_df.empty or (self.ml_model.selected_features is not None and not all(feature in features_df.columns for feature in self.ml_model.selected_features)):
-                logger.warning("Feature DataFrame is empty or missing selected features. Returning HOLD signal.")
-                return "HOLD", 50  # Return HOLD and default confidence
+            # Filter the DataFrame!
+            features_df = df[model.selected_features]
 
-            # Use .iloc[[-1]] to get a DataFrame, even with a single row.  This is important!
-            features = features_df[self.ml_model.selected_features].iloc[[-1]]
-            probabilities = self.ml_model.model.predict_proba(features)[0]
-            confidence = probabilities[1] * 100 # Probability of price increase
+            if features_df.empty:
+                logger.warning("Feature DataFrame is empty after filtering. Returning HOLD signal.")
+                return "HOLD", 50.0
+
+            features = features_df.iloc[[-1]]  # Use iloc[[-1]] for DataFrame
+            probabilities = model.predict_proba(features)[0]
+            confidence = probabilities[1] * 100
 
             if confidence >= 80:
-                # Determine signal based on predicted class (0 or 1)
-                prediction = self.ml_model.model.predict(features)[0]
+                prediction = model.predict(features)[0]
                 signal = "BUY" if prediction == 1 else "SELL"
                 return signal, confidence
             else:
@@ -89,4 +96,4 @@ class AlertSystem:
 
         except Exception as e:
             logger.exception(f"Error generating automatic signal: {e}")
-            return "HOLD", 50 # Default to HOLD on error
+            return "HOLD", 50
