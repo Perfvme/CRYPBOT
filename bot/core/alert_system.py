@@ -70,11 +70,12 @@ class AlertSystem:
             features_df = self.processor.get_prediction_features(temp_df)
 
             # Check for empty DataFrame or missing features
-            if features_df.empty or not all(feature in features_df.columns for feature in self.ml_model.selected_features):
+            if features_df.empty or (self.ml_model.selected_features is not None and not all(feature in features_df.columns for feature in self.ml_model.selected_features)):
                 logger.warning("Feature DataFrame is empty or missing selected features. Returning HOLD signal.")
                 return "HOLD", 50  # Return HOLD and default confidence
 
-            features = features_df[self.ml_model.selected_features].tail(1)
+            # Use .iloc[[-1]] to get a DataFrame, even with a single row.  This is important!
+            features = features_df[self.ml_model.selected_features].iloc[[-1]]
             probabilities = self.ml_model.model.predict_proba(features)[0]
             confidence = probabilities[1] * 100 # Probability of price increase
 
