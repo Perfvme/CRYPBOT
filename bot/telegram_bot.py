@@ -13,7 +13,7 @@ from bot.api.binance_client import BinanceClient
 import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
-from bot.model_retraining import retrain_models
+from bot.core.model_retraining import retrain_models
 import json  # Import the json module
 
 # Configure logging
@@ -36,8 +36,9 @@ if not telegram_token:
     raise ValueError("TELEGRAM_BOT_TOKEN is not set in the environment variables.")
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
-# Initialize MLModel for backtesting results
+# Initialize MLModel for backtesting results and getting selected features
 ml_model = MLModel(model_path="models/logistic_regression_model.joblib") # Or whichever model
+
 
 # Function to fetch data (placeholder implementation)
 def fetch_data(symbol, interval):
@@ -122,10 +123,8 @@ def evaluate_model_performance(model):
 def get_backtesting_results():
     try:
         processor = DataProcessor()
-        data = processor.fetch_data("BTCUSDT", "1h", limit=1000) # Fetch enough data
-        df = processor.preprocess_data(data)
-        df = processor._engineer_features(df)
-        df = df.iloc[:-1]
+        data = processor.fetch_data("BTCUSDT", "1h", limit=1000)
+        df = processor.preprocess_for_strategy(data)  # Use preprocess_for_strategy
         results = ml_model.backtest(df, "BTCUSDT")
         return results
     except Exception as e:
@@ -333,7 +332,7 @@ def send_signal(message):
             # Use get_prediction_features to ensure correct feature set
             ml_features_df = alert_system.processor.get_prediction_features(combined_df)
             if not ml_features_df.empty:
-                ml_confidence = alert_system.calculate_ml_confidence(combined_df)
+                ml_confidence = alert_system.calculate_ml_confidence(ml_features_df) # Pass the features df
             else:
                 ml_confidence = 50.0 # Default if no features are available.
 
@@ -349,7 +348,7 @@ def send_signal(message):
                 # Parse as JSON
                 ai_confidence = float(json.loads(ai_confidence_response.text)["Confidence"])
 
-            except (json.JSONDecodeError, KeyError, ValueError) as e:
+            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
                 logger.warning(f"Failed to parse AI confidence for {strategy_name}. Returning 50. Error: {e}")
                 ai_confidence = 50.0
             except Exception as e:
@@ -392,7 +391,7 @@ def send_signal(message):
                     "confidence": float(recommendation.get("Confidence", 50.0)),
                 }
 
-            except (json.JSONDecodeError, KeyError, ValueError) as e:
+            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
                 logger.warning(f"Failed to parse global recommendation from Gemini. Returning defaults. Error: {e}")
                 return {
                     "entry_point": 0.0,
