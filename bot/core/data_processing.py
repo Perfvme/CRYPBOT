@@ -50,7 +50,7 @@ class DataProcessor:
     def preprocess_for_training(self, data):
         """Preprocess for training, including feature engineering and train/test split."""
         df = self.preprocess_data(data)
-        df = self._engineer_features(df) # Call feature engineering
+        df = self._engineer_features(df)  # Call feature engineering
 
         # Labels: Future price movement (1 for increase, 0 for decrease)
         df['future_close'] = df['close'].shift(-1)  # Next time period's close price
@@ -60,7 +60,7 @@ class DataProcessor:
         df = df.iloc[:-1]
 
         # Extract features and labels
-        X = df[self.get_feature_columns()] # Use helper function
+        X = df[self.get_feature_columns()]  # Use helper function
         y = df['label']
 
         # --- Train/Test Split ---
@@ -72,28 +72,55 @@ class DataProcessor:
         return X_train, X_test, y_train, y_test
 
     def _engineer_features(self, df):
-        """Helper function to engineer features.  Keeps training and prediction consistent."""
-        # Lagged Features (example: lag RSI by 1 period)
-        df['rsi_lag1'] = df['rsi'].shift(1)
-        df['macd_lag1'] = df['macd'].shift(1)
+        """Helper function to engineer features. Keeps training and prediction consistent."""
 
-        # Rolling Statistics (example: 5-period rolling mean of RSI)
-        df['rsi_rollmean5'] = df['rsi'].rolling(window=5).mean()
-        df['rsi_rollstd5'] = df['rsi'].rolling(window=5).std()
+        # Lagged Features
+        for lag in [1, 2, 3, 5, 10]:
+            df[f'rsi_lag{lag}'] = df['rsi'].shift(lag)
+            df[f'macd_lag{lag}'] = df['macd'].shift(lag)
+            df[f'close_lag{lag}'] = df['close'].shift(lag)
+
+        # Rolling Statistics
+        for window in [5, 10, 20, 50]:
+            df[f'rsi_rollmean{window}'] = df['rsi'].rolling(window=window).mean()
+            df[f'rsi_rollstd{window}'] = df['rsi'].rolling(window=window).std()
+            df[f'close_rollmean{window}'] = df['close'].rolling(window=window).mean()
+            df[f'close_rollstd{window}'] = df['close'].rolling(window=window).std()
+            df[f'volume_rollmean{window}'] = df['volume'].rolling(window=window).mean()
 
         # Price-Based Features
-        df['pct_change'] = df['close'].pct_change()  # Percentage change
-        df['price_diff'] = df['close'].diff()       # Price difference
-        df['high_low_range'] = df['high'] - df['low'] #high-low range
+        for period in [1, 2, 3, 5]:
+            df[f'pct_change_{period}'] = df['close'].pct_change(periods=period)
+            df[f'price_diff_{period}'] = df['close'].diff(periods=period)
+        df['high_low_range'] = df['high'] - df['low']
+        df['close_open_ratio'] = df['close'] / df['open']
+        df['high_open_ratio'] = df['high'] / df['open']
+        df['low_open_ratio'] = df['low'] / df['open']
 
-        df.dropna(inplace=True) # Drop NaNs here, AFTER all calculations
+        # Indicator-Based Features
+        df['rsi_ema_diff'] = df['rsi'] - df['ema']
+        df['macd_hist_change'] = df['macd'].diff()
+        df['bb_width'] = df['bb_upper'] - df['bb_lower']
+        df['bb_pct'] = (df['close'] - df['bb_lower']) / df['bb_width']  # Normalized distance from BB
+
+        # Time-Based Features
+        df['hour_of_day'] = df.index.hour
+        df['day_of_week'] = df.index.dayofweek
+        df['day_of_month'] = df.index.day
+
+        # Interaction Features
+        df['rsi_macd'] = df['rsi'] * df['macd']
+        df['rsi_bb_pct'] = df['rsi'] * df['bb_pct']
+
+        df.dropna(inplace=True)  # Drop NaNs here, AFTER all calculations
         return df
 
     def get_feature_columns(self):
-        """Returns a list of feature column names."""
-        return ['rsi', 'macd', 'bb_upper', 'bb_lower', 'ema', 'atr', 'vwap',
-                'rsi_lag1', 'macd_lag1', 'rsi_rollmean5', 'rsi_rollstd5',
-                'pct_change', 'price_diff', 'high_low_range']
+        """Returns a list of *all* engineered feature column names."""
+        # This is important:  It should reflect *all* columns created in _engineer_features
+        #  *except* 'label' and 'future_close'.
+        return [col for col in self._engineer_features(self.preprocess_data(self.fetch_data('BTCUSDT', '1h'))).columns
+                if col not in ['label', 'future_close']]
 
     def get_prediction_features(self, df):
         """Preprocesses data and returns features for prediction (no labels, no split)."""
