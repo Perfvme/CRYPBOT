@@ -4,6 +4,7 @@ import talib
 from bot.api.binance_client import BinanceClient
 import logging
 from sklearn.model_selection import train_test_split
+import numpy as np  # <--- ADD THIS LINE
 
 # Configure logging
 logging.basicConfig(
