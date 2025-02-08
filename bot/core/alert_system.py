@@ -51,7 +51,7 @@ class AlertSystem:
             logger.exception(f"Error calculating ML confidence: {e}") # Use logger.exception
             return 50.0  # Default confidence if prediction fails
 
-    def calculate_ds_confidence(self, df: pd.DataFrame) -> float:
+    def calculate_ai_confidence(self, df: pd.DataFrame) -> float:
         """Calculate Gemini-based confidence."""
         try:
             # Use the last 50 rows for sentiment analysis
@@ -66,7 +66,7 @@ class AlertSystem:
     def calculate_combined_confidence(self, df: pd.DataFrame, model: MLModel) -> float:
         """Calculate combined confidence for a single timeframe."""
         ml_confidence = self.calculate_ml_confidence(df, model) # Pass the model
-        ds_confidence = self.calculate_ds_confidence(df)
+        ai_confidence = self.calculate_ai_confidence(df)
         return (ml_confidence + ds_confidence) / 2
 
     def generate_automatic_signal(self, df: pd.DataFrame, model: MLModel) -> Tuple[str, float]:
