@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 import logging
 import re
-from typing import Dict, Union
+from typing import Dict, Union, List
 
 # Configure logging
 logging.basicConfig(
@@ -22,6 +22,42 @@ class GeminiClient:
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel('gemini-pro') # Using gemini-pro
 
+    def _parse_gemini_response(self, response_text: str, keys: List[str]) -> Dict[str, float]:
+        """Parses a Gemini response, extracting values for specified keys.
+
+        Args:
+            response_text: The raw text response from Gemini.
+            keys: A list of keys to extract (e.g., ["Confidence", "Entry Point"]).
+
+        Returns:
+            A dictionary where keys are the input keys (lowercase, spaces replaced
+            with underscores) and values are the extracted float values (or default
+            values if not found).
+        """
+        results = {}
+        for key in keys:
+            # More robust regex: case-insensitive, handles any chars before/after,
+            # captures digits and .
+            match = re.search(rf".*?{key}.*?:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+            try:
+                if match:
+                    results[key.lower().replace(" ", "_")] = float(match.group(1))  # Convert to float
+                else:
+                    logger.warning(f"Could not find key '{key}' in Gemini response.")
+                    # Use a default value appropriate for the key
+                    if key == "Confidence":
+                        results[key.lower().replace(" ", "_")] = 50.0  # Default confidence
+                    else:
+                        results[key.lower().replace(" ", "_")] = 0.0  # Default for prices
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Error parsing value for {key}: {e}. Using default.")
+                if key == "Confidence":
+                    results[key.lower().replace(" ", "_")] = 50.0
+                else:
+                    results[key.lower().replace(" ", "_")] = 0.0
+        return results
+
+
     def analyze_sentiment(self, text: str) -> float:
         """Analyze text for sentiment and return a score between -1 and 1."""
         try:
@@ -32,18 +68,8 @@ class GeminiClient:
 
             response = self.model.generate_content(prompt)
             logger.debug(f"Gemini API raw response (sentiment): {response.text}")
+            return self._parse_gemini_response(response.text, ["sentiment_score"]).get("sentiment_score", 0.0) # Use helper and default
 
-            try:
-                match = re.search(r"[-+]?\d*\.?\d+", response.text)
-                if match:
-                    sentiment_score = float(match.group(0))
-                    return sentiment_score
-                else:
-                    raise ValueError("No numeric sentiment score found.")
-            except ValueError:
-                logger.warning("Failed to parse sentiment score. Returning 0.")
-                logger.debug(f"Raw response content: {response.text}")
-                return 0.0
         except Exception as e:
             logger.error(f"Error calling Gemini API (sentiment): {e}")
             return 0.0
@@ -65,18 +91,9 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
-            # --- Robust Regex Parsing ---
-            match = re.search(r".*?Confidence.*?:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
-            if match:
-                try:
-                    ai_confidence = float(match.group(1))
-                    return ai_confidence
-                except (ValueError, TypeError):
-                    logger.warning("Failed to parse confidence from regex match. Returning 50.")
-                    return 50.0  # Default value
-            else:
-                logger.warning("No 'Confidence:' value found using regex. Returning 50.")
-                return 50.0
+            # Use the helper function for consistent parsing
+            result = self._parse_gemini_response(response_text, ["Confidence"])
+            return result.get("confidence", 50.0)  # Return the float value
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (strategy confidence): {e}")
@@ -104,34 +121,8 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (global recommendation): {response_text}")
 
-            # --- Robust Regex Parsing (Handles variations in Gemini's output) ---
-            try:
-                # More robust regex that handles variations
-                entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                confidence_match = re.search(r"Confidence:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
-
-                entry_point = float(entry_match.group(1)) if entry_match and entry_match.group(1) else 0.0
-                stop_loss = float(stop_loss_match.group(1)) if stop_loss_match and stop_loss_match.group(1) else 0.0
-                take_profit = float(take_profit_match.group(1)) if take_profit_match and take_profit_match.group(1) else 0.0
-                confidence = float(confidence_match.group(1)) if confidence_match and confidence_match.group(1) else 50.0
-
-
-                return {
-                    "entry_point": entry_point,
-                    "stop_loss": stop_loss,
-                    "take_profit": take_profit,
-                    "confidence": confidence,
-                }
-            except (AttributeError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse global recommendation using regex. Returning defaults. Error: {e}")
-                return {
-                    "entry_point": 0.0,
-                    "stop_loss": 0.0,
-                    "take_profit": 0.0,
-                    "confidence": 50.0,
-                }
+            # Use the helper function for consistent parsing
+            return self._parse_gemini_response(response_text, ["Entry Point", "Stop Loss", "Take Profit", "Confidence"])
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
