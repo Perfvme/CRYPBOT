@@ -11,12 +11,12 @@ from bot.core.alert_system import AlertSystem
 from bot.core.data_processing import DataProcessor
 from bot.api.binance_client import BinanceClient
 import psutil
-from bot.api.gemini_client import GeminiClient  # Corrected import
+from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
-from bot.model_retraining import retrain_models
+from bot.core.model_retraining import retrain_models
 import json  # Import the json module
 import requests  # Import requests
-import google.generativeai as genai  # Import genai
+import google.generativeai as genai # Import genai
 import argparse  # Import argparse
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -136,7 +136,7 @@ def get_backtesting_results(model: MLModel) -> dict:
         processor = DataProcessor()
         data = processor.fetch_data("BTCUSDT", "1h", limit=1000)
         df = processor.preprocess_for_strategy(data)  # Use preprocess_for_strategy
-        results = model.backtest(df, "BTCUSDT")
+        results = ml_model.backtest(df, "BTCUSDT")
         return results
     except Exception as e:
         logger.error(f"Error during backtesting: {e}")
@@ -172,7 +172,7 @@ def check_and_send_alerts(model: MLModel):
                 atr = df['atr'].iloc[-1]
 
                 signals.append(signal)
-                ds_confidences.append(ds_confidence)
+                ds_confidences.append(ds_confidences)
                 support_levels.append(support)
                 resistance_levels.append(resistance)
                 atr_values.append(atr)
@@ -181,7 +181,7 @@ def check_and_send_alerts(model: MLModel):
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
-            avg_ds_confidence = sum(ds_confidences) / len(ds_confidences)
+            avg_ds_confidence = sum(ds_confidences) / len(timeframe_data)
 
             # Check if 3/4 timeframes agree and DS confidence is above 75%
             buy_count = signals.count("BUY")
@@ -203,8 +203,8 @@ def check_and_send_alerts(model: MLModel):
                     take_profit = avg_support - avg_atr
                 else:  # Handle HOLD case explicitly
                     entry_point = (avg_support + avg_resistance) / 2
-                    stop_loss = entry_point - avg_atr  # Example, adjust as needed
-                    take_profit = entry_point + avg_atr # Example, adjust as needed
+                    stop_loss = avg_support - avg_atr  # Example, adjust as needed
+                    take_profit = avg_resistance + avg_atr # Example, adjust as needed
 
                 # Prepare the alert message
                 alert_message = (
@@ -325,9 +325,13 @@ def send_signal(message):
             avg_close = np.mean(close_prices)
 
             if majority_signal == "BUY":
-                entry_point = fib_levels.get("61.8%", avg_close)
+                entry_point = avg_support
+                stop_loss = avg_support - avg_atr
+                take_profit = avg_resistance + avg_atr
             elif majority_signal == "SELL":
-                entry_point = fib_levels.get("38.2%", avg_close)
+                entry_point = avg_resistance
+                stop_loss = avg_resistance + avg_atr
+                take_profit = avg_support - avg_atr
             else:
                 entry_point = (avg_support + avg_resistance) / 2
 
@@ -350,13 +354,11 @@ def send_signal(message):
                 ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-
+                ai_confidence = ai_confidence
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
-                ai_confidence = 50.0  # Return a default value
-
-
+                ai_confidence = 50.0  # Default value
 
             return {
                 "strategy": strategy_name,
@@ -462,9 +464,9 @@ def send_ml_status(message):
                 "📊 Backtesting Results (BTCUSDT, 1h):\n"
                 f"  - Final Capital: ${backtest_results['final_capital']:.2f}\n"
                 f"  - Win Rate: {backtest_results['win_rate']:.2%}\n"
-                f"  - Profit Factor: {backtest_results['profit_factor']:.2f}\n"
-                f"  - Max Drawdown: {backtest_results['max_drawdown']:.2%}\n"
-                f"  - Sharpe Ratio: {backtest_results['sharpe_ratio']:.2f}\n"
+            f"  - Profit Factor: {backtest_results['profit_factor']:.2f}\n"
+            f"  - Max Drawdown: {backtest_results['max_drawdown']:.2%}\n"
+            f"  - Sharpe Ratio: {backtest_results['sharpe_ratio']:.2f}\n"
             )
         else:
             response += "▫️ Backtesting Results:  Not available\n"
@@ -483,14 +485,14 @@ def echo_all(message):
 # Start polling
 if __name__ == "__main__":
     logger.info("Starting bot...")
-    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.") #argument parser
+    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
     parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
-                        help='Path to the trained ML model file.') #model path argument
+                        help='Path to the trained ML model file.')
     args = parser.parse_args()
     ml_model = MLModel(model_path=args.model_path)  # Use args.model_path for loading the model
     # Pass ml_model to functions that need it
-    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True) #pass model to scheduler
-    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)  # Pass ml_model to check and send alerts
+    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True)
+    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)  # Pass ml_model to check_and_send_alerts
     try:
         bot.infinity_polling()
     except Exception as e:
