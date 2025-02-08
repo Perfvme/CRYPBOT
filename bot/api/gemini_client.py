@@ -79,7 +79,7 @@ class GeminiClient:
         try:
             examples = """..."""  # Your examples
             prompt = (
-                f"You are a financial analysis model. Analyze the following market data for {symbol} ({strategy_name}) and provide a confidence level (0-100) for the overall trading signal.\n"
+                f"You are a financial analysis model. Analyze the following market data for {symbol} ({strategy_name}) and provide a confidence level (0-100) with format like this confidence : , for the overall trading signal.\n"
                 f"{examples}\n"
                 f"Input:\nSymbol: {symbol}, Strategy: {strategy_name}\n"
                 f"OHLC Data:\n{ohlc_data}\n"
