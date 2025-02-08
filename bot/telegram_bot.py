@@ -14,9 +14,6 @@ import psutil
 from bot.api.gemini_client import GeminiClient
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
-import json  # Import the json module
-import requests  # Import requests
-import google.generativeai as genai # Import genai
 import argparse  # Import argparse
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -361,7 +358,7 @@ def send_signal(message):
                 "take_profit": take_profit,
                 "risk_reward_ratio": risk_reward_ratio,
                 "ml_confidence": ml_confidence,
-                "ai_confidence": ai_confidence,
+                "ai_confidence": ai_confidence, # Correctly using parsed value
             }
 
         def get_global_recommendation(all_timeframes: Dict[str, pd.DataFrame]) -> Dict[str, float]:
@@ -394,7 +391,7 @@ def send_signal(message):
             f"│ Take Profit: ${scalping_params['take_profit']:.2f}\n"
             f"│ Risk-Reward Ratio: {scalping_params['risk_reward_ratio']:.2f}\n"
             f"│ ML Confidence: {scalping_params['ml_confidence']:.1f}%\n"
-            f"│ AI Confidence: {scalping_params['ai_confidence']:.1f}%\n\n"
+            f"│ AI Confidence: {scalping_params['ai_confidence']:.1f}%\n\n"  # Correctly using ai_confidence
             f"📈 Swing Trading Strategy:\n"
             f"│ Signal: {swing_params['signal']}\n"
             f"│ Entry Point: ${swing_params['entry_point']:.2f}\n"
@@ -402,7 +399,7 @@ def send_signal(message):
             f"│ Take Profit: ${swing_params['take_profit']:.2f}\n"
             f"│ Risk-Reward Ratio: {swing_params['risk_reward_ratio']:.2f}\n"
             f"│ ML Confidence: {swing_params['ml_confidence']:.1f}%\n"
-            f"│ AI Confidence: {swing_params['ai_confidence']:.1f}%\n\n"
+            f"│ AI Confidence: {swing_params['ai_confidence']:.1f}%\n\n"  # Correctly using ai_confidence
             f"🌍 Global Recommendation:\n"
             f"│ Entry Point: ${global_recommendation['entry_point']:.2f}\n"
             f"│ Stop Loss: ${global_recommendation['stop_loss']:.2f}\n"
