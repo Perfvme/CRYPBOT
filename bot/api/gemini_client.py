@@ -1,10 +1,9 @@
-from typing import Dict, Union
 import os
 import google.generativeai as genai
 import logging
 import re
-import json
-import requests  # Add import
+import json  # Keep json import for potential future use, even if not strictly needed now
+from typing import Dict, Union
 
 # Configure logging
 logging.basicConfig(
@@ -24,7 +23,7 @@ class GeminiClient:
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel('gemini-2.0-flash-001')
 
-    def analyze_sentiment(self, text):
+    def analyze_sentiment(self, text: str) -> float:
         """Analyze text for sentiment and return a score between -1 and 1."""
         try:
             prompt = (
@@ -50,7 +49,7 @@ class GeminiClient:
             logger.error(f"Error calling Gemini API (sentiment): {e}")
             return 0.0
 
-    def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
+    def analyze_strategy_confidence(self, symbol: str, strategy_name: str, ohlc_data: str, indicator_data: str) -> float:
         """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
             examples = """..."""  # Your examples
@@ -67,31 +66,26 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
-            # --- Prioritize Regex, then JSON as fallback ---
+            # --- Prioritize Regex ---
             match = re.search(r".*Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
             if match:
                 try:
                     ai_confidence = float(match.group(1))
                     return ai_confidence
                 except (ValueError, TypeError):
-                    logger.warning("Failed to parse confidence from regex match. Trying JSON...")
+                    logger.warning("Failed to parse confidence from regex match. Returning 50.")
+                    return 50.0
             else:
-                logger.warning("No 'Confidence:' value found using regex. Trying JSON...")
-
-            try:
-                response_json = json.loads(response_text)
-                ai_confidence = float(response_json.get("Confidence", 50.0))
-                return ai_confidence
-            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse AI confidence. Returning 50. Error: {e}")
+                logger.warning("No 'Confidence:' value found using regex. Returning 50.")
                 return 50.0
+
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (strategy confidence): {e}")
             return 50.0
 
-    def analyze_global_recommendation(self, symbol, ohlc_data, indicator_data):
-        """Analyze market data, return recommendation dict. Robust parsing."""
+    def analyze_global_recommendation(self, symbol: str, ohlc_data: str, indicator_data: str) -> Dict[str, float]:
+        """Analyze market data for a global recommendation. Returns a dict."""
         try:
             examples = """..."""  # Your examples
             prompt = (
@@ -112,9 +106,9 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (global recommendation): {response_text}")
 
-            # --- Prioritize Regex, then JSON as fallback ---
+            # --- Prioritize Regex ---
             try:
-                # More robust regex that handles variations in Gemini's output
+                # More robust regex that handles variations
                 entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                 stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                 take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
@@ -131,26 +125,15 @@ class GeminiClient:
                     "take_profit": take_profit,
                     "confidence": confidence,
                 }
-            except (AttributeError, ValueError):
-                logger.warning("Failed to parse global recommendation using regex. Trying JSON...")
-
-            # Fallback to JSON parsing (less reliable, but still useful)
-            try:
-                response_json = json.loads(response_text)
-                return {
-                    "entry_point": float(response_json.get("Entry Point", 0.0)),
-                    "stop_loss": float(response_json.get("Stop Loss", 0.0)),
-                    "take_profit": float(response_json.get("Take Profit", 0.0)),
-                    "confidence": float(response_json.get("Confidence", 50.0)),
-                }
-            except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse global recommendation. Returning defaults. Error: {e}")
+            except (AttributeError, ValueError, TypeError):
+                logger.warning("Failed to parse global recommendation using regex. Returning defaults.")
                 return {
                     "entry_point": 0.0,
                     "stop_loss": 0.0,
                     "take_profit": 0.0,
                     "confidence": 50.0,
                 }
+
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
