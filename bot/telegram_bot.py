@@ -38,7 +38,7 @@ if not telegram_token:
 bot = telebot.TeleBot(telegram_token)
 alert_system = AlertSystem()
 
-# --- Moved and corrected model initialization ---
+# --- Correct model initialization with argparse ---
 parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
 parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
                     help='Path to the trained ML model file.')
@@ -375,7 +375,7 @@ def send_signal(message):
             recommendation = alert_system.gemini_client.analyze_global_recommendation(
                 symbol, ohlc_data, indicator_data
             )
-            return recommendation #Corrected
+            return recommendation
 
 
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
