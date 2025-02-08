@@ -303,7 +303,7 @@ def send_signal(message):
                 # Use preprocess_for_strategy here
                 df = alert_system.processor.preprocess_for_strategy(data)
                 dataframes.append(df)
-                signal, _ = alert_system.engine.generate_signal(df)
+                signal, reason = alert_system.engine.generate_signal(df) # Get the reason
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
                 atr = df['atr'].iloc[-1]
@@ -354,7 +354,7 @@ def send_signal(message):
                 ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                ai_confidence = ai_confidence_response #Corrected
+                ai_confidence = ai_confidence_response
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
@@ -388,7 +388,7 @@ def send_signal(message):
                 recommendation = alert_system.gemini_client.analyze_global_recommendation(
                     symbol, ohlc_data, indicator_data
                 )
-                return recommendation #Corrected
+                return recommendation
 
             except Exception as e:  # Corrected exception handling
                 logger.exception(f"Error calling Gemini API (global recommendation): {e}")
