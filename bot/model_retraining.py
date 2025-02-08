@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def retrain_models(model_type='logistic_regression'):  # Add model_type argument
-    """Retrain the ML model and save it to disk."""
+    """Retrain the ML model and save it."""
     try:
         processor = DataProcessor()  # Use DataProcessor
         model = MLModel(model_type=model_type) # Pass model_type to MLModel
@@ -55,6 +55,7 @@ def retrain_models(model_type='logistic_regression'):  # Add model_type argument
         # Update last retraining time
         with open("last_retraining_time.txt", "w") as f:
             f.write(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
     except Exception as e:
         logger.exception(f"Error during model retraining: {e}") # Use logger.exception
 
