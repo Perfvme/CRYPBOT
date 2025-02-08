@@ -62,7 +62,7 @@ class GeminiClient:
         """Analyze text for sentiment and return a score between -1 and 1."""
         try:
             prompt = (
-                "You are a financial sentiment analysis model. Analyze the provided market data and return ONLY a sentiment score between -1 (bearish) and +1 (bullish). "
+                "You are a financial sentiment analysis model. Analyze the provided market data and return ONLY a sentiment score between -1 (bearish) and +1 (bullish), the format should be, sentiment : . "
                 f"Market Data: {text}"
             )
 
