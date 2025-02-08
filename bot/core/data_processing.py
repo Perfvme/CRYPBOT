@@ -104,10 +104,13 @@ class DataProcessor:
 
     def get_feature_columns(self):
         """Returns a list of *ML model* feature column names."""
-        # Use a smaller set of features, or let RFECV handle it
-        return [col for col in self._engineer_features(self.preprocess_data(self.fetch_data('BTCUSDT', '1h'))).columns
-                if col not in ['open', 'high', 'low', 'close', 'volume', 'close_time', 'quote_asset_volume', 'number_of_trades', 'taker_buy_base_asset_volume', 'taker_buy_quote_asset_volume', 'ignore','label', 'future_close']]
-
+        # Dynamically generate the list based on _engineer_features
+        sample_data = self.fetch_data('BTCUSDT', '1h', limit=500)
+        if not sample_data:
+            return []  # Return empty list if no data
+        sample_df = self._engineer_features(self.preprocess_data(sample_data))
+        feature_columns = [col for col in sample_df.columns if col not in ['label', 'future_close']]
+        return feature_columns
 
     def get_prediction_features(self, df):
         """Preprocesses data and returns features for prediction."""
