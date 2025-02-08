@@ -108,7 +108,7 @@ class GeminiClient:
 
             # --- Robust Regex Parsing (Handles variations in Gemini's output) ---
             try:
-                # Even more robust regex (handles more variations)
+                # More robust regex that handles variations
                 entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                 stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
                 take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
@@ -118,6 +118,7 @@ class GeminiClient:
                 stop_loss = float(stop_loss_match.group(1)) if stop_loss_match and stop_loss_match.group(1) else 0.0
                 take_profit = float(take_profit_match.group(1)) if take_profit_match and take_profit_match.group(1) else 0.0
                 confidence = float(confidence_match.group(1)) if confidence_match and confidence_match.group(1) else 50.0
+
 
                 return {
                     "entry_point": entry_point,
@@ -133,6 +134,7 @@ class GeminiClient:
                     "take_profit": 0.0,
                     "confidence": 50.0,
                 }
+
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
