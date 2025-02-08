@@ -2,7 +2,6 @@ import os
 import google.generativeai as genai
 import logging
 import re
-import json
 from typing import Dict, Union
 
 # Configure logging
@@ -50,7 +49,7 @@ class GeminiClient:
             return 0.0
 
     def analyze_strategy_confidence(self, symbol: str, strategy_name: str, ohlc_data: str, indicator_data: str) -> float:
-        """Analyze market data for strategy confidence (0-100).  Returns a float."""
+        """Analyze market data, return confidence (0-100). Robust parsing."""
         try:
             examples = """..."""  # Your examples
             prompt = (
@@ -66,26 +65,25 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
-            # --- Prioritize Regex, then JSON as fallback ---
-            match = re.search(r".*?Confidence.*?:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL) #Even MORE robust regex
+            # --- Robust Regex Parsing ---
+            match = re.search(r".*?Confidence.*?:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
             if match:
                 try:
                     ai_confidence = float(match.group(1))
                     return ai_confidence
                 except (ValueError, TypeError):
-                    logger.warning("Failed to parse confidence from regex match. Returning 50.")
+                    logger.warning("Failed to parse confidence. Returning 50.")
                     return 50.0
             else:
-                logger.warning("No 'Confidence:' value found using regex. Returning 50.")
+                logger.warning("No 'Confidence:' value found. Returning 50.")
                 return 50.0
-
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (strategy confidence): {e}")
             return 50.0
 
     def analyze_global_recommendation(self, symbol: str, ohlc_data: str, indicator_data: str) -> Dict[str, float]:
-        """Analyze market data for a global recommendation. Returns a dict."""
+        """Analyze market data, return recommendation dict. Robust parsing."""
         try:
             examples = """..."""  # Your examples
             prompt = (
@@ -108,37 +106,36 @@ class GeminiClient:
 
             # --- Robust Regex Parsing (Handles variations in Gemini's output) ---
             try:
-                # More robust regex that handles variations
-                entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                confidence_match = re.search(r"Confidence:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
+                # Extract all relevant values in one go
+                match = re.search(
+                    r".*Entry Point:.*?([\d.]+).*Stop Loss:.*?([\d.]+).*Take Profit:.*?([\d.]+).*Confidence:.*?(\d+)",
+                    response_text,
+                    re.IGNORECASE | re.DOTALL,
+                )
 
-                # Initialize with default values
-                entry_point = 0.0
-                stop_loss = 0.0
-                take_profit = 0.0
-                confidence = 50.0
+                if match:
+                    entry_point = float(match.group(1))
+                    stop_loss = float(match.group(2))
+                    take_profit = float(match.group(3))
+                    confidence = float(match.group(4))
 
-                # Extract values if matches are found
-                if entry_match:
-                    entry_point = float(entry_match.group(1))
-                if stop_loss_match:
-                    stop_loss = float(stop_loss_match.group(1))
-                if take_profit_match:
-                    take_profit = float(take_profit_match.group(1))
-                if confidence_match:
-                    confidence = float(confidence_match.group(1))
+                    return {
+                        "entry_point": entry_point,
+                        "stop_loss": stop_loss,
+                        "take_profit": take_profit,
+                        "confidence": confidence,
+                    }
+                else:
+                    logger.warning("Failed to parse global recommendation using regex. Returning defaults.")
+                    return {
+                        "entry_point": 0.0,
+                        "stop_loss": 0.0,
+                        "take_profit": 0.0,
+                        "confidence": 50.0,
+                    }
 
-
-                return {
-                    "entry_point": entry_point,
-                    "stop_loss": stop_loss,
-                    "take_profit": take_profit,
-                    "confidence": confidence,
-                }
             except (AttributeError, ValueError, TypeError) as e:
-                logger.warning(f"Failed to parse global recommendation using regex. Returning defaults. Error: {e}")
+                logger.warning(f"Failed to parse global recommendation. Returning defaults. Error: {e}")
                 return {
                     "entry_point": 0.0,
                     "stop_loss": 0.0,
