@@ -88,7 +88,7 @@ class AlertSystem:
             probabilities = model.predict_proba(features)[0]
             confidence = probabilities[1] * 100
 
-            if confidence >= 40:
+            if confidence >= 80:
                 prediction = model.predict(features)[0]
                 signal = "BUY" if prediction == 1 else "SELL"
                 return signal, confidence
