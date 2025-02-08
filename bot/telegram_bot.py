@@ -11,12 +11,12 @@ from bot.core.alert_system import AlertSystem
 from bot.core.data_processing import DataProcessor
 from bot.api.binance_client import BinanceClient
 import psutil
-from bot.api.gemini_client import GeminiClient
+from bot.api.gemini_client import GeminiClient  # Corrected import
 from bot.core.ml_models import MLModel
 from bot.model_retraining import retrain_models
 import json  # Import the json module
 import requests  # Import requests
-import google.generativeai as genai # Import genai
+import google.generativeai as genai  # Import genai
 import argparse  # Import argparse
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -347,10 +347,10 @@ def send_signal(message):
 
             # --- Corrected Gemini Confidence Parsing ---
             try:
-                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
+                ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                ai_confidence = ai_confidence_response
+
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
@@ -483,15 +483,14 @@ def echo_all(message):
 # Start polling
 if __name__ == "__main__":
     logger.info("Starting bot...")
-    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.")
+    parser = argparse.ArgumentParser(description="Run the Telegram bot with a specific ML model.") #argument parser
     parser.add_argument('--model_path', type=str, default='models/logistic_regression_model.joblib',
-                        help='Path to the trained ML model file.')
+                        help='Path to the trained ML model file.') #model path argument
     args = parser.parse_args()
-    # Initialize MLModel with the specified path
-    ml_model = MLModel(model_path=args.model_path)
-     # Pass ml_model to functions that need it
-    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True)
-    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)
+    ml_model = MLModel(model_path=args.model_path)  # Use args.model_path for loading the model
+    # Pass ml_model to functions that need it
+    scheduler_thread = threading.Thread(target=run_scheduler, args=(ml_model,), daemon=True) #pass model to scheduler
+    schedule.every(10).minutes.do(check_and_send_alerts, ml_model)  # Pass ml_model to check and send alerts
     try:
         bot.infinity_polling()
     except Exception as e:
