@@ -358,7 +358,7 @@ def send_signal(message):
                 "take_profit": take_profit,
                 "risk_reward_ratio": risk_reward_ratio,
                 "ml_confidence": ml_confidence,
-                "ai_confidence": ai_confidence, # Correctly using parsed value
+                "ai_confidence": ai_confidence,  # Correctly using parsed value
             }
 
         def get_global_recommendation(all_timeframes: Dict[str, pd.DataFrame]) -> Dict[str, float]:
@@ -375,7 +375,7 @@ def send_signal(message):
             recommendation = alert_system.gemini_client.analyze_global_recommendation(
                 symbol, ohlc_data, indicator_data
             )
-            return recommendation
+            return recommendation #Corrected
 
 
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
