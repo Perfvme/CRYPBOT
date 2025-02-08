@@ -1,9 +1,10 @@
+from typing import Dict, Union
 import os
 import google.generativeai as genai
 import logging
 import re
 import json
-from typing import Dict, Union
+import requests  # Add import
 
 # Configure logging
 logging.basicConfig(
@@ -23,7 +24,7 @@ class GeminiClient:
         genai.configure(api_key=self.api_key)
         self.model = genai.GenerativeModel('gemini-2.0-flash-001')
 
-    def analyze_sentiment(self, text: str) -> float:
+    def analyze_sentiment(self, text):
         """Analyze text for sentiment and return a score between -1 and 1."""
         try:
             prompt = (
@@ -49,34 +50,10 @@ class GeminiClient:
             logger.error(f"Error calling Gemini API (sentiment): {e}")
             return 0.0
 
-    def analyze_strategy_confidence(self, symbol: str, strategy_name: str, ohlc_data: str, indicator_data: str) -> float:
-        """Analyze market data, return confidence (0-100). Robust parsing."""
+    def analyze_strategy_confidence(self, symbol, strategy_name, ohlc_data, indicator_data):
+        """Analyze market data for strategy confidence (0-100).  Returns a float."""
         try:
-            examples = """
-Example 1:
-Input:
-Symbol: BTCUSDT, Strategy: Scalping
-OHLC Data:
-             open      high       low     close
-2024-01-28  42000.0  42100.0  41900.0  42050.0
-Indicator Data:
-    volume        rsi       macd  macdsignal
-  1500.0  55.2  12.5  8.2
-Output:
-Confidence: 68
-
-Example 2:
-Input:
-Symbol: ETHUSDT, Strategy: Swing Trading
-OHLC Data:
-             open      high       low     close
-2024-01-28  2200.0  2220.0  2180.0  2190.0
-Indicator Data:
-   volume        rsi      macd  macdsignal
-  2500.0  42.8  -5.3  -2.1
-Output:
-Confidence: 35
-"""
+            examples = """..."""  # Your examples
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} ({strategy_name}) and provide a confidence level (0-100) for the overall trading signal.\n"
                 f"{examples}\n"
@@ -91,7 +68,7 @@ Confidence: 35
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
             # --- Prioritize Regex, then JSON as fallback ---
-            match = re.search(r".*Confidence:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
+            match = re.search(r".*Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
             if match:
                 try:
                     ai_confidence = float(match.group(1))
@@ -113,17 +90,17 @@ Confidence: 35
             logger.exception(f"Error calling Gemini API (strategy confidence): {e}")
             return 50.0
 
-    def analyze_global_recommendation(self, symbol: str, ohlc_data: str, indicator_data: str) -> Dict[str, float]:
+    def analyze_global_recommendation(self, symbol, ohlc_data, indicator_data):
         """Analyze market data, return recommendation dict. Robust parsing."""
         try:
             examples = """..."""  # Your examples
             prompt = (
                 f"You are a financial analysis model. Analyze the following market data for {symbol} and provide a global trading recommendation, including reasoning.\n"
                 "Follow these steps:\n"
-                "1. Identify the overall trend (Bullish, Bearish, or Neutral).\n"
-                "2. Identify key support and resistance levels.\n"
-                "3. Based on the trend and levels, provide an ideal entry point, stop-loss, and take-profit.\n"
-                "4. Provide a confidence level (0-100) for the recommendation.\n\n"
+                "1. Identify the overall trend (Bullish, Bearish, or Neutral).  Be concise.\n"
+                "2. Identify key support and resistance levels. Be concise.\n"
+                "3. Based on the trend and levels, provide an ideal entry point, stop-loss, and take-profit. Be concise.\n"
+                "4. Provide a confidence level (0-100) for the recommendation. Be concise.\n\n"
                 f"{examples}\n"
                 f"Input:\nSymbol: {symbol}\n"
                 f"OHLC Data:\n{ohlc_data}\n"
@@ -137,10 +114,11 @@ Confidence: 35
 
             # --- Prioritize Regex, then JSON as fallback ---
             try:
-                entry_match = re.search(r"Entry Point:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                stop_loss_match = re.search(r"Stop Loss:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                take_profit_match = re.search(r"Take Profit:\s*([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
-                confidence_match = re.search(r"Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
+                # More robust regex that handles variations in Gemini's output
+                entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                stop_loss_match = re.search(r"Stop Loss:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                take_profit_match = re.search(r"Take Profit:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
+                confidence_match = re.search(r"Confidence:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
 
                 entry_point = float(entry_match.group(1)) if entry_match else 0.0
                 stop_loss = float(stop_loss_match.group(1)) if stop_loss_match else 0.0
@@ -156,6 +134,7 @@ Confidence: 35
             except (AttributeError, ValueError):
                 logger.warning("Failed to parse global recommendation using regex. Trying JSON...")
 
+            # Fallback to JSON parsing (less reliable, but still useful)
             try:
                 response_json = json.loads(response_text)
                 return {
