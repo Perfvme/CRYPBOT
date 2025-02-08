@@ -122,7 +122,7 @@ class GeminiClient:
             logger.debug(f"Gemini API raw response (global recommendation): {response_text}")
 
             # Use the helper function for consistent parsing
-            return self._parse_gemini_response(response_text, ["Entry Point", "Stop Loss", "Take Profit", "Confidence"])
+            return self._parse_gemini_response(response_text, ["Entry Point", "Stop-Loss", "Take-Profit", "Confidence"])
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
