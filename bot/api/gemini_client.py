@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 import logging
 import re
-import json  # Keep json import for potential future use, even if not strictly needed now
+import json
 from typing import Dict, Union
 
 # Configure logging
@@ -66,8 +66,8 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (strategy confidence): {response_text}")
 
-            # --- Prioritize Regex ---
-            match = re.search(r".*Confidence:\s*(\d+)", response_text, re.IGNORECASE | re.DOTALL)
+            # --- Prioritize Regex, then JSON as fallback ---
+            match = re.search(r".*Confidence:.*?(\d+)", response_text, re.IGNORECASE | re.DOTALL)
             if match:
                 try:
                     ai_confidence = float(match.group(1))
@@ -106,7 +106,7 @@ class GeminiClient:
             response_text = response.text
             logger.debug(f"Gemini API raw response (global recommendation): {response_text}")
 
-            # --- Prioritize Regex ---
+            # --- Prioritize Regex, then JSON as fallback ---
             try:
                 # More robust regex that handles variations
                 entry_match = re.search(r"Entry Point:.*?([\d.]+)", response_text, re.IGNORECASE | re.DOTALL)
@@ -133,7 +133,6 @@ class GeminiClient:
                     "take_profit": 0.0,
                     "confidence": 50.0,
                 }
-
 
         except Exception as e:
             logger.exception(f"Error calling Gemini API (global recommendation): {e}")
