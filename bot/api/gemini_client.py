@@ -20,7 +20,7 @@ class GeminiClient:
 
         # Initialize the Gemini client
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-pro') # Using gemini-pro
+        self.model = genai.GenerativeModel('gemini-2.0-flash') # Using gemini-pro
 
     def _parse_gemini_response(self, response_text: str, keys: List[str]) -> Dict[str, float]:
         """Parses a Gemini response, extracting values for specified keys.
