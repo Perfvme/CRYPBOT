@@ -18,7 +18,7 @@ class GeminiClient:
         if not self.api_key:
             raise ValueError("GEMINI_API_KEY is not set in the environment variables.")
         genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel('gemini-2.0-pro-exp-02-05') # Using gemini-pro, more reliable
+        self.model = genai.GenerativeModel('gemini-2.0-flash') 
 
     def _parse_gemini_response(self, response_text: str, keys: List[str]) -> Dict[str, float]:
         """Parses a Gemini response, extracting values for specified keys.
