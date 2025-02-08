@@ -303,7 +303,7 @@ def send_signal(message):
                 # Use preprocess_for_strategy here
                 df = alert_system.processor.preprocess_for_strategy(data)
                 dataframes.append(df)
-                signal, reason = alert_system.engine.generate_signal(df) # Get the reason
+                signal, _ = alert_system.engine.generate_signal(df)
                 support, resistance = alert_system.engine.calculate_support_resistance(df)
                 fib_levels = alert_system.engine.calculate_fibonacci_levels(df)
                 atr = df['atr'].iloc[-1]
@@ -336,7 +336,6 @@ def send_signal(message):
                 entry_point = (avg_support + avg_resistance) / 2
                 stop_loss = entry_point -  avg_atr  # Use avg_atr
                 take_profit = entry_point +  avg_atr # Use avg_atr
-
             risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss) if abs(entry_point - stop_loss) >0 else 0
 
             # --- ML Confidence (using selected features) ---
@@ -350,17 +349,9 @@ def send_signal(message):
             indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).tail(50).to_string()
 
             # --- Corrected Gemini Confidence Parsing ---
-            try:
-                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
-                    symbol, strategy_name, ohlc_data, indicator_data
-                )
-                ai_confidence = ai_confidence_response
-
-            except Exception as e:
-                logger.error(f"Error calling Gemini API (strategy confidence): {e}")
-                ai_confidence = 50.0  # Return a default value
-
-
+            ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
+                symbol, strategy_name, ohlc_data, indicator_data
+            )
 
             return {
                 "strategy": strategy_name,
@@ -384,20 +375,11 @@ def send_signal(message):
             ohlc_data = combined_df[['open', 'high', 'low', 'close']].to_string()
             indicator_data = combined_df.drop(columns=['open', 'high', 'low', 'close', 'volume']).to_string()
 
-            try:
-                recommendation = alert_system.gemini_client.analyze_global_recommendation(
-                    symbol, ohlc_data, indicator_data
-                )
-                return recommendation
+            recommendation = alert_system.gemini_client.analyze_global_recommendation(
+                symbol, ohlc_data, indicator_data
+            )
+            return recommendation
 
-            except Exception as e:  # Corrected exception handling
-                logger.exception(f"Error calling Gemini API (global recommendation): {e}")
-                return {
-                    "entry_point": 0.0,
-                    "stop_loss": 0.0,
-                    "take_profit": 0.0,
-                    "confidence": 50.0,
-                }
 
         scalping_params = calculate_trade_parameters(scalping_timeframes, "Scalping")
         swing_params = calculate_trade_parameters(swing_timeframes, "Swing Trading")
