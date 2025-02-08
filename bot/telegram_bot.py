@@ -136,7 +136,7 @@ def get_backtesting_results(model: MLModel) -> dict:
         processor = DataProcessor()
         data = processor.fetch_data("BTCUSDT", "1h", limit=1000)
         df = processor.preprocess_for_strategy(data)  # Use preprocess_for_strategy
-        results = ml_model.backtest(df, "BTCUSDT")
+        results = model.backtest(df, "BTCUSDT")
         return results
     except Exception as e:
         logger.error(f"Error during backtesting: {e}")
@@ -172,7 +172,7 @@ def check_and_send_alerts(model: MLModel):
                 atr = df['atr'].iloc[-1]
 
                 signals.append(signal)
-                ds_confidences.append(ds_confidences)
+                ds_confidences.append(ds_confidence)
                 support_levels.append(support)
                 resistance_levels.append(resistance)
                 atr_values.append(atr)
@@ -181,7 +181,7 @@ def check_and_send_alerts(model: MLModel):
             avg_support = np.mean(support_levels)
             avg_resistance = np.mean(resistance_levels)
             avg_atr = np.mean(atr_values)
-            avg_ds_confidence = sum(ds_confidences) / len(timeframe_data)
+            avg_ds_confidence = sum(ds_confidences) / len(ds_confidences)
 
             # Check if 3/4 timeframes agree and DS confidence is above 75%
             buy_count = signals.count("BUY")
@@ -203,8 +203,8 @@ def check_and_send_alerts(model: MLModel):
                     take_profit = avg_support - avg_atr
                 else:  # Handle HOLD case explicitly
                     entry_point = (avg_support + avg_resistance) / 2
-                    stop_loss = avg_support - avg_atr  # Example, adjust as needed
-                    take_profit = avg_resistance + avg_atr # Example, adjust as needed
+                    stop_loss = entry_point - avg_atr  # Example, adjust as needed
+                    take_profit = entry_point + avg_atr # Example, adjust as needed
 
                 # Prepare the alert message
                 alert_message = (
@@ -334,9 +334,9 @@ def send_signal(message):
                 take_profit = avg_support - avg_atr
             else:
                 entry_point = (avg_support + avg_resistance) / 2
+                stop_loss = entry_point -  avg_atr  # Use avg_atr
+                take_profit = entry_point +  avg_atr # Use avg_atr
 
-            stop_loss = entry_point - avg_atr if majority_signal == "BUY" else entry_point + avg_atr
-            take_profit = entry_point + 2 * avg_atr if majority_signal == "BUY" else entry_point - 2 * avg_atr
             risk_reward_ratio = abs(take_profit - entry_point) / abs(entry_point - stop_loss) if abs(entry_point - stop_loss) >0 else 0
 
             # --- ML Confidence (using selected features) ---
@@ -351,14 +351,16 @@ def send_signal(message):
 
             # --- Corrected Gemini Confidence Parsing ---
             try:
-                ai_confidence = alert_system.gemini_client.analyze_strategy_confidence(
+                ai_confidence_response = alert_system.gemini_client.analyze_strategy_confidence(
                     symbol, strategy_name, ohlc_data, indicator_data
                 )
-                ai_confidence = ai_confidence
+                ai_confidence = ai_confidence_response #Corrected
 
             except Exception as e:
                 logger.error(f"Error calling Gemini API (strategy confidence): {e}")
-                ai_confidence = 50.0  # Default value
+                ai_confidence = 50.0  # Return a default value
+
+
 
             return {
                 "strategy": strategy_name,
@@ -386,7 +388,7 @@ def send_signal(message):
                 recommendation = alert_system.gemini_client.analyze_global_recommendation(
                     symbol, ohlc_data, indicator_data
                 )
-                return recommendation
+                return recommendation #Corrected
 
             except Exception as e:  # Corrected exception handling
                 logger.exception(f"Error calling Gemini API (global recommendation): {e}")
@@ -464,9 +466,9 @@ def send_ml_status(message):
                 "📊 Backtesting Results (BTCUSDT, 1h):\n"
                 f"  - Final Capital: ${backtest_results['final_capital']:.2f}\n"
                 f"  - Win Rate: {backtest_results['win_rate']:.2%}\n"
-            f"  - Profit Factor: {backtest_results['profit_factor']:.2f}\n"
-            f"  - Max Drawdown: {backtest_results['max_drawdown']:.2%}\n"
-            f"  - Sharpe Ratio: {backtest_results['sharpe_ratio']:.2f}\n"
+                f"  - Profit Factor: {backtest_results['profit_factor']:.2f}\n"
+                f"  - Max Drawdown: {backtest_results['max_drawdown']:.2%}\n"
+                f"  - Sharpe Ratio: {backtest_results['sharpe_ratio']:.2f}\n"
             )
         else:
             response += "▫️ Backtesting Results:  Not available\n"
